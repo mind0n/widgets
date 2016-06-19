@@ -2,15 +2,24 @@
   "name": "assets",
   "version": "0.1.0",
   "description": "Front End Assets",
-  "main": "entry.js",
+  "main": "./bundle",
   "scripts": {
-    "test": "echo \"Test success\" && exit 0"
+    "build": "webpack --watch"
   },
   "author": "",
   "license": "Mozilla Public License Version 2.0",
   "dependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "typescript": "^1.8.10",
     "webpack": "^1.13.1",
-    "typescript": "^1.8.10"
+    "css-loader": "^0.23.1",
+    "node-sass": "^3.8.0",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
   }
