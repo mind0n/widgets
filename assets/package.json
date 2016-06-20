@@ -4,7 +4,7 @@
   "description": "Front End Assets",
   "main": "./bundle",
   "scripts": {
-    "build": "webpack --watch"
+    "build": "webpack"
   },
   "author": "",
   "license": "Mozilla Public License Version 2.0",
@@ -18,9 +18,10 @@
     "node-sass": "^3.8.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "ts-loader": "^0.8.2"
   },
   "devDependencies": {
+    "ntypescript": "^1.201606200105.1"
   }
 }

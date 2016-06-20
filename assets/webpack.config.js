@@ -4,6 +4,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var exCss = new ExtractTextPlugin('[name].bundle.css');
 var exScss = new ExtractTextPlugin('[name].bundle.css');
 
+
 var ugjs = new webpack.optimize.UglifyJsPlugin({
 	output:{
 		comments:false
@@ -22,8 +23,13 @@ module.exports = {
     },
     module: {
         loaders: [
-			{ test: /\.css$/, loader: exCss.extract(["css"])},
+			{ test: /\.css$/, loader: exCss.extract(["css"]) },
+            { test:/\.ts$/, loader: "ts-loader" }
         ]
     },
-	plugins: [exScss, exCss, ugjs]
+	plugins: [exScss, exCss, ugjs],
+    ts:{
+        compiler: 'ntypescript',
+        exclude: ["node_modules", "typings"]
+    }
 };
