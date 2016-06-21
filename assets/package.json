@@ -22,6 +22,7 @@
     "ts-loader": "^0.8.2"
   },
   "devDependencies": {
-    "ntypescript": "^1.201606200105.1"
+    "ntypescript": "^1.201606200105.1",
+    "webpack-typescript": "^0.5.6"
   }
 }

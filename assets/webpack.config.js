@@ -1,9 +1,9 @@
+var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var exCss = new ExtractTextPlugin('[name].bundle.css');
-var exScss = new ExtractTextPlugin('[name].bundle.css');
-
+var exTs = new ExtractTextPlugin('[name].bundle.js');
 
 var ugjs = new webpack.optimize.UglifyJsPlugin({
 	output:{
@@ -24,12 +24,8 @@ module.exports = {
     module: {
         loaders: [
 			{ test: /\.css$/, loader: exCss.extract(["css"]) },
-            { test:/\.ts$/, loader: "ts-loader" }
+            { test:/\.ts$/, loader: exTs.extract(path.join(__dirname, "my-loader.js")) }
         ]
     },
-	plugins: [exScss, exCss, ugjs],
-    ts:{
-        compiler: 'ntypescript',
-        exclude: ["node_modules", "typings"]
-    }
+	plugins: [exCss, exTs],
 };
