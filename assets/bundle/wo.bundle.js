@@ -1,3 +1,30 @@
+String.prototype.startsWith = function (str) {
+    return this.indexOf(str) == 0;
+};
+String.prototype.format = function () {
+    var args = arguments;
+    var s = this;
+    if (!args || args.length < 1) {
+        return s;
+    }
+    var r = s;
+    for (var i = 0; i < args.length; i++) {
+        var reg = new RegExp('\\{' + i + '\\}');
+        r = r.replace(reg, args[i]);
+    }
+    return r;
+};
+Element.prototype.astyle = function actualStyle(props) {
+    var el = this;
+    var compStyle = window.getComputedStyle(el, null);
+    for (var i = 0; i < props.length; i++) {
+        var style = compStyle[props[i]];
+        if (style != null) {
+            return style;
+        }
+    }
+    return null;
+};
 var Destroyer = (function () {
     function Destroyer() {
     }
@@ -30,20 +57,6 @@ var Destroyer = (function () {
     Destroyer.container = document.createElement("div");
     return Destroyer;
 }());
-String.prototype.startsWith = function (str) {
-    return this.indexOf(str) == 0;
-};
-Element.prototype.astyle = function actualStyle(props) {
-    var el = this;
-    var compStyle = window.getComputedStyle(el, null);
-    for (var i = 0; i < props.length; i++) {
-        var style = compStyle[props[i]];
-        if (style != null) {
-            return style;
-        }
-    }
-    return null;
-};
 var MobileDevice = (function () {
     function MobileDevice() {
     }
