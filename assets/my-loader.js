@@ -1,5 +1,3 @@
-var fs = require("fs");
-global.window = global;
 module.exports = function(source){
     // var tmp = fs.readFileSync("loader-template.js").toString();
     // var src = source;
@@ -18,6 +16,6 @@ module.exports = function(source){
     src = src.replace(/\n/ig, "\\n");
     console.log("====================>" + src);
     //[[module.id, content, '']]
-    return 'var content = [[module.id,"'+src+'", ""]];module.exports = content[0][1];';
+    return 'var content = "'+src+'";module.exports = content;';
 };
 

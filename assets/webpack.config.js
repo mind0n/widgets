@@ -24,7 +24,8 @@ module.exports = {
     module: {
         loaders: [
 			{ test: /\.css$/, loader: exCss.extract(["css"]) },
-            { test:/\.ts$/, loader: exTs.extract(path.join(__dirname, "my-loader.js")) }
+            //{ test:/\.ts$/, loader: exTs.extract(["ts-loader", path.join(__dirname, "my-loader.js")]) }
+            { test:/\.ts$/, loader: exTs.extract([path.join(__dirname, "my-loader.js"), "ts-loader"]) }
         ]
     },
 	plugins: [exCss, exTs],

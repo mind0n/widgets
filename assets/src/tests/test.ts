@@ -1,1 +1,1 @@
-let obj = 'ok';
+let a:string = 'ok';
