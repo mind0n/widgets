@@ -12,7 +12,11 @@ var ugjs = new webpack.optimize.UglifyJsPlugin({
 		comments:false
 	}
 });
-
+function load(name){
+	var r = path.join(__dirname, "extensions/" + name + "-loader.js");
+	console.log("Loading: " + r + "-loader.js");
+	return r;
+}
 module.exports = {
     entry: {
 		wo:"./src/wo.script.entry.js",
@@ -29,8 +33,8 @@ module.exports = {
         loaders: [
 			{ test: /\.css$/, loader: exCss.extract(["css"]) },
 			{ test: /\.scss$/, loader: exScss.extract(["css", "sass"]) },
-            { test:/\.ts$/, loader: exTs.extract([path.join(__dirname, "my-loader.js"), "ts-loader"]) },
-            { test:/\jquery.js$/, loader: exJs.extract([path.join(__dirname, "my-loader.js")]) },
+            { test:/\.ts$/, loader: exTs.extract([load("content"), "ts-loader"]) },
+            { test:/\jquery.js$/, loader: exJs.extract([load("content")]) },
         ]
     },
 	plugins: [exCss, exTs, exJs, exScss],
