@@ -31,8 +31,8 @@ module.exports = {
     },
     module: {
         loaders: [
-			{ test: /\.css$/, loader: exCss.extract(["css"]) },
-			{ test: /\.scss$/, loader: exScss.extract(["css", "sass"]) },
+			{ test:/\.css$/, loader: exCss.extract(["css"]) },
+			{ test:/\.scss$/, loader: exScss.extract(["css", "sass"]) },
             { test:/\.ts$/, loader: exTs.extract([load("content"), "ts-loader"]) },
             { test:/\jquery.js$/, loader: exJs.extract([load("content")]) },
         ]
