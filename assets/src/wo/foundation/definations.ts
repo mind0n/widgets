@@ -1,5 +1,5 @@
 interface Element{
-    astyle([string]);
+    astyle(props:string[]);
 }
 
 interface HTMLElement{
