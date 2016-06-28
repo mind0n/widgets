@@ -47,9 +47,12 @@
 	"use strict";
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(2);
-	var Hello_1 = __webpack_require__(3);
-	var id = "example";
-	ReactDOM.render(React.createElement(Hello_1.HelloComponent, {compiler: "TypeScript2", framework: "React2"}), document.getElementById(id));
+	var $ = __webpack_require__(3);
+	var Hello_1 = __webpack_require__(4);
+	$(function () {
+	    var id = "target";
+	    ReactDOM.render(React.createElement(Hello_1.HelloComponent, {compiler: "TypeScript", framework: "React"}), document.getElementById(id));
+	});
 
 
 /***/ },
@@ -66,6 +69,12 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	module.exports = jquery;
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

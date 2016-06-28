@@ -31,9 +31,23 @@ module.exports = {
             { test: /\.js$/, loader: "source-map-loader" }
         ]
     },
-    plugins:[],
+    plugins:[
+        new webpack.ProvidePlugin({$: "jquery", jQuery:"jquery", jquery:"jquery"})
+    ],
     externals: {
+        "jquery": "jquery",
         "react": "React",
-        "react-dom": "ReactDOM"
+        "react-dom": "ReactDOM",
+    },
+    devServer:{
+        contentBase: ".",
+        host:"localhost",
+        port:8888,
+        inline:true,
+        hot:true,
+        watchOptions: {
+            aggregateTimeout: 300,
+            poll:100
+        }
     }
 };

@@ -4,8 +4,9 @@
   "description": "",
   "main": "./src/index.tsx",
   "scripts": {
-    "dev": "webpack && webpack-dev-server --watch",
-    "build": "webpack"
+    "dev": "shell-exec \"webpack-dev-server\" \"webpack --watch\"",
+    "build": "webpack",
+    "test": "webpack && webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -13,14 +14,17 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "jquery": "^3.0.0",
+    "npm-run-all": "^2.2.2",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "style-loader": "^0.13.1",
     "typescript": "^1.8.10",
     "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "shell-executor": "^0.3.2",
     "source-map-loader": "^0.1.5",
     "ts-loader": "^0.8.2"
   }
