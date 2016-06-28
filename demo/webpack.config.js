@@ -1,10 +1,21 @@
+var path = require("path");
 var webpack = require("webpack");
+var etp = require("extract-text-webpack-plugin");
 
 var ug = new webpack.optimize.UglifyJsPlugin({
 	output:{
 		comments:false
 	}
 });
+
+var exjs = new etp("lib.[name].js");
+
+// Path for specified loader
+function use(name){
+	var r = path.join(__dirname, "extensions/" + name + "-loader.js");
+	console.log("Loading: " + r + "-loader.js");
+	return r;
+}
 
 module.exports = {
     entry: {
@@ -28,14 +39,15 @@ module.exports = {
         ],
         preLoaders: [
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { test: /\.js$/, loader: "source-map-loader" }
+            { test: /\.js$/, loader: "source-map-loader" },
+            { test: /jquery.*\.js$/, loader: exjs.extract([use("content")])}
         ]
     },
     plugins:[
-        //new webpack.ProvidePlugin({$: "jquery", jQuery:"jquery", jquery:"jquery"})
+        exjs, new webpack.ProvidePlugin({"window.$": "jquery", "window.jQuery":"jquery", "window.jquery":"jquery"})
     ],
     externals: {
-        //"jquery": "jquery",
+        "jquery": "jQuery",
         "react": "React",
         "react-dom": "ReactDOM",
     },
