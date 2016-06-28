@@ -44,16 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	var $ = __webpack_require__(1);
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(3);
-	var Hello_1 = __webpack_require__(4);
-	$(function () {
-	    var id = "target";
-	    ReactDOM.render(React.createElement(Hello_1.HelloComponent, {compiler: "TypeScript", framework: "React"}), document.getElementById(id));
-	});
-
+	__webpack_require__(1);
 
 /***/ },
 /* 1 */
@@ -10098,42 +10089,6 @@
 	} ) );
 
 
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	module.exports = React;
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	module.exports = ReactDOM;
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(2);
-	var HelloComponent = (function (_super) {
-	    __extends(HelloComponent, _super);
-	    function HelloComponent() {
-	        _super.apply(this, arguments);
-	    }
-	    HelloComponent.prototype.render = function () {
-	        return React.createElement("div", null, " Hellow ", this.props.compiler, " and ", this.props.framework);
-	    };
-	    return HelloComponent;
-	}(React.Component));
-	exports.HelloComponent = HelloComponent;
-
-
 /***/ }
 /******/ ]);
-//# sourceMappingURL=demo.bundle.js.map
+//# sourceMappingURL=lib.bundle.js.map

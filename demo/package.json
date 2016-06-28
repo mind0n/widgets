@@ -5,7 +5,7 @@
   "main": "./src/index.tsx",
   "scripts": {
     "dev": "shell-exec \"webpack-dev-server\" \"webpack --watch\"",
-    "build": "webpack",
+    "build": "webpack && tsc -p basics",
     "test": "webpack && webpack-dev-server"
   },
   "author": "",

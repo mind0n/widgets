@@ -9,7 +9,6 @@ var ug = new webpack.optimize.UglifyJsPlugin({
 });
 
 var exjs = new etp("lib.[name].js");
-var exb = new etp("[name].bundle.js");
 var excss = new etp("[name].bundle.css");
 
 // Path for specified loader
@@ -21,13 +20,13 @@ function use(name){
 
 module.exports = {
     entry: {
-        demo:"./src/index.tsx",
-        theme:"./src/theme.tsx",
-        basic:"./src/basic.tsx"
+        demo: "./src/index.tsx",
+        theme: "./src/theme.tsx",
+        lib: "./src/lib.js"
     },
     output: {
         path: __dirname + "/dist",
-        filename: "[name].bundle.js",
+        filename: "[name].bundle.js"
     },
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
@@ -38,20 +37,20 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.tsx?$/, loader: "ts-loader" },
-            { test: /\.css$/, loader: excss.extract(["css"]) }
+            { test: /\.css$/, loader: excss.extract(["css"]) },
+            { test: /\.svg$/, loader: "file-loader" },
+            //{ test: /jquery/i, loader: exjs.extract([use("content")]) }
         ],
         preLoaders: [
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" },
-            { test: /\.svg$/, loader: "file-loader" },
-            { test: /jquery.*\.js$/, loader: exjs.extract([use("content")]) }
         ]
     },
     plugins:[
         exjs, excss, new webpack.ProvidePlugin({"window.$": "jquery", "window.jQuery":"jquery", "window.jquery":"jquery"})
     ],
     externals: {
-        "jquery": "jQuery",
+        //"jquery": "jQuery",
         "react": "React",
         "react-dom": "ReactDOM",
     },
