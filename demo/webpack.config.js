@@ -9,6 +9,7 @@ var ug = new webpack.optimize.UglifyJsPlugin({
 });
 
 var exjs = new etp("lib.[name].js");
+var excss = new etp("[name].bundle.css");
 
 // Path for specified loader
 function use(name){
@@ -35,16 +36,16 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.tsx?$/, loader: "ts-loader" },
-            { test: /\.css?$/, loader: "style-loader!css-loader" }
+            { test: /\.css$/, loader: excss.extract(["css"]) }
         ],
         preLoaders: [
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" },
-            { test: /jquery.*\.js$/, loader: exjs.extract([use("content")])}
+            { test: /jquery.*\.js$/, loader: exjs.extract([use("content")]) }
         ]
     },
     plugins:[
-        exjs, new webpack.ProvidePlugin({"window.$": "jquery", "window.jQuery":"jquery", "window.jquery":"jquery"})
+        exjs, excss, new webpack.ProvidePlugin({"window.$": "jquery", "window.jQuery":"jquery", "window.jquery":"jquery"})
     ],
     externals: {
         "jquery": "jQuery",
