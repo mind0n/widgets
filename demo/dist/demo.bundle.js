@@ -45,10 +45,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var $ = __webpack_require__(1);
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(3);
-	var Hello_1 = __webpack_require__(4);
+	var $ = __webpack_require__(2);
+	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(4);
+	var Hello_1 = __webpack_require__(5);
 	$(function () {
 	    var id = "target";
 	    ReactDOM.render(React.createElement(Hello_1.HelloComponent, {compiler: "TypeScript", framework: "React"}), document.getElementById(id));
@@ -56,25 +56,26 @@
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports) {
 
 	module.exports = jQuery;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = ReactDOM;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -83,7 +84,7 @@
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var React = __webpack_require__(2);
+	var React = __webpack_require__(3);
 	var HelloComponent = (function (_super) {
 	    __extends(HelloComponent, _super);
 	    function HelloComponent() {

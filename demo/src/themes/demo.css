@@ -12,7 +12,10 @@ body{
     z-index:10;
 }
 .bg{
-    
+    background-image: url(ts.svg);
+    background-position: center;
+    background-repeat:no-repeat;
+    opacity: 0.2;
 }
 #target{
     z-index:100;

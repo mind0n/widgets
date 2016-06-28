@@ -9,6 +9,7 @@ var ug = new webpack.optimize.UglifyJsPlugin({
 });
 
 var exjs = new etp("lib.[name].js");
+var exb = new etp("[name].bundle.js");
 var excss = new etp("[name].bundle.css");
 
 // Path for specified loader
@@ -21,7 +22,8 @@ function use(name){
 module.exports = {
     entry: {
         demo:"./src/index.tsx",
-        theme:"./src/theme.tsx"
+        theme:"./src/theme.tsx",
+        basic:"./src/basic.tsx"
     },
     output: {
         path: __dirname + "/dist",
@@ -41,6 +43,7 @@ module.exports = {
         preLoaders: [
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" },
+            { test: /\.svg$/, loader: "file-loader" },
             { test: /jquery.*\.js$/, loader: exjs.extract([use("content")]) }
         ]
     },

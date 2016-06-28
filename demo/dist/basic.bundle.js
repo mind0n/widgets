@@ -40,23 +40,33 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(6);
+	var webuser_tsx_1 = __webpack_require__(1);
+	var webuser_tsx_2 = __webpack_require__(1);
+	var user = new webuser_tsx_2._WebUser("Ed", "James");
+	var user2 = new webuser_tsx_1.WebUser("Ed", "James");
 
 
 /***/ },
-
-/***/ 6:
+/* 1 */
 /***/ function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
+	"use strict";
+	var WebUser = (function () {
+	    function WebUser(userId, pwd) {
+	        this.UserId = userId;
+	        this.Pwd = pwd;
+	    }
+	    return WebUser;
+	}());
+	exports.WebUser = WebUser;
+	exports._WebUser = WebUser;
+
 
 /***/ }
-
-/******/ });
-//# sourceMappingURL=theme.bundle.js.map
+/******/ ]);
+//# sourceMappingURL=basic.bundle.js.map
