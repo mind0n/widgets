@@ -37,7 +37,7 @@ module.exports = {
             { test:/\jquery.js$/, loader: exJs.extract([load("content")]) },
         ]
     },
-	plugins: [exCss, exTs, exJs, exScss],
+	plugins: [exCss, exTs, exJs, exScss, ugjs],
     sassLoader:{
         includePaths:[path.resolve(__dirname, "./src")]
     }

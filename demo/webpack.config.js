@@ -1,7 +1,17 @@
+var webpack = require("webpack");
+
+var ug = new webpack.optimize.UglifyJsPlugin({
+	output:{
+		comments:false
+	}
+});
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: {
+        demo:"./src/index.tsx"
+    },
     output: {
-        filename: "./dist/bundle.js",
+        path: __dirname + "/dist",
+        filename: "[name].bundle.js",
     },
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
@@ -18,6 +28,7 @@ module.exports = {
             { test: /\.js$/, loader: "source-map-loader" }
         ]
     },
+    plugins:[ug],
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
