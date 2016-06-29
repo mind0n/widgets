@@ -17,6 +17,12 @@ body{
     background-repeat:no-repeat;
     opacity: 0.2;
 }
+.welcome{
+    font:18px arial;
+    padding:12px;
+    line-height: 24px;
+    color:#bbb;
+}
 #target{
     z-index:100;
 }

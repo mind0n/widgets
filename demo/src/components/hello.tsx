@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-export class HelloComponent extends React.Component<any, any>{
+export default class HelloComponent extends React.Component<any, any>{
     render():any{
-        return <div> Hellow {this.props.compiler} and {this.props.framework}</div>
+        return <div className={this.props.class}>{this.props.framework}</div>
     }
 }

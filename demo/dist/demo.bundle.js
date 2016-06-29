@@ -49,9 +49,19 @@
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(3);
 	var Hello_1 = __webpack_require__(4);
+	var LabelTextbox_1 = __webpack_require__(5);
+	var WebUser_1 = __webpack_require__(6);
 	$(function () {
 	    var id = "target";
-	    ReactDOM.render(React.createElement(Hello_1.HelloComponent, {compiler: "TypeScript", framework: "React"}), document.getElementById(id));
+	    var container = document.getElementById(id);
+	    var model = new WebUser_1.default("James", "pwdcontent");
+	    function validate() {
+	        return model.validate();
+	    }
+	    var wrapper = React.createElement("div", null, React.createElement(Hello_1.default, {class: "welcome", compiler: "TypeScript", framework: "ReactJS"}), React.createElement(LabelTextbox_1.default, {type: "text", label: "Username", model: model}), React.createElement("button", {onClick: validate}, "Validate"));
+	    ReactDOM.render(wrapper, container);
+	    // ReactDOM.render(<LabelTextbox type="text" label="Username" model="{model}" />, container);
+	    // ReactDOM.render(<button onclick="model.validate()">Validate</button>, container);
 	});
 
 
@@ -10127,11 +10137,66 @@
 	        _super.apply(this, arguments);
 	    }
 	    HelloComponent.prototype.render = function () {
-	        return React.createElement("div", null, " Hellow ", this.props.compiler, " and ", this.props.framework);
+	        return React.createElement("div", {className: this.props.class}, this.props.framework);
 	    };
 	    return HelloComponent;
 	}(React.Component));
-	exports.HelloComponent = HelloComponent;
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = HelloComponent;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(2);
+	var LabelTextbox = (function (_super) {
+	    __extends(LabelTextbox, _super);
+	    function LabelTextbox() {
+	        _super.apply(this, arguments);
+	    }
+	    LabelTextbox.prototype.update = function (event) {
+	        var model = this.props.model;
+	        var box = this.refs["box"];
+	        model.UserId = box.value;
+	        this.setState({ value: event.target.value });
+	    };
+	    LabelTextbox.prototype.render = function () {
+	        var _this = this;
+	        var classes = 'lb-txt ' + this.props.class;
+	        var model = this.props.model;
+	        return React.createElement("div", {className: classes}, React.createElement("div", {className: "label"}, this.props.label), React.createElement("div", {className: "txt-container"}, React.createElement("input", {ref: "box", className: "txt", type: this.props.type, onChange: function (e) { return _this.update(e); }, value: model.UserId})));
+	    };
+	    return LabelTextbox;
+	}(React.Component));
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = LabelTextbox;
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var WebUser = (function () {
+	    function WebUser(userId, pwd) {
+	        this.UserId = userId;
+	        this.Pwd = pwd;
+	    }
+	    WebUser.prototype.validate = function () {
+	        alert(this.UserId);
+	        return true;
+	    };
+	    return WebUser;
+	}());
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = WebUser;
 
 
 /***/ }
