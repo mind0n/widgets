@@ -15,9 +15,7 @@ $(function(){
     }
     let wrapper:any = <div>
     <HelloComponent class="welcome" compiler="TypeScript" framework="ReactJS" />
-    <LabelTextbox type="text" label="Username" model={model} />
+    <LabelTextbox class="field-username" type="text" label="Username" model={model} />
     <button onClick={validate}>Validate</button></div>; 
     ReactDOM.render(wrapper, container);
-    // ReactDOM.render(<LabelTextbox type="text" label="Username" model="{model}" />, container);
-    // ReactDOM.render(<button onclick="model.validate()">Validate</button>, container);
 });
