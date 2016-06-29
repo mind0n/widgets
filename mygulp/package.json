@@ -1,0 +1,16 @@
+{
+  "name": "mygulp",
+  "version": "1.0.0",
+  "description": "Lab project of Gulp",
+  "scripts": {
+    "build": "gulp"
+  },
+  "author": "Michael Yuan",
+  "license": "Mozilla 2.0",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.10",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0"
+  }
+}
