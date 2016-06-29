@@ -9,7 +9,7 @@ import WebUser from "./components/WebUser";
 $(function(){
     let id:string = "target";
     let container:Element = document.getElementById(id);
-    let model:WebUser = new WebUser("James", "pwdcontent");
+    let model:WebUser = new WebUser("James", null);
     function validate():boolean{
         return model.validate();
     }
