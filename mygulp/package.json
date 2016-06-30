@@ -8,7 +8,7 @@
     "test": "gulp test"
   },
   "author": "Michael Yuan",
-  "license": "Mozilla 2.0",
+  "license": "Mozilla Public License Version 2.0",
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.10",
