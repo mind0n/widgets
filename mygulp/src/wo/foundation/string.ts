@@ -1,6 +1,6 @@
 interface String{
-	startsWith(str:string);
-	format(...restArgs:any[]);
+	startsWith(str:string):boolean;
+	format(...restArgs:any[]):string;
 }
 
 String.prototype.startsWith = function(str:string):boolean{

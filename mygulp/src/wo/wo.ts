@@ -4,6 +4,3 @@
 /// <reference path="foundation/elements.ts" />
 /// <reference path="builder/use.ts" />
 
-module wo{
-
-}
