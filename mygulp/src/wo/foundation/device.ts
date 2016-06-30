@@ -1,3 +1,17 @@
+interface Window{
+	opr:any;
+	opera:any;
+	chrome:any;
+	StyleMedia:any;
+	InstallTrigger:any;
+	CSS:any;
+}
+
+interface Document{
+	documentMode:any;
+}
+
+
 class MobileDevice{
 	static get Android ():boolean {
 		var r = navigator.userAgent.match(/Android/i);
@@ -47,7 +61,7 @@ class Browser{
 	
 	// Firefox 1.0+
 	static get isFirefox():boolean{
-		return typeof InstallTrigger !== 'undefined';
+		return typeof window.InstallTrigger !== 'undefined';
 	}
 	// At least Safari 3+: "[object HTMLElementConstructor]"
 	static get isSafari():boolean{

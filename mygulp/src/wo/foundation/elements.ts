@@ -1,8 +1,23 @@
-Element.prototype.astyle = function actualStyle(props) {
-	var el = this;
-	var compStyle = window.getComputedStyle(el, null);
-	for (var i = 0; i < props.length; i++) {
-		var style = compStyle[props[i]];
+
+interface Element{
+	[name:string]:any;
+	astyle(styles:string[]):string;
+}
+
+interface HTMLElement{
+	destroyStatus:Destroyer;
+	dispose():any;
+}
+
+interface String{
+	startsWith(str:string):boolean;
+}
+
+Element.prototype.astyle = function actualStyle(props:string[]) {
+	let el:Element = this;
+	let compStyle:CSSStyleDeclaration = window.getComputedStyle(el, null);
+	for (let i:number = 0; i < props.length; i++) {
+		let style:string = compStyle.getPropertyValue(props[i]);
 		if (style != null) {
 			return style;
 		}
@@ -26,8 +41,8 @@ class Destroyer{
 			target.destroyStatus.destroying = true;
 			Destroyer.container.appendChild(target);
 			for(let i in target){
-				if (i.startsWith('$')){
-					var tmp = target[i];
+				if (i.indexOf('$') == 0){
+					let tmp:any = target[i];
 					if (tmp instanceof HTMLElement){
 						target[i] = null;
 						tmp = null;

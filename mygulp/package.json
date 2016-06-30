@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "description": "Lab project of Gulp",
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "dev": "gulp && gulp dev",
+    "test": "gulp test && gulp host"
   },
   "author": "Michael Yuan",
   "license": "Mozilla 2.0",
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-bundle-assets": "^2.27.1",
     "gulp-clean-css": "^2.0.10",
+    "gulp-minify": "0.0.12",
     "gulp-sass": "^2.3.2",
-    "gulp-sourcemaps": "^1.6.0"
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.13.6",
+    "gulp-webserver": "^0.9.1"
   }
 }

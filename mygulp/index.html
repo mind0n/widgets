@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello React!</title>
+        <link rel="stylesheet" href="dist/themes/wo/wo.css" />
+        <script src="dist/scripts/device.js"></script>
+        <script src="dist/scripts/elements.js"></script>
+        <script>
+            function init(){
+                console.log(Browser.isChrome);
+                var el = document.getElementById("target");
+                Destroyer.destroy(el);
+            }
+        </script>
+    </head>
+    <body onload="init();">
+        <div class="bg">First Div</div>
+        <div id="target">Second Div</div>
+    </body>
+</html>
