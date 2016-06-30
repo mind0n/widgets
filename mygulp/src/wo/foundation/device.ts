@@ -1,17 +1,4 @@
-interface Window{
-	opr:any;
-	opera:any;
-	chrome:any;
-	StyleMedia:any;
-	InstallTrigger:any;
-	CSS:any;
-}
-
-interface Document{
-	documentMode:any;
-}
-
-
+/// <reference path="definitions.ts" />
 class MobileDevice{
 	static get Android ():boolean {
 		var r = navigator.userAgent.match(/Android/i);
