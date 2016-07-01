@@ -1,4 +1,6 @@
 module wo{
+    export let Creators:Creator[] = [];
+
     class Cursor{
         parent:any;
         group:any;
@@ -87,6 +89,11 @@ module wo{
     }
 
     export function use(json:any):any{
-        
+        for(var i of Creators){
+            if (json[i.Id]){
+                return i.Create(json);
+            }
+        }
+        return null;
     }
 }
