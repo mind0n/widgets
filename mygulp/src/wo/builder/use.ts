@@ -17,9 +17,7 @@ module wo{
         Create(json:any):any{
             var o = this.create(json);
             delete json[this.Id];
-            if (o instanceof HTMLElement){
-                this.extend(o, json);
-            }
+            this.extend(o, json);
             return o;
         }
         protected abstract create(json:any):any;
@@ -36,7 +34,12 @@ module wo{
                 return null;
             }
             let tag = json[this.id];
-            let el:Node = (tag == '#text'? document.createTextNode(tag) : document.createElement(tag));
+            let el:Node;
+            if (tag == '#text'){
+                el = document.createTextNode(tag);
+            } else { 
+                el = document.createElement(tag);
+            }
             return el;
         }
         extend(o:any, json:any):void{
@@ -44,7 +47,13 @@ module wo{
                 debugger;
                 return;
             }
-            domextend(o, json);
+            if (o instanceof HTMLElement){
+                domextend(o, json);
+            }else if (json.$ && o instanceof Node){
+                o.nodeValue = json.$;
+            }else if (o.extend){
+                o.extend(json);
+            }
         }
     }
 

@@ -12,7 +12,11 @@
                 wo.destroy(el);
                 var d = wo.use({
                     tag:'div',
-                    $:'Dynamic created element'
+                    $:[
+                        {tag:'div', className:'cl1', $:{tag:"#text", $:"Text node value"}},
+                        {tag:'div', className:'cl2', onclick: function(event){alert('ok');}, $:"Dynamic created element" },
+                        {tag:'div', className:'cl3', $:{tag:'div', $:"2nd element"}}
+                    ]
                 });
                 console.log(d);
                 if (d){
