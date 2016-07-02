@@ -6,13 +6,18 @@
         "noImplicitAny": true,
         "module": "commonjs",
         "target": "es5",
+        "declarationFiles":true,
         "experimentalDecorators": true
     },
     "exclude": [
         "node_modules"
     ],
     "files": [
+        "./src/wo/foundation/definitions.ts",
         "./src/wo/foundation/device.ts",
-        "./src/wo/foundation/elements.ts"
+        "./src/wo/foundation/elements.ts",
+        "./src/wo/foundation/string.ts",
+        "./src/wo/builder/use.ts",
+        "./src/wo/wo.ts"
     ]
 }

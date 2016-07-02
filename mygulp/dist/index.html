@@ -7,20 +7,21 @@
         <script src="scripts/wo.js"></script>
         <script>
             function init(){
-                console.log(Browser.isChrome);
+                //console.log(Browser.isChrome);
                 var el = document.getElementById("target");
                 wo.destroy(el);
                 var d = wo.use({
                     tag:'div',
                     $:'Dynamic created element'
                 });
+                console.log(d);
                 if (d){
                     document.body.appendChild(d);
                 }
             }
         </script>
     </head>
-    <body onload="init();">
+    <body onload="init();" style="background:silver">
         <div class="bg">First Div</div>
         <div id="target">Second Div</div>
     </body>

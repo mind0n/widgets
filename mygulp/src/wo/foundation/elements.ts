@@ -11,13 +11,12 @@ Element.prototype.astyle = function actualStyle(props:string[]) {
 	}
 	return null;
 };
-
 module wo{
 	class Destroyer{
 		disposing:boolean;
 		destroying:boolean;
 		static container:HTMLElement = document.createElement("div");
-		static destroy(target:HTMLElement){
+		static destroy(target:Element){
 			if (!target.destroyStatus){
 				target.destroyStatus = new Destroyer();
 			}
@@ -44,8 +43,8 @@ module wo{
 		}
 	}
 
-	export function destroy(target:HTMLElement):void{
+	export function destroy(target:Element):void{
 		Destroyer.destroy(target);
 	}
-}
 
+}

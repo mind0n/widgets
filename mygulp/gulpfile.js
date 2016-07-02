@@ -5,17 +5,21 @@ var ts      =   require("gulp-typescript");
 var minify  =   require("gulp-minify");
 var map     =   require("gulp-sourcemaps");
 var web     =   require("gulp-webserver");
-var bnd     =   require("gulp-concat");   
+var bnd     =   require("gulp-concat");
+var nocmt   =   require("gulp-strip-comments");
 
 var tsproj = ts.createProject("tsconfig.json");
-
 function buildev(){
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
         .pipe(mcss({compatibility:"ie8"}))
         .pipe(gulp.dest("./dist/themes"));
 
-    var tsResult = tsproj.src().pipe(map.init()).pipe(ts(tsproj));
+    var tsResult = tsproj.src()
+        .pipe(nocmt())
+        .pipe(map.init())
+        .pipe(ts(tsproj));
+
     tsResult.js
         .pipe(bnd("wo.js"))
         .pipe(map.write())
@@ -28,7 +32,10 @@ function buildtest(){
         .pipe(mcss({compatibility:"ie8"}))
         .pipe(gulp.dest("./dist/themes"));
 
-    var tsResult = tsproj.src().pipe(ts(tsproj));
+    var tsResult = tsproj.src()
+        .pipe(nocmt())
+        .pipe(ts(tsproj));
+
     tsResult.js
         .pipe(bnd("wo.js"))
         .pipe(minify({ext:{src:".js", min:"-min.js"}, ignoreFiles:["-min.js"], exclude:["tasks"]}))

@@ -1,4 +1,6 @@
 module wo{
+
+    /// Contains creator instance object
     export let Creators:Creator[] = [];
 
     class Cursor{
@@ -7,7 +9,7 @@ module wo{
         root:any;
     }
 
-    abstract class Creator{
+    export abstract class Creator{
         id:string;
         get Id():string{
             return this.id;
@@ -24,7 +26,7 @@ module wo{
         protected abstract extend(o:any, json:any):void;
     }
 
-    class DomCreator extends Creator{
+    export class DomCreator extends Creator{
         constructor(){
             super();
             this.id = "tag";

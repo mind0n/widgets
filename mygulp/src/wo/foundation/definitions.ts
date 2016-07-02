@@ -16,13 +16,18 @@ interface Document{
 interface Element{
 	[name:string]:any;
 	astyle(styles:string[]):string;
-}
-
-interface HTMLElement{
 	destroyStatus:any;
 	dispose():any;
 }
 
 interface String{
 	startsWith(str:string):boolean;
+}
+
+interface Array<T>{
+	add(item:T):void;
+}
+
+Array.prototype.add = function (item:any) {
+	this[this.length] = item;
 }
