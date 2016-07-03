@@ -4,7 +4,7 @@
         "outDir": "./dist",
         "sourceMap": true,
         "noImplicitAny": true,
-        "rootDir": "./src",
+        //"rootDir": "./src",
         "module": "commonjs",
         "target": "es5",
         "declarationFiles":true,
@@ -12,5 +12,15 @@
     },
     "exclude": [
         "node_modules"
+    ],
+    "files": [
+        "./src/wo/foundation/definitions.ts",
+        "./src/wo/foundation/device.ts",
+        "./src/wo/foundation/elements.ts",
+        "./src/wo/foundation/string.ts",
+        "./src/wo/builder/use.ts",
+        "./src/wo/builder/domcreator.ts",
+        "./src/wo/builder/svgcreator.ts",
+        "./src/wo/wo.ts"
     ]
 }

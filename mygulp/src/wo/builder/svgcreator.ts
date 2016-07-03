@@ -1,10 +1,10 @@
 /// <reference path="./use.ts" />
 
 module wo{
-    export class DomCreator extends Creator{
+    export class SvgCreator extends Creator{
         constructor(){
             super();
-            this.id = "tag";
+            this.id = "sg";
         }
         create(json:any):Node{
             if (json == null){
@@ -12,10 +12,10 @@ module wo{
             }
             let tag = json[this.id];
             let el:Node;
-            if (tag == '#text'){
-                el = document.createTextNode(tag);
-            } else { 
-                el = document.createElement(tag);
+            if (tag == "svg"){
+                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+            }else{
+                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
             }
             return el;
         }
@@ -24,8 +24,8 @@ module wo{
                 debugger;
                 return;
             }
-            if (o instanceof HTMLElement){
-                domextend(o, json);
+            if (o instanceof SVGElement){
+                svgextend(o, json);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;
             }else if (o.extend){
@@ -34,7 +34,7 @@ module wo{
         }
     }
 
-    function domextend(el:HTMLElement, json:any){
+    function svgextend(el:HTMLElement, json:any){
         for(let i in json){
             if (i.startsWith("$$")){
                 let target = el[i];
@@ -42,7 +42,7 @@ module wo{
                 if (type == 'object'){
                     let vtype = typeof json[i];
                     if (vtype == 'object'){
-                        domextend(target, json[i]);
+                        svgextend(target, json[i]);
                     }else{
                         el[i] = json[i];
                     }
@@ -71,12 +71,7 @@ module wo{
             }else if (i.startsWith("$")){
                 el[i] = json[i];
             }else{
-                var type = typeof json[i];
-                if (type == "function"){
-                    el[i] = json[i];
-                }else{
-                    el.setAttribute(i, json[i]);
-                }
+                el.setAttributeNS(null, i, json[i]);
             }
         }
     }

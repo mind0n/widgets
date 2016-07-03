@@ -4,23 +4,51 @@
         <meta charset="UTF-8" />
         <title>Hello React!</title>
         <link rel="stylesheet" href="/themes/wo/wo.css" />
+        <style>
+            #svg{
+                width:400px;
+                height:400px;
+                border:solid 2px blue;
+            }
+            #svg svg{
+                width:100%;
+                height:100%;
+                background:lightblue;
+            }
+        </style>
         <script src="scripts/wo.js"></script>
         <script>
             function init(){
-                //console.log(Browser.isChrome);
                 var el = document.getElementById("target");
                 wo.destroy(el);
                 var d = wo.use({
                     tag:'div',
                     $:[
-                        {tag:'div', className:'cl1', $:{tag:"#text", $:"Text node value"}},
-                        {tag:'div', className:'cl2', onclick: function(event){alert('ok');}, $:"Dynamic created element" },
-                        {tag:'div', className:'cl3', $:{tag:'div', $:"2nd element"}}
+                        {tag:'div', class:'cl1', $:{tag:"#text", $:"Text node value"}},
+                        {tag:'div', $$test:"success", class:'cl2', onclick: function(event){alert('ok');}, $:"Dynamic created element" },
+                        {tag:'div', class:'cl3', $:{tag:'div', $:"2nd element"}}
                     ]
                 });
                 console.log(d);
                 if (d){
                     document.body.appendChild(d);
+                }
+                var sc = document.getElementById("svg");
+                var sj = {
+                    sg:"svg",
+                    $$test: "pass",
+                    $:[
+                        {sg:"circle", cx:"100", cy:"100", r:"20"},
+                        {sg:"g", stroke:"green", fill:"yellow", "stroke-width":"5", $:[
+                            {sg:"circle", cx:"100", cy:"200", r:"20"},
+                            {sg:"circle", cx:"200", cy:"100", r:"20"},
+                            {sg:"text", x:"40", y:"40", "font-family":"verdana", "font-size":"24", $:"This is text"}
+                        ]}
+                    ]
+                }
+                var s = wo.use(sj);
+                if (s){
+                    sc.appendChild(s);
                 }
             }
         </script>
@@ -28,5 +56,6 @@
     <body onload="init();" style="background:silver">
         <div class="bg">First Div</div>
         <div id="target">Second Div</div>
+        <div id="svg"></div>
     </body>
 </html>
