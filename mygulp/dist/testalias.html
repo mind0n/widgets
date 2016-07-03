@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello React!</title>
+        <link rel="stylesheet" href="/themes/wo/wo.css" />
+        <style>
+            #svg{
+                width:400px;
+                height:400px;
+                border:solid 2px blue;
+            }
+            #svg svg{
+                width:100%;
+                height:100%;
+                background:lightblue;
+            }
+        </style>
+        <script src="scripts/wo.js"></script>
+        <script>
+            function init(){
+                var el = document.getElementById("target");
+                wo.destroy(el);
+                var d = wo.use({
+                    tag:'div',
+                    $:[
+                        {tag:'div', class:'cl1', $:{tag:"#text", alias:"txt", $:"Text node value"}},
+                        {tag:'div', $$test:"success", class:'cl2', onclick: function(event){alert('ok');}, $:"Dynamic created element" },
+                        {tag:'div', class:'cl3', $:{tag:'div', $:"2nd element"}}
+                    ]
+                });
+                if (d){
+                    document.body.appendChild(d);
+                }
+                var sc = document.getElementById("svg");
+                var sj = {
+                    sg:"svg",
+                    $$test: "pass",
+                    $:[
+                        {sg:"circle", cx:"100", cy:"100", r:"20"},
+                        {sg:"g", alias:"$grp", stroke:"green", fill:"yellow", "stroke-width":"5", $:[
+                            {sg:"circle", cx:"100", cy:"200", r:"20"},
+                            {sg:"circle", alias:"cl", cx:"200", cy:"100", r:"20"},
+                            {sg:"text", x:"40", y:"40", "font-family":"verdana", "font-size":"24", $:"This is text"}
+                        ]}
+                    ]
+                }
+                var s = wo.use(sj);
+                if (s){
+                    sc.appendChild(s);
+                }
+                console.log(d.$txt, s.$grp.$cl);
+                document.getElementById("cn").onclick = function(event){
+                    wo.destroy(d);
+                    wo.destroy(s);
+                }
+            }
+        </script>
+    </head>
+    <body onload="init();" style="background:silver">
+        <div class="bg">First Div</div>
+        <div id="target">Second Div</div>
+        <div id="svg"></div>
+        <button id="cn">Cleanup</button>
+    </body>
+</html>
