@@ -11,6 +11,7 @@ Element.prototype.astyle = function actualStyle(props:string[]) {
 	}
 	return null;
 };
+
 module wo{
 	class Destroyer{
 		disposing:boolean;

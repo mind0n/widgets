@@ -1,3 +1,4 @@
+/// <reference path="../foundation/definitions.ts" />
 /// <reference path="./use.ts" />
 
 module wo{
@@ -35,6 +36,7 @@ module wo{
     }
 
     function svgextend(el:HTMLElement, json:any){
+        let cs = el.cursor;
         for(let i in json){
             if (i.startsWith("$$")){
                 let target = el[i];
@@ -53,13 +55,13 @@ module wo{
                 let type = typeof json[i];
                 if (json[i] instanceof Array){
                     for(let j of json[i]){
-                        let child = use(j);
+                        let child = use(j, cs);
                         if (child != null){
                             el.appendChild(child);
                         }
                     }
                 }else if (type == 'object'){
-                    let child = use(json[i]);
+                    let child = use(json[i], cs);
                     if (child != null){
                         el.appendChild(child);
                     }else{

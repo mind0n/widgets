@@ -20,6 +20,10 @@ interface Element{
 	dispose():any;
 }
 
+interface Node{
+	cursor:any;
+}
+
 interface String{
 	startsWith(str:string):boolean;
 }
