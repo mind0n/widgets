@@ -57,6 +57,14 @@ module wo{
         protected abstract extend(o:any, json:any):void;
     }
 
+    export function append(el:any, child:any){
+        if (el.append && typeof(el.append) == 'function'){
+            el.append(child);
+        }else{
+            el.appendChild(child);
+        }
+    }
+
     export function use(json:any, cs?:Cursor):any{
         for(var i of Creators){
             if (json[i.Id]){
@@ -65,4 +73,15 @@ module wo{
         }
         return null;
     }
+
+    export function objextend(o:any, json:any){
+        for(let i in json){
+            if (o[i] && typeof(o[i]) == 'object'){
+                objextend(o[i], json[i]);
+            }else{
+                o[i] = json[i];
+            }
+        }
+    }
+
 }

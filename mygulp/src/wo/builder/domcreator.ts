@@ -35,8 +35,7 @@ module wo{
             }
         }
     }
-
-    function domextend(el:HTMLElement, json:any){
+    export function domextend(el:any, json:any){
         let cs = el.cursor;
         for(let i in json){
             if (i.startsWith("$$")){
@@ -58,13 +57,15 @@ module wo{
                     for(let j of json[i]){
                         let child = use(j, cs);
                         if (child != null){
-                            el.appendChild(child);
+                            append(el, child);
+                            //el.appendChild(child);
                         }
                     }
                 }else if (type == 'object'){
                     let child = use(json[i], cs);
                     if (child != null){
-                        el.appendChild(child);
+                        //el.appendChild(child);
+                        append(el, child);
                     }else{
                         debugger;
                     }
@@ -78,7 +79,11 @@ module wo{
                 if (type == "function"){
                     el[i] = json[i];
                 }else{
-                    el.setAttribute(i, json[i]);
+                    if (el[i] && typeof(el[i]) == 'object'){
+                        objextend(el[i], json[i]);
+                    }else{
+                        el.setAttribute(i, json[i]);
+                    }
                 }
             }
         }

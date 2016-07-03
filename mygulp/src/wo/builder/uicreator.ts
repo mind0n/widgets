@@ -1,23 +1,26 @@
 /// <reference path="../foundation/definitions.ts" />
 /// <reference path="./use.ts" />
+/// <reference path="./domcreator.ts" />
 
 module wo{
-    export class SvgCreator extends Creator{
+    export let Widgets:any = {};
+
+    export class UiCreator extends Creator{
         constructor(){
             super();
-            this.id = "sg";
+            this.id = "ui";
         }
         create(json:any):Node{
             if (json == null){
                 return null;
             }
-            let tag = json[this.id];
-            let el:Node;
-            if (tag == "svg"){
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
-            }else{
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+            
+            let wg = json[this.id];
+            if (!Widgets[wg]){
+                return null;
             }
+
+            let el:Node = use(wg);
             return el;
         }
         extend(o:any, json:any):void{
@@ -25,8 +28,9 @@ module wo{
                 debugger;
                 return;
             }
-            if (o instanceof SVGElement){
-                svgextend(o, json);
+
+            if (o instanceof HTMLElement){
+                domapply(o, json);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;
             }else if (o.extend){
@@ -35,7 +39,7 @@ module wo{
         }
     }
 
-    function svgextend(el:HTMLElement, json:any){
+    export function domapply(el:any, json:any){
         let cs = el.cursor;
         for(let i in json){
             if (i.startsWith("$$")){
@@ -44,7 +48,7 @@ module wo{
                 if (type == 'object'){
                     let vtype = typeof json[i];
                     if (vtype == 'object'){
-                        svgextend(target, json[i]);
+                        domapply(target, json[i]);
                     }else{
                         el[i] = json[i];
                     }
@@ -53,25 +57,29 @@ module wo{
                 }
             }else if (i == "$"){
                 let type = typeof json[i];
-                if (json[i] instanceof Array){
-                    for(let j of json[i]){
-                        let child = use(j, cs);
-                        if (child != null){
-                            append(el, child);
-                            //el.appendChild(child);
+                let ji = json[i];
+                
+                if (type == 'object'){
+                    ji = [ji];
+                }
+                
+                if (ji instanceof Array){
+                    let nodes = el.childNodes;
+                    for(let j = 0; j<ji.length; j++){
+                        let item = json[j];
+                        if (j < nodes.length){
+                            domapply(nodes[j], item);
+                        }else{
+                            let child = use(item, cs);
+                            if (child != null){
+                                append(el, child);
+                            }
                         }
-                    }
-                }else if (type == 'object'){
-                    let child = use(json[i], cs);
-                    if (child != null){
-                        append(el, child);
-                        //el.appendChild(child);
-                    }else{
-                        debugger;
                     }
                 }else{
                     el.innerHTML = json[i];
                 }
+
             }else if (i.startsWith("$")){
                 el[i] = json[i];
             }else{
@@ -82,11 +90,10 @@ module wo{
                     if (el[i] && typeof(el[i]) == 'object'){
                         objextend(el[i], json[i]);
                     }else{
-                        el.setAttributeNS(null, i, json[i]);
+                        el.setAttribute(i, json[i]);
                     }
                 }
             }
         }
     }
-
 }
