@@ -51,6 +51,9 @@ module wo{
 
             delete json[this.Id];
             this.extend(o, json);
+            if (json.made){
+                json.made.call(o);
+            }
             return o;
         }
         protected abstract create(json:any):any;

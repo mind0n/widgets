@@ -1,3 +1,4 @@
+/// <reference path="../../foundation/elements.ts" />
 /// <reference path="../../builder/uicreator.ts" />
 
 module wo{
@@ -9,6 +10,13 @@ module wo{
             this.style.display = '';
         },hide:function():void{
             this.style.display = 'none';
+        },made: function(){
+            let cv = (document.body as any).$gcv$;
+            if (cv){
+                wo.destroy(cv);
+            }
+            document.body.appendChild(this);
+            (document.body as any).$gcv$ = this;
         }
     }
 }

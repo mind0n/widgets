@@ -14,13 +14,12 @@ module wo{
             if (json == null){
                 return null;
             }
-            
             let wg = json[this.id];
             if (!Widgets[wg]){
                 return null;
             }
 
-            let el:Node = use(wg);
+            let el:Node = use(Widgets[wg]);
             return el;
         }
         extend(o:any, json:any):void{

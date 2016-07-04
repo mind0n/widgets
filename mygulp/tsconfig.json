@@ -22,7 +22,7 @@
         "./src/wo/builder/domcreator.ts",
         "./src/wo/builder/svgcreator.ts",
         "./src/wo/builder/uicreator.ts",
-        "./src/wo/widgets/cover/cover.ts",
-        "./src/wo/wo.ts"
+        "./src/wo/wo.ts",
+        "./src/wo/widgets/cover/cover.ts"
     ]
 }
