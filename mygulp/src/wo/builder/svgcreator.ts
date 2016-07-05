@@ -1,7 +1,7 @@
 /// <reference path="../foundation/definitions.ts" />
 /// <reference path="./use.ts" />
 
-module wo{
+namespace wo{
     export class SvgCreator extends Creator{
         constructor(){
             super();
@@ -35,7 +35,7 @@ module wo{
         }
     }
 
-    function svgextend(el:HTMLElement, json:any){
+    function svgextend(el:any, json:any){
         let cs = el.cursor;
         for(let i in json){
             if (i.startsWith("$$")){

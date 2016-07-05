@@ -2,7 +2,7 @@
 /// <reference path="./use.ts" />
 /// <reference path="./domcreator.ts" />
 
-module wo{
+namespace wo{
     export let Widgets:any = {};
 
     export class UiCreator extends Creator{

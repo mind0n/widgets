@@ -1,7 +1,7 @@
 /// <reference path="../../foundation/elements.ts" />
 /// <reference path="../../builder/uicreator.ts" />
 
-module wo{
+namespace wo{
     Widgets.cover = {
         tag:"div",
         class:"cover",

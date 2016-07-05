@@ -12,7 +12,7 @@ Element.prototype.astyle = function actualStyle(props:string[]) {
 	return null;
 };
 
-module wo{
+namespace wo{
 	class Destroyer{
 		disposing:boolean;
 		destroying:boolean;
@@ -44,8 +44,13 @@ module wo{
 		}
 	}
 
-	export function destroy(target:Element):void{
-		Destroyer.destroy(target);
+	export function destroy(target:any):void{
+		if (target.length > 0 || target instanceof Array){
+			for(let i of target){
+				Destroyer.destroy(i);
+			}
+		} else if (target instanceof Element){
+				Destroyer.destroy(target);
+		}
 	}
-
 }

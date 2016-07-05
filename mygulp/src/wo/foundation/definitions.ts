@@ -1,4 +1,3 @@
-/// Device.ts
 interface Window{
 	opr:any;
 	opera:any;
@@ -35,3 +34,4 @@ interface Array<T>{
 Array.prototype.add = function (item:any) {
 	this[this.length] = item;
 }
+

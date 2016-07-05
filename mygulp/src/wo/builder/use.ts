@@ -1,8 +1,20 @@
 /// <reference path="../foundation/string.ts" />
 
-module wo{
+namespace wo{
     /// Contains creator instance object
     export let Creators:Creator[] = [];
+
+    export function get(selector:any):any{
+        let rlt:any = [];
+        if (selector){
+            try{
+                rlt = document.querySelectorAll(selector);
+            }catch(e){
+                console.log(e);
+            }
+        }
+        return rlt;
+    }
 
     export class Cursor{
         parent:any;

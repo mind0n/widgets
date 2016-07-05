@@ -1,7 +1,7 @@
 /// <reference path="../foundation/definitions.ts" />
 /// <reference path="./use.ts" />
 
-module wo{
+namespace wo{
     export class DomCreator extends Creator{
         constructor(){
             super();
