@@ -8,7 +8,7 @@
             #svg{
                 width:400px;
                 height:400px;
-                border:solid 2px blue;
+                border:solid 1px silver;
             }
             #svg svg{
                 width:100%;
@@ -21,12 +21,11 @@
             function init(){
                 var d = wo.use({
                     ui:'cover',
-                    $$test:"success"
+                    $$touchclose:true
                 });
                 d.show();
                 var list = wo.get("#cn");
                 console.dir(list);
-                debugger;
                 wo.destroy(list);
             }
         </script>

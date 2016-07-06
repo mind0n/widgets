@@ -17,6 +17,10 @@ namespace wo{
             }
             document.body.appendChild(this);
             (document.body as any).$gcv$ = this;
+        },onclick:function(event:any){
+            if (this.$$touchclose){
+                this.hide();
+            }
         }
     }
 }
