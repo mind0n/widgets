@@ -5,53 +5,31 @@
 @import "widgets/_themes.scss";
 @import "widgets/cover/_cover.scss";
 
-#{$root} {
-    button{
-        padding:0em 1em;
-        border-radius: .2em;
-        font-size: .8em;
-        font-weight: 600;
-        line-height: 2em;
-    }
-    button.large{
-        padding:0em 2em;
-        line-height: 3em;
-    }
-    @media (#{$phone-l}){
-        button{
-            width:100%;
-        }
+@mixin cols($num){
+    @for $i from 1 through $num{
+        #{$root} {
+            @media(#{$phone-p}){
+                .row .col-phone-p-#{$i}{
+                    width: $i / $num * 100%;
+                    padding:.5em;
+                    float:left;
+                }
+            }
+            @media(#{$phone-l}){
+                .row .col-phone-l-#{$i}{
+                    width: $i / $num * 100%;
+                    padding:.5em;
+                    float:left;
+                }
+            }
+        }        
     }
 }
+
+#{$root} {
+
+}
+
 #{$root}.basic, #{$root} .basic {
-    button{
-        color:#555;
-        border:solid 1px silver;
-    }
 
-    button.disabled, button.primary.disabled, button.disabled:hover, button.primary.disabled:active{
-        color:#bbb;
-        border:solid 1px #bbb;
-        background: none;
-    }
-
-    button.primary{
-        color:white;
-        border:solid 1px #ff8875;
-        background: linear-gradient(to bottom, #FEB118, #FF7517);
-    }
-
-    button.primary:hover, button.primary:active{
-        border:solid 1px #ff8875;
-        background: linear-gradient(to bottom, #cc7517, #FF7517);
-    }
-    button:hover{
-        border:solid 1px #aaa;
-        background-color: rgba(228, 228, 228, 255);
-    }    
-    
-    button:active{
-        border:solid 1px #999;
-        background-color: rgba(208, 208, 208, 255);
-    }
 }
