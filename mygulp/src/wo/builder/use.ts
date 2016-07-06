@@ -4,7 +4,7 @@ namespace wo{
     /// Contains creator instance object
     export let Creators:Creator[] = [];
 
-    export function get(selector:any):any{
+    function get(selector:any):any{
         let rlt:any = [];
         if (selector){
             try{
@@ -81,12 +81,29 @@ namespace wo{
     }
 
     export function use(json:any, cs?:Cursor):any{
+        let rlt:any = null;
+        if (!json){
+            return rlt;
+        }
+        let container:any = null;
+        if (json.$container$){
+            container = json.$container$;
+            delete json.$container$;
+        }
+        if (typeof (json) == 'string'){
+            rlt = get(json);
+        }
+
         for(var i of Creators){
             if (json[i.Id]){
-                return i.Create(json, cs);
+                rlt = i.Create(json, cs);
+                break;
             }
         }
-        return null;
+        if (container){
+            container.appendChild(rlt);
+        }
+        return rlt;
     }
 
     export function objextend(o:any, json:any){
