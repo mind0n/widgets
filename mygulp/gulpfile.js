@@ -10,23 +10,28 @@ var nocmt   =   require("gulp-strip-comments");
 
 var tsproj = ts.createProject("tsconfig.json");
 function buildev(){
+    gulp.src(["./node_modules/jquery/dist/jquery.js"])
+        .pipe(gulp.dest("./dist/scripts"))
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
         .pipe(mcss())
         .pipe(gulp.dest("./dist/themes"));
 
     var tsResult = tsproj.src()
-        .pipe(nocmt())
         .pipe(map.init())
         .pipe(ts(tsproj));
 
     tsResult.js
         .pipe(bnd("wo.js"))
+        .pipe(nocmt())
         .pipe(map.write())
         .pipe(gulp.dest("./dist/scripts"));    
 }
 
 function buildtest(){
+    gulp.src(["./node_modules/jquery/dist/jquery.js"])
+        .pipe(minify({ext:{src:".js", min:"-min.js"}, ignoreFiles:["-min.js"], exclude:["tasks"]}))
+        .pipe(gulp.dest("./dist/scripts"))
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
         .pipe(mcss({compatibility:"ie8"}))
