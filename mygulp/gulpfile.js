@@ -12,7 +12,7 @@ var tsproj = ts.createProject("tsconfig.json");
 function buildev(){
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
-        //.pipe(mcss())
+        .pipe(mcss())
         .pipe(gulp.dest("./dist/themes"));
 
     var tsResult = tsproj.src()

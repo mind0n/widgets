@@ -22,6 +22,9 @@
 
     button.primary:hover, button.primary:active{
         border:solid 1px #ff8875;
+        background: linear-gradient(to bottom, #FF7517, #FEB118);
+    }
+    button.primary:active{
         background: linear-gradient(to bottom, #cc7517, #FF7517);
     }
     button:hover{
