@@ -504,7 +504,11 @@ body {
 .wo .card .title .ctrls {
   position: absolute;
   right: 4px;
-  top: 4px; }
+  top: 4px;
+  display: none; }
+
+.wo .card.form .title .ctrls {
+  display: initial; }
 
 .wo .card .title .ctrls .wbtn {
   font: 12px arial;

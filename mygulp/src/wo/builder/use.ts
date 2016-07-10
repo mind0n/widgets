@@ -66,6 +66,8 @@ namespace wo{
             if (json.made){
                 json.made.call(o);
             }
+            o.$root = cs.root;
+            o.$border = cs.border;
             return o;
         }
         protected abstract create(json:any):any;

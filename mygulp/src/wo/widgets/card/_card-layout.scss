@@ -18,6 +18,10 @@
         position: absolute;
         right:4px;
         top:4px;
+        display:none;
+    }
+    .card.form .title .ctrls{
+        display:initial;
     }
     .card .title .ctrls .wbtn{
         font:12px arial;

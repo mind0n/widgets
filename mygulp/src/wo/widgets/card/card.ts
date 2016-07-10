@@ -14,7 +14,7 @@ namespace wo{
             {tag:"div", class:"title", $:[
                 {tag:"div", class:"txt", alias:"title"},
                 {tag:"div", class:"ctrls", $:[
-                    {tag:"div", class:"wbtn", $:"X"}
+                    {tag:"div", class:"wbtn", onclick: function(event:any){wo.destroy(this.$border);}, $:"X"}
                 ]}
             ]},
             {tag:"div", class:"body", alias:"body"}
