@@ -1,41 +1,21 @@
 // wo style entry point
 @import "foundation/_reset.scss";
 @import "foundation/_definitions.scss";
+@import "foundation/_layout.scss";
 @import "widgets/_widgets.scss";
+
+@import "widgets/buttons/_btn-layout.scss";
+@import "widgets/cover/_cover-layout.scss";
+@import "widgets/card/_card-layout.scss";
 @import "widgets/_themes.scss";
-@import "widgets/cover/_cover.scss";
 
-@mixin col($name, $i, $num){
-    @media(#{$name}){
-        .row .col-#{$name}-#{$i}{
-            width: $i / $num * 100%;
-            padding:.5em;
-            float:left;
-        }
-    }
-}
-
-@mixin cols($num){
-    @for $i from 1 through $num{
-        #{$root} {
-            @include col("phone-p", $i, $num);
-            @include col("phone-l", $i, $num);
-            @include col("tablet-p", $i, $num);
-            @include col("tablet-l", $i, $num);
-            @include col("desktop", $i, $num);
-            @include col("desktop-lg", $i, $num);
-        }        
-    }
-}
-
-@include cols(12);
 
 #{$root} {
 
 }
 
 #{$root}.basic, #{$root} .basic {
-
+    
 }
 
 

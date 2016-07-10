@@ -1,39 +1,59 @@
-.temp{
-    color:initial;
-}
+.sass-issue{cursor:default;}
+
 
 #{$root}.basic, #{$root} .basic {
-    button{
-        color:#555;
-        border:solid 1px silver;
+    .wbtn, button{
+        color:$cl-default;
+        border:$bd-default;
+        background-color:$bg-default;
     }
 
-    button.disabled, button.primary.disabled, button.disabled:hover, button.primary.disabled:active{
-        color:#bbb;
-        border:solid 1px #bbb;
-        background: none;
-    }
-
-    button.primary{
-        color:white;
-        border:solid 1px #ff8875;
-        background: linear-gradient(to bottom, #FEB118, #FF7517);
-    }
-
-    button.primary:hover, button.primary:active{
-        border:solid 1px #ff8875;
-        background: linear-gradient(to bottom, #FF7517, #FEB118);
-    }
-    button.primary:active{
-        background: linear-gradient(to bottom, #cc7517, #FF7517);
-    }
-    button:hover{
-        border:solid 1px #aaa;
-        background-color: rgba(228, 228, 228, 255);
+    .wbtn:hover, button:hover{
+        border:$bd-hover;
+        background-color: $bg-hover;
     }    
     
-    button:active{
-        border:solid 1px #999;
-        background-color: rgba(208, 208, 208, 255);
+    .wbtn:active, button:active{
+        border:$bd-hover;
+        background-color: $bg-active;
+    }
+
+   button.primary{
+        color:$cl-primary;
+        border:$bd-primary;
+        background: $bg-primary;
+    }
+
+    button.primary:hover{
+        border:$bd-primary-hover;
+        background: $bg-primary;
+    }
+    button.primary:active{
+        background: $bg-primary-hover;
+    }
+
+    .wbtn.disabled, button.disabled, button.primary.disabled, button.disabled:hover, button.primary.disabled:active{
+        color:$cl-disable;
+        border:$bd-disable;
+        background: $bg-default;
+    }
+
+    .card{
+        border:$bd-default;
+    }
+    .card .title{
+        background:$bg-default;
+        border-bottom:$bd-default;
+    }
+    .card.pure .title{
+        background:none;
+        border-bottom:$bd-default;
+    }
+    .card.basic .title{
+        background:none;
+        border-bottom:none;
+    }
+    .card .title .ctrls .wbtn{
+        color:$cl-disable;
     }
 }

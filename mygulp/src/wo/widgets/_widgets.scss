@@ -1,23 +1,5 @@
-.temp{
-    color:initial;
-}
+.sass-issue{cursor:default;}
+
 
 #{$root} {
-    button{
-        padding:0em 1em;
-        border-radius: .2em;
-        font-size: .8em;
-        font-weight: 600;
-        line-height: 2em;
-        cursor:default;
-    }
-    button.large{
-        padding:0em 2em;
-        line-height: 3em;
-    }
-    @media (#{$phone-p}){
-        button{
-            width:100%;
-        }
-    }
 }

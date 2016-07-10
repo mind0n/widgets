@@ -1,4 +1,5 @@
 $root:".wo";
+
 // Devices
 $phone-p:"max-width:480px";
 $phone-l:"max-width:768px";
@@ -11,3 +12,22 @@ $desktop-lg:"min-width:1280";
     width:100%;
 }
 
+$bradius:.2em;
+$weight-default:normal;
+$weight-title:600;
+
+$bg-primary:linear-gradient(to bottom, #FEB118, #FF7517);
+$bg-primary-hover:linear-gradient(to bottom, #FF7517, #FEB118);
+$bd-primary:solid 1px #ff8875;
+$bd-primary-hover:solid 1px #ff7517;
+$cl-primary:white;
+
+$bg-default:#eee;
+$bg-hover:rgba(238, 238, 238, 255);
+$bg-active:rgba(228, 228, 228, 255);
+$bd-default:solid 1px #ccc;
+$bd-hover:solid 1px #aaa;
+$cl-default:#555;
+
+$bd-disable:solid 1px #ddd;
+$cl-disable:#bbb;

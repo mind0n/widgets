@@ -1,0 +1,25 @@
+.sass-issue{cursor:default;}
+
+#{$root}{
+    .wbtn, button{
+        padding:0em 1em;
+        border-radius: $bradius;
+        font-size: .8em;
+        font-weight: $weight-title;
+        line-height: 2em;
+        cursor:pointer;
+        text-align: center;
+    }
+    .wbtn, button.large{
+        padding:0em 2em;
+        line-height: 3em;
+    }
+    .wbtn.disabled, button.disabled, button.primary.disabled, button.disabled:hover, button.primary.disabled:active{
+        cursor:default;
+    }
+    @media (#{$phone-p}){
+        .wbtn, button{
+            width:100%;
+        }
+    }
+}

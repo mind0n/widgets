@@ -14,7 +14,8 @@
         <script>
             $(function(){
                 var cd = wo.use({
-                    ui:"card"
+                    ui:"card",
+                    class:"card fill-x"
                 });
                 cd.setval({
                     title: "Card Title",
@@ -24,16 +25,23 @@
             });
         </script>
     </head>
-    <body class="wo" onload="init();">
-        <div id="container" class="row">
+    <body class="wo">
+        <div class="container-fluid basic">
+            <div class="row">
+                <div id="container" class="col-xs-12">
 
-        </div>
-        <div class="basic row">
-            <div class="col-xs-6">
-                <button class="primary large fill-x">Primary</button>
+                </div>
             </div>
-            <div class="col-xs-6">
-                <button class="large fill-x">Default</button>
+            <div class="basic row">
+                <div class="col-xs-4">
+                    <button class="primary large fill-x">Primary</button>
+                </div>
+                <div class="col-xs-4">
+                    <div class="wbtn large fill-x">Default</div>
+                </div>
+                <div class="col-xs-4">
+                    <button class="large disabled fill-x">Disabled</button>
+                </div>
             </div>
         </div>
     </body>

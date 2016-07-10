@@ -11,7 +11,12 @@ namespace wo{
             }            
         },
         $:[
-            {tag:"div", class:"title", alias:"title"},
+            {tag:"div", class:"title", $:[
+                {tag:"div", class:"txt", alias:"title"},
+                {tag:"div", class:"ctrls", $:[
+                    {tag:"div", class:"wbtn", $:"X"}
+                ]}
+            ]},
             {tag:"div", class:"body", alias:"body"}
         ]
     }
