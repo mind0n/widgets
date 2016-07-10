@@ -553,7 +553,8 @@ body {
   background: #eee; }
 
 .wo.basic .card, .wo .basic .card {
-  border: solid 1px #ccc; }
+  border: solid 1px #ccc;
+  background: white; }
 
 .wo.basic .card .title, .wo .basic .card .title {
   background: #eee;

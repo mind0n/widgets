@@ -53,4 +53,13 @@ namespace wo{
 				Destroyer.destroy(target);
 		}
 	}
+
+	export function centerScreen(target:any){
+		let rect = target.getBoundingClientRect();
+		target.style.position = "fixed";
+		target.style.left = "50%";
+		target.style.top = "50%";
+		target.style.marginTop = -rect.height / 2 + "px";
+		target.style.marginLeft = -rect.width / 2 + "px";
+	}
 }

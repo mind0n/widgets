@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Hello React!</title>
+        <title>Test Cover</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
         <link rel="stylesheet" href="/themes/wo/wo.css" />
         <link rel="stylesheet" href="/themes/lib/bootstrap.css" />
@@ -13,26 +13,49 @@
         <script src="scripts/wo.js"></script>
         <script>
             $(function(){
-                var cd = wo.use({
-                    ui:"card",
-                    class:"card"
+                var cv = wo.use({
+                    ui:'cover',
+                    $$touchclose:true,
+                    $:{
+                        ui:"card",
+                        class:"card",
+                        alias:"box",
+                        style:{width:"80%"},
+                        made:function(){
+                            this.setval({
+                                title: "Card Title",
+                                body:"Card Body Content"
+                            })
+                        }
+                    }
                 });
-                cd.setval({
-                    title: "Card Title",
-                    body:"Card Body Content"
-                })
-                $("#container").append(cd);
+                cv.show(function(el){
+                    wo.centerScreen(el.$box);
+                });
+
+                // var cd = wo.use({
+                //     ui:"card"
+                //     ,style:{width:"400px", height:"300px"}
+                //     ,made:function(){
+                //         this.setval({
+                //             title: "Card Title",
+                //             body:"Card Body Content"
+                //         });
+                //     }
+                // });
+                // $("#container").append(cd);
+                // wo.centerScreen(cd);
             });
         </script>
     </head>
-    <body class="wo">
+    <body class="wo basic">
         <div class="container-fluid basic">
             <div class="row">
                 <div id="container" class="col-xs-12">
 
                 </div>
             </div>
-            <div class="basic row">
+            <div class="row">
                 <div class="col-xs-4">
                     <button class="primary large fill-x">Primary</button>
                 </div>

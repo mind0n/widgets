@@ -66,6 +66,7 @@ gulp.task("dev", function(){
     buildev();
     gulp.src('./dist').pipe(web({
         fallback:"index.html",
+        host:"0.0.0.0",
         port:9999,
         livereload:true,
         directoryListing:false,

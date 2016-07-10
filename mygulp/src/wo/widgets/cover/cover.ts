@@ -6,9 +6,16 @@ namespace wo{
         tag:"div",
         class:"cover",
         style:{display:'none'},
-        show:function():void{
+        show:function(callback:any):void{
             this.style.display = '';
+            if (callback){
+                callback(this);
+            }
         },hide:function():void{
+            if (this.$child){
+                wo.destroy(this.$child);
+                delete this.$child;
+            }
             this.style.display = 'none';
         },made: function(){
             let cv = (document.body as any).$gcv$;
@@ -21,6 +28,9 @@ namespace wo{
             if (this.$$touchclose){
                 this.hide();
             }
+        },append:function(child:any){
+            this.$child = child;
+            document.body.appendChild(child);
         }
     }
 }

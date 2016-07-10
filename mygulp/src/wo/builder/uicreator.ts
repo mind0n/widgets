@@ -27,7 +27,6 @@ namespace wo{
                 debugger;
                 return;
             }
-
             if (o instanceof HTMLElement){
                 domapply(o, json);
             }else if (json.$ && o instanceof Node){
@@ -57,7 +56,6 @@ namespace wo{
             }else if (i == "$"){
                 let type = typeof json[i];
                 let ji = json[i];
-                
                 if (type == 'object'){
                     ji = [ji];
                 }
@@ -65,7 +63,7 @@ namespace wo{
                 if (ji instanceof Array){
                     let nodes = el.childNodes;
                     for(let j = 0; j<ji.length; j++){
-                        let item = json[j];
+                        let item = ji[j];
                         if (j < nodes.length){
                             domapply(nodes[j], item);
                         }else{
@@ -81,6 +79,8 @@ namespace wo{
 
             }else if (i.startsWith("$")){
                 el[i] = json[i];
+            }else if (i == "style"){
+                objextend(el[i], json[i]);
             }else{
                 var type = typeof json[i];
                 if (type == "function"){
