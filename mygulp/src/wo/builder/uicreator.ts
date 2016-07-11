@@ -19,7 +19,7 @@ namespace wo{
                 return null;
             }
 
-            let el:Node = use(Widgets[wg]);
+            let el:Node = use(Widgets[wg]());
             return el;
         }
         extend(o:any, json:any):void{

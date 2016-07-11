@@ -13,38 +13,19 @@
         <script src="scripts/wo.js"></script>
         <script>
             $(function(){
-                var cv = wo.use({
-                    ui:'cover',
-                    $$touchclose:true,
-                    $:{
+                $("#bpri").click(function(){
+                    wo.cover({
                         ui:"card",
-                        class:"card",
                         alias:"box",
-                        style:{width:"80%"},
+                        style:{width:"80%", display:"none"},
                         made:function(){
                             this.setval({
                                 title: "Card Title",
                                 body:"Card Body Content"
                             })
                         }
-                    }
+                    });
                 });
-                cv.show(function(el){
-                    wo.centerScreen(el.$box);
-                });
-
-                // var cd = wo.use({
-                //     ui:"card"
-                //     ,style:{width:"400px", height:"300px"}
-                //     ,made:function(){
-                //         this.setval({
-                //             title: "Card Title",
-                //             body:"Card Body Content"
-                //         });
-                //     }
-                // });
-                // $("#container").append(cd);
-                // wo.centerScreen(cd);
             });
         </script>
     </head>
@@ -57,7 +38,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="primary large fill-x">Primary</button>
+                    <button id="bpri" class="primary large fill-x">Primary</button>
                 </div>
                 <div class="col-xs-4">
                     <div class="wbtn large fill-x">Default</div>
