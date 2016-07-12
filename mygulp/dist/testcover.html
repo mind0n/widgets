@@ -14,22 +14,17 @@
         <script>
             $(function(){
                 $("#bpri").click(function(){
-                    var ld = wo.use({
-                        ui:"loading"
+                    wo.cover({
+                        ui:"card",
+                        alias:"box",
+                        style:{width:"80%", display:"none"},
+                        made:function(){
+                            this.setval({
+                                title: "Card Title",
+                                body:"Card Body Content"
+                            })
+                        }
                     });
-
-                    document.body.appendChild(ld);
-                    // wo.cover({
-                    //     ui:"card",
-                    //     alias:"box",
-                    //     style:{width:"80%", display:"none"},
-                    //     made:function(){
-                    //         this.setval({
-                    //             title: "Card Title",
-                    //             body:"Card Body Content"
-                    //         })
-                    //     }
-                    // });
                 });
             });
         </script>
