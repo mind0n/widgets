@@ -9,19 +9,19 @@ namespace wo{
             made: function(){
                 let p1 = wo.use({ui:"arc"});
                 p1.setAttributeNS(null, "class", "arc p1");
-                p1.update([32, 32], 16, 180);
+                p1.update([16, 48], 16, 270);
                 this.$sbox.appendChild(p1);                
 
                 let p2 = wo.use({ui:"arc"});
                 p2.setAttributeNS(null, "class", "arc p1");
-                p2.update([32, 32], 16, 180);
+                p2.update([16, 48], 16, 270);
                 this.$sbox.appendChild(p2);
 
                 //$element.velocity({ opacity: 1 }, { duration: 1000 });
                 p1.style.transformOrigin = "32px 32px";
-                p2.style.transformOrigin = "32px 32px";
+                p2.style.transformOrigin = "50% 50%";
 
-                let t1 = 1500, t2=1000;
+                let t1 = 2000, t2=1400;
                 ($(p1) as any).velocity({rotateZ:"-=360deg"}, {duration:t1, easing:"linear"});
                 this.$handle1 = window.setInterval(function() {
                     ($(p1) as any).velocity({rotateZ:"-=360deg"}, {duration:t1, easing:"linear"});
@@ -43,7 +43,7 @@ namespace wo{
             update:function(center:number[], radius:number, angle:number):void{
                 let pend = polarToCartesian(center[0], center[1], radius, angle);
                 let pstart = [center[0] + radius, center[1]];
-                let d = ["M" + pstart[0], pstart[1], "A" + radius, radius, "0 0 0", pend[0], pend[1]];
+                let d = ["M" + pstart[0], pstart[1], "A" + radius, radius, "0 1 0", pend[0], pend[1]];
                 this.setAttributeNS(null, "d", d.join(" "));
             }
         };

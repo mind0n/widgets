@@ -527,10 +527,11 @@ body {
   border-radius: 1em;
   width: 64px;
   height: 64px;
-  overflow: hidden; }
+  overflow: hidden;
+  background-color: #eee; }
   .wo.basic .loading .arc, .wo .basic .loading .arc {
     fill: none;
-    stroke: #999;
+    stroke: #000;
     stroke-width: 4;
     stroke-opacity: .5; }
 

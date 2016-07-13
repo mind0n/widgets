@@ -45,7 +45,7 @@ namespace wo{
             $:json
         });
         cv.show(function(el:any){
-            wo.centerScreen(el.$box);
+            wo.centerScreen(el.$box || el.$child);
         });
     }
 }
