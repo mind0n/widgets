@@ -10,7 +10,7 @@ var nocmt   =   require("gulp-strip-comments");
 var tsproj = ts.createProject("tsconfig.json");
 
 function buildev(){
-    gulp.src(["./node_modules/jquery/dist/jquery.js"])
+    gulp.src(["./node_modules/jquery/dist/jquery.js", "./src/lib/velocity.js"])
         .pipe(gulp.dest("./dist/scripts"))
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))

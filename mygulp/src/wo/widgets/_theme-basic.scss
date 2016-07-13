@@ -16,3 +16,19 @@ $cl-default:#555;
 
 $bd-disable:solid 1px #ddd;
 $cl-disable:#bbb;
+
+#{$root}.basic, #{$root} .basic{
+    .loading{
+        border:$bd-default;
+        border-radius: $bradius-large;
+        width:64px;
+        height:64px;
+        overflow: hidden;
+        .arc{
+            fill:none;
+            stroke:#999;
+            stroke-width: 4;
+            stroke-opacity: .5;
+        }
+    }
+}
