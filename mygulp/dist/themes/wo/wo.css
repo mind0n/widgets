@@ -489,9 +489,11 @@ body {
   cursor: default; }
 
 .wo .card {
+  position: relative;
   padding: 0px;
   border-radius: 0.2em;
   margin-bottom: 1em;
+  margin-top: 1em;
   min-height: 100px; }
 
 .wo .card .title, .wo .card .body {
@@ -518,6 +520,13 @@ body {
   padding: 0;
   width: 24px;
   height: 24px; }
+
+.wo .card.static .body {
+  position: absolute;
+  top: 33px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px; }
 
 .sass-issue {
   cursor: default; }

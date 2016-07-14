@@ -2,9 +2,11 @@
 
 #{$root}{
     .card{
+        position:relative;
         padding:0px;
         border-radius: $bradius;
         margin-bottom:1em;
+        margin-top:1em;
         min-height:100px;
     }
     .card .title, .card .body{
@@ -31,5 +33,12 @@
         padding:0;
         width:24px;
         height:24px;
+    }
+    .card.static .body{
+        position: absolute;
+        top: 33px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
     }
 }

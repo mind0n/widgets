@@ -13,11 +13,68 @@
         <script src="scripts/velocity.js"></script>
         <script src="scripts/wo.js"></script>
         <script>
+            var rawenable = false;
             $(function(){
+                var h = "600px";
+                var raw = wo.use({
+                    ui:"card",
+                    class:"card static",
+                    alias:"box",
+                    id:"rcc",
+                    style:{height:h, overflow:"hidden"},
+                    made:function(){
+                        this.$body.style.overflow = "auto";
+                        this.setval({
+                            title: "Raw Events",
+                            body:""
+                        })
+                    }
+                });
+                var psr = wo.use({
+                    ui:"card",
+                    alias:"box",
+                    id:"pcc",
+                    style:{height:h, overflow:"auto"},
+                    made:function(){
+                        this.setval({
+                            title: "Recognized Events",
+                            body:""
+                        })
+                    }
+                });
+                $("#rc").append(raw);
+                $("#pc").append(psr);
+
+                finger({
+                    onact:function(acts){
+                        if (rawenable){
+                            var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
+                            for(var i=0; i<acts.length; i++){
+                                var act = acts[i];
+                                el.innerHTML += act.act + "<br />";
+                            }
+                            $("#rcc")[0].setval({body:{mode:"prepend", target:el}});
+                        }
+                    }
+                });
                 $("#bpri").click(function(){
-                    wo.cover({
-                         ui:"loading"
-                    });
+                    rawenable = true;
+                    console.log("enable");
+                    // wo.cover({
+                    //     ui:"card",
+                    //     alias:"box",
+                    //     style:{width:"80%", display:"none"},
+                    //     made:function(){
+                    //         this.setval({
+                    //             title: "Card Title",
+                    //             body:"Card Body Content"
+                    //         })
+                    //     }
+                    // });
+                });
+                $("#bdsb").click(function(){
+                    rawenable = false;
+                    console.log("disable");
                 });
             });
         </script>
@@ -25,19 +82,22 @@
     <body class="wo basic">
         <div class="container-fluid basic">
             <div class="row">
-                <div id="container" class="col-xs-12">
-
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-xs-4">
                     <button id="bpri" class="primary large fill-x">Primary</button>
                 </div>
                 <div class="col-xs-4">
-                    <div class="wbtn large fill-x">Default</div>
+                    <div id="bdef" class="wbtn large fill-x">Default</div>
                 </div>
                 <div class="col-xs-4">
-                    <button class="large disabled fill-x">Disabled</button>
+                    <button id="bdsb" class="large disabled fill-x">Disabled</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="rc" class="col-xs-12 col-sm-6">
+
+                </div>
+                <div id="pc" class="col-xs-12 col-sm-6">
+
                 </div>
             </div>
         </div>
