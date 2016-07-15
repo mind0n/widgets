@@ -51,14 +51,20 @@ gulp.task("default", function(){
 
 gulp.task("test", function(){
     buildtest();
-    // gulp.src('./dist').pipe(web({
-    //     fallback:"index.html",
-    //     port:9999,
-    //     livereload:true,
-    //     directoryListing:false,
-    //     open:false
-    // }));
 });
+
+gulp.task("deploy", function(){
+    gulp.src(["./dist/scripts/*.*"])
+        .pipe(gulp.dest("../../widgetonline.github.io/scripts"));
+    gulp.src(["./dist/themes/lib/*.*"])
+        .pipe(gulp.dest("../../widgetonline.github.io/themes/lib"));
+    gulp.src(["./dist/themes/wo/*.*"])
+        .pipe(gulp.dest("../../widgetonline.github.io/themes/wo"));
+    gulp.src(["./dist/*.html"])
+        .pipe(gulp.dest("../../widgetonline.github.io"));
+});
+
+
 
 gulp.task("dev", function(){
     buildev();
