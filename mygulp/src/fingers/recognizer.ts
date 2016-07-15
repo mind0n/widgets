@@ -9,8 +9,6 @@ namespace fingers{
         time?:number
     }
 
-    Patterns.touched = new TouchedPattern();
-
     export class Recognizer{
         inqueue:any[] = [];
         outqueue:iact[] = [];
@@ -19,27 +17,41 @@ namespace fingers{
 
         constructor(cfg:any){
             let defpatterns = ["touched"];
+            
             if (!cfg){
                 cfg = {patterns:defpatterns};
             }
+
             if (!cfg.patterns){
                 cfg.patterns = defpatterns;
             }
+
             this.cfg = cfg;
             for(let i of cfg.patterns){
                 if (Patterns[i]){
                     this.patterns.add(Patterns[i]);
                 }
             }
+
         }
 
         parse(acts:iact[]):void{
-            this.inqueue.add(acts);
+            if (!this.cfg.qlen){
+                this.cfg.qlen = 12;
+            }
+
+            this.inqueue.splice(0, 0, acts);
+            if (this.inqueue.length > this.cfg.qlen){
+                this.inqueue.splice(this.inqueue.length - 1, 1);
+            }
             for(let pattern of this.patterns){
-                if (pattern.verify(acts, this.inqueue)){
-                    let rlt = pattern.recognize(this.inqueue);
+                if (pattern.verify(acts, this.inqueue, this.outqueue)){
+                    let rlt = pattern.recognize(this.inqueue, this.outqueue);
                     if (rlt){
-                        this.outqueue.add(rlt);
+                        this.outqueue.splice(0, 0, rlt);
+                        if (this.outqueue.length > this.cfg.qlen){
+                            this.outqueue.splice(this.outqueue.length - 1, 1);
+                        }
                         let q = this.inqueue;
                         this.inqueue = [];
                         q.clear();
@@ -50,6 +62,7 @@ namespace fingers{
                     }
                 }
             }
+
         }
     }
 }

@@ -12,10 +12,10 @@ namespace fingers{
             if (!cfg || !cfg.enabled){
                 return;
             }
-            if (cfg.onact){
-                cfg.onact(acts);
-            }
             rg.parse(acts);
+            if (cfg.onact){
+                cfg.onact(rg.inqueue);
+            }
         }
 
         if (!inited){
