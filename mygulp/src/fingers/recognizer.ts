@@ -44,6 +44,7 @@ namespace fingers{
             if (this.inqueue.length > this.cfg.qlen){
                 this.inqueue.splice(this.inqueue.length - 1, 1);
             }
+            
             for(let pattern of this.patterns){
                 if (pattern.verify(acts, this.inqueue, this.outqueue)){
                     let rlt = pattern.recognize(this.inqueue, this.outqueue);

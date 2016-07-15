@@ -39,6 +39,8 @@ Array.prototype.add = function (item:any) {
 Array.prototype.clear = function (keepalive?:boolean) {
 	let n = this.length;
 	for(let i = n - 1; i >= 0; i--){
-		delete this[i];
+		//delete this[i];
+		let tmp = this.pop();
+		tmp = null;
 	}
 }
