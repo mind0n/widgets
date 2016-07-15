@@ -30,6 +30,7 @@
                         })
                     }
                 });
+
                 var psr = wo.use({
                     ui:"card",
                     alias:"box",
@@ -42,10 +43,11 @@
                         })
                     }
                 });
+
                 $("#rc").append(raw);
                 $("#pc").append(psr);
 
-                finger({
+                var cfg = finger({
                     onact:function(acts){
                         if (rawenable){
                             var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
@@ -55,10 +57,16 @@
                             }
                             $("#rcc")[0].setval({body:{mode:"prepend", target:el}});
                         }
+                    },onrecognized:function(act){
+                        console.log("recognized");
+                        var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
+                        el.innerHTML = act.act;
+                        $("#pcc")[0].setval({body:{mode:"prepend", target:el}});
                     }
                 });
                 $("#bpri").click(function(){
                     rawenable = true;
+                    cfg.enabled = true;
                     console.log("enable");
                     // wo.cover({
                     //     ui:"card",
@@ -74,6 +82,7 @@
                 });
                 $("#bdsb").click(function(){
                     rawenable = false;
+                    cfg.enabled = false;
                     console.log("disable");
                 });
             });

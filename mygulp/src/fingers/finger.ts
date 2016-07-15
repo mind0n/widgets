@@ -1,23 +1,23 @@
+/// <reference path="recognizer.ts" />
+
 namespace fingers{
     let inited:boolean = false;
-    interface iact{
-        act:string,
-        cpos:number[],
-        rpos?:number[],
-        time?:number
-    }
-    function handle(cfg:any, acts:iact[]):void{
-        if (!cfg){
-            return;
-        }
-        if (cfg.onact){
-            cfg.onact(acts);
-        }
-    }
-    function createAct(name:string, x:number, y:number):iact{
-        return {act:name, cpos:[x, y], time:new Date().getTime()};
-    }
     export function finger(cfg:any):any{
+        let rg:Recognizer = new Recognizer(cfg);
+
+        function createAct(name:string, x:number, y:number):iact{
+            return {act:name, cpos:[x, y], time:new Date().getTime()};
+        }
+        function handle(cfg:any, acts:iact[]):void{
+            if (!cfg || !cfg.enabled){
+                return;
+            }
+            if (cfg.onact){
+                cfg.onact(acts);
+            }
+            rg.parse(acts);
+        }
+
         if (!inited){
             document.oncontextmenu = function(){
                 return false;
@@ -36,6 +36,7 @@ namespace fingers{
             }, true);
             inited = true;
         }
+        return cfg;
     }
 }
 

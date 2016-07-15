@@ -23,6 +23,7 @@
         "./src/wo/builder/domcreator.ts",
         "./src/wo/builder/svgcreator.ts",
         "./src/wo/builder/uicreator.ts",
+        "./src/fingers/patterns.ts",
         "./src/fingers/recognizer.ts",
         "./src/fingers/finger.ts",
         "./src/wo/wo.ts",

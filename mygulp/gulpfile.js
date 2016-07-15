@@ -68,7 +68,7 @@ gulp.task("dev", function(){
         port:9999,
         livereload:true,
         directoryListing:false,
-        open:true
+        open:false
     }));
 });
 
