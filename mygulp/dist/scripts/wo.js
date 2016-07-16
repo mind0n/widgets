@@ -877,9 +877,47 @@ var fingers;
     fingers.Recognizer = Recognizer;
 })(fingers || (fingers = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var fingers;
 (function (fingers) {
     var inited = false;
+    var zoomsim = (function () {
+        function zoomsim() {
+        }
+        zoomsim.prototype.create = function (act) {
+            var m = [document.documentElement.clientWidth / 2, document.documentElement.clientHeight / 2];
+            this.oppo = { act: act.act, cpos: [2 * m[0] - act.cpos[0], 2 * m[1] - act.cpos[1]], time: act.time };
+        };
+        zoomsim.prototype.start = function (act) {
+            this.create(act);
+            return [act, this.oppo];
+        };
+        zoomsim.prototype.zoom = function (act) {
+            this.create(act);
+            return [act, this.oppo];
+        };
+        zoomsim.prototype.end = function (act) {
+            this.create(act);
+            return [act, this.oppo];
+        };
+        return zoomsim;
+    }());
+    var offsetsim = (function (_super) {
+        __extends(offsetsim, _super);
+        function offsetsim() {
+            _super.apply(this, arguments);
+        }
+        offsetsim.prototype.create = function (act) {
+            this.oppo = { act: act.act, cpos: [act.cpos[0] + 100, act.cpos[1] + 100], time: act.time };
+        };
+        return offsetsim;
+    }(zoomsim));
+    var zs = null;
+    var os = null;
     function finger(cfg) {
         var rg = new fingers.Recognizer(cfg);
         function createAct(name, x, y) {
@@ -899,17 +937,49 @@ var fingers;
                 return false;
             };
             if (!MobileDevice.any) {
+                zs = new zoomsim();
+                os = new offsetsim();
                 document.addEventListener("mousedown", function (event) {
                     var act = createAct("touchstart", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0) {
+                        handle(cfg, [act]);
+                    }
+                    else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    }
+                    else if (event.button == 2) {
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
                 document.addEventListener("mousemove", function (event) {
                     var act = createAct("touchmove", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0) {
+                        handle(cfg, [act]);
+                    }
+                    else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    }
+                    else if (event.button == 2) {
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
                 document.addEventListener("mouseup", function (event) {
                     var act = createAct("touchend", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0) {
+                        handle(cfg, [act]);
+                    }
+                    else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    }
+                    else if (event.button == 2) {
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
             }
             else {

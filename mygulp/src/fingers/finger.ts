@@ -2,6 +2,33 @@
 
 namespace fingers{
     let inited:boolean = false;
+    class zoomsim{
+        oppo:iact;
+        protected create(act:iact):void{
+            let m = [document.documentElement.clientWidth/2, document.documentElement.clientHeight/2];
+            this.oppo = {act:act.act, cpos:[2*m[0] - act.cpos[0], 2*m[1] - act.cpos[1]], time:act.time};
+            //console.log(act.cpos[1], m[1], this.oppo.cpos[1]);
+        }
+        start(act:iact):iact[]{
+            this.create(act);
+            return [act, this.oppo];
+        }
+        zoom(act:iact):iact[]{
+            this.create(act);
+            return [act, this.oppo];
+        }
+        end(act:iact):iact[]{
+            this.create(act);
+            return [act, this.oppo];
+        }
+    }
+    class offsetsim extends zoomsim{
+        protected create(act:iact):void{
+            this.oppo = {act:act.act, cpos:[act.cpos[0] + 100, act.cpos[1] + 100], time:act.time};
+        }
+    }
+    let zs:zoomsim = null;
+    let os:offsetsim = null;
     export function finger(cfg:any):any{
         let rg:Recognizer = new Recognizer(cfg);
 
@@ -25,19 +52,45 @@ namespace fingers{
             };
 
             if (!MobileDevice.any){
+                zs = new zoomsim();
+                os = new offsetsim();
                 document.addEventListener("mousedown", function(event){
                     let act:iact = createAct("touchstart", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0){
+                        handle(cfg, [act]);
+                    } else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    } else if (event.button == 2){
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
 
                 document.addEventListener("mousemove", function(event){
                     let act:iact = createAct("touchmove", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0){
+                        handle(cfg, [act]);
+                    } else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    } else if (event.button == 2){
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
 
                 document.addEventListener("mouseup", function(event){
                     let act:iact = createAct("touchend", event.clientX, event.clientY);
-                    handle(cfg, [act]);
+                    if (event.button == 0){
+                        handle(cfg, [act]);
+                    } else if (event.button == 1) {
+                        os.start(act);
+                        handle(cfg, [act, os.oppo]);
+                    } else if (event.button == 2){
+                        zs.start(act);
+                        handle(cfg, [act, zs.oppo]);
+                    }
                 }, true);
             }else{
                 document.addEventListener("touchstart", function(event){
@@ -72,7 +125,7 @@ namespace fingers{
                     }
                     handle(cfg, acts);
                     event.stopPropagation();
-                    
+
                 }, true);
             }
             inited = true;
