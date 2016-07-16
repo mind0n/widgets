@@ -118,21 +118,46 @@ namespace fingers{
         }
     }
 
-    class InvalidTouchPattern implements ipattern{
+    class DblTouchedPattern implements ipattern{
         verify(acts:iact[], queue:any[]):boolean{
-            let rlt = acts.length == 1 && acts[0].act == "touchmove" && queue.length == 1;
-            //console.log("verifying invtouched ... ", rlt, queue.length);
+            let rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0;
+            //console.log("verify dbltouched ...", rlt);
             return rlt;
         }
 
-        recognize(queue:any[]):any{
-            console.dir(queue);
-            queue.clear();
+        recognize(queue:any[], outq:iact[]):any{
+            let prev = queue[1];
+            //debugger;
+            if (prev && prev.length == 1){
+                let act = prev[0];
+                //console.log("pact ...", act.act);
+                if (outq != null && outq.length > 0){
+                    let pact:any = outq[0];
+                    if (pact && pact.act == "touched"){
+                        if (act.act == "touchstart" || act.act == "touchmove"){
+                            if (act.time - pact.time < 500){
+                                return {
+                                    act:"dbltouched",
+                                    cpos:[act.cpos[0], act.cpos[1]],
+                                    time:act.time
+                                };
+                            }else{
+                                return {
+                                    act:"touched",
+                                    cpos:[act.cpos[0], act.cpos[1]],
+                                    time:act.time
+                                };
+                            }
+                        }
+                    }
+                }
+            }
             return null;
         }
-    } 
-    //Patterns.invtouched = new InvalidTouchPattern();
+    }
+
     Patterns.dragging = new DraggingPattern();
     Patterns.dropped = new DropPattern();
     Patterns.touched = new TouchedPattern();
+    Patterns.dbltouched = new DblTouchedPattern();
 }

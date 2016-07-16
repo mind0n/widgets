@@ -779,23 +779,47 @@ var fingers;
         };
         return DropPattern;
     }());
-    var InvalidTouchPattern = (function () {
-        function InvalidTouchPattern() {
+    var DblTouchedPattern = (function () {
+        function DblTouchedPattern() {
         }
-        InvalidTouchPattern.prototype.verify = function (acts, queue) {
-            var rlt = acts.length == 1 && acts[0].act == "touchmove" && queue.length == 1;
+        DblTouchedPattern.prototype.verify = function (acts, queue) {
+            var rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0;
             return rlt;
         };
-        InvalidTouchPattern.prototype.recognize = function (queue) {
-            console.dir(queue);
-            queue.clear();
+        DblTouchedPattern.prototype.recognize = function (queue, outq) {
+            var prev = queue[1];
+            if (prev && prev.length == 1) {
+                var act = prev[0];
+                if (outq != null && outq.length > 0) {
+                    var pact = outq[0];
+                    if (pact && pact.act == "touched") {
+                        if (act.act == "touchstart" || act.act == "touchmove") {
+                            if (act.time - pact.time < 500) {
+                                return {
+                                    act: "dbltouched",
+                                    cpos: [act.cpos[0], act.cpos[1]],
+                                    time: act.time
+                                };
+                            }
+                            else {
+                                return {
+                                    act: "touched",
+                                    cpos: [act.cpos[0], act.cpos[1]],
+                                    time: act.time
+                                };
+                            }
+                        }
+                    }
+                }
+            }
             return null;
         };
-        return InvalidTouchPattern;
+        return DblTouchedPattern;
     }());
     fingers.Patterns.dragging = new DraggingPattern();
     fingers.Patterns.dropped = new DropPattern();
     fingers.Patterns.touched = new TouchedPattern();
+    fingers.Patterns.dbltouched = new DblTouchedPattern();
 })(fingers || (fingers = {}));
 
 var fingers;
@@ -874,24 +898,115 @@ var fingers;
             document.oncontextmenu = function () {
                 return false;
             };
-            document.addEventListener("mousedown", function (event) {
-                var act = createAct("touchstart", event.clientX, event.clientY);
-                handle(cfg, [act]);
-            }, true);
-            document.addEventListener("mousemove", function (event) {
-                var act = createAct("touchmove", event.clientX, event.clientY);
-                handle(cfg, [act]);
-            }, true);
-            document.addEventListener("mouseup", function (event) {
-                var act = createAct("touchend", event.clientX, event.clientY);
-                handle(cfg, [act]);
-            }, true);
+            if (!MobileDevice.any) {
+                document.addEventListener("mousedown", function (event) {
+                    var act = createAct("touchstart", event.clientX, event.clientY);
+                    handle(cfg, [act]);
+                }, true);
+                document.addEventListener("mousemove", function (event) {
+                    var act = createAct("touchmove", event.clientX, event.clientY);
+                    handle(cfg, [act]);
+                }, true);
+                document.addEventListener("mouseup", function (event) {
+                    var act = createAct("touchend", event.clientX, event.clientY);
+                    handle(cfg, [act]);
+                }, true);
+            }
+            else {
+                document.addEventListener("touchstart", function (event) {
+                    var acts = [];
+                    for (var i = 0; i < event.changedTouches.length; i++) {
+                        var item = event.changedTouches[i];
+                        var act = createAct("touchstart", item.clientX, item.clientY);
+                        acts.add(act);
+                    }
+                    handle(cfg, acts);
+                    event.stopPropagation();
+                }, true);
+                document.addEventListener("touchmove", function (event) {
+                    var acts = [];
+                    for (var i = 0; i < event.changedTouches.length; i++) {
+                        var item = event.changedTouches[i];
+                        var act = createAct("touchmove", item.clientX, item.clientY);
+                        acts.add(act);
+                    }
+                    handle(cfg, acts);
+                    event.stopPropagation();
+                    if (Browser.isSafari) {
+                        event.preventDefault();
+                    }
+                }, true);
+                document.addEventListener("touchend", function (event) {
+                    var acts = [];
+                    for (var i = 0; i < event.changedTouches.length; i++) {
+                        var item = event.changedTouches[i];
+                        var act = createAct("touchend", item.clientX, item.clientY);
+                        acts.add(act);
+                    }
+                    handle(cfg, acts);
+                    event.stopPropagation();
+                }, true);
+            }
             inited = true;
         }
         return cfg;
     }
     fingers.finger = finger;
 })(fingers || (fingers = {}));
+function simulate(element, eventName, pos) {
+    function extend(destination, source) {
+        for (var property in source)
+            destination[property] = source[property];
+        return destination;
+    }
+    var eventMatchers = {
+        'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+        'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+    };
+    var defaultOptions = {
+        pointerX: 100,
+        pointerY: 100,
+        button: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+        metaKey: false,
+        bubbles: true,
+        cancelable: true
+    };
+    if (pos) {
+        defaultOptions.pointerX = pos[0];
+        defaultOptions.pointerY = pos[1];
+    }
+    var options = extend(defaultOptions, arguments[3] || {});
+    var oEvent, eventType = null;
+    for (var name_1 in eventMatchers) {
+        if (eventMatchers[name_1].test(eventName)) {
+            eventType = name_1;
+            break;
+        }
+    }
+    if (!eventType)
+        throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+    if (document.createEvent) {
+        oEvent = document.createEvent(eventType);
+        if (eventType == 'HTMLEvents') {
+            oEvent.initEvent(eventName, options.bubbles, options.cancelable);
+        }
+        else {
+            oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView, options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY, options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+        }
+        element.dispatchEvent(oEvent);
+    }
+    else {
+        options.clientX = options.pointerX;
+        options.clientY = options.pointerY;
+        var evt = document.createEventObject();
+        oEvent = extend(evt, options);
+        element.fireEvent('on' + eventName, oEvent);
+    }
+    return element;
+}
 var finger = fingers.finger;
 
 wo.Creators.add(new wo.DomCreator());

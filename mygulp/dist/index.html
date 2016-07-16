@@ -15,7 +15,7 @@
         <script>
             var rawenable = false;
             $(function(){
-                var h = "600px";
+                var h = "300px";
                 var raw = wo.use({
                     ui:"card",
                     class:"card static",
@@ -48,7 +48,7 @@
                 $("#pc").append(psr);
 
                 var cfg = finger({
-                    patterns:["touched", "dropped", "dragging"],
+                    patterns:["dbltouched", "touched", "dropped", "dragging"],
                     onact:function(inq){
                         if (rawenable){
                             $("#rcc")[0].setval({body:''});
