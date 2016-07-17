@@ -157,6 +157,14 @@ namespace fingers{
         }
     }
 
+    function calcAngle(a:iact, b:iact, len:number):number{
+        let ag = Math.acos((b.cpos[0] - a.cpos[0])/len) / Math.PI * 180;
+        if (b.cpos[1] < a.cpos[1]){
+            ag*=-1;
+        }
+        return ag;
+    }
+
     class ZoomStartPattern implements ipattern{
         verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
             let rlt = acts.length == 2 
@@ -176,7 +184,7 @@ namespace fingers{
             let a:iact = acts[0];
             let b:iact = acts[1];
             let len = Math.sqrt((b.cpos[0] - a.cpos[0])*(b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1])*(b.cpos[1] - a.cpos[1]));
-            let ag = Math.asin((b.cpos[1] - a.cpos[1])/len) / Math.PI * 180;
+            let ag = calcAngle(a, b, len); //Math.acos((b.cpos[0] - a.cpos[0])/len) / Math.PI * 180;
             let r:iact = {
                 act:"zoomstart",
                 cpos:[(a.cpos[0] + b.cpos[0])/2, (a.cpos[1] + b.cpos[1])/2],
@@ -206,7 +214,7 @@ namespace fingers{
             let a:iact = acts[0];
             let b:iact = acts[1];
             let len = Math.sqrt((b.cpos[0] - a.cpos[0])*(b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1])*(b.cpos[1] - a.cpos[1]));
-            let ag = Math.asin((b.cpos[1] - a.cpos[1])/len) / Math.PI * 180;
+            let ag = calcAngle(a, b, len); //Math.acos((b.cpos[0] - a.cpos[0])/len) / Math.PI * 180;
             let r:iact = {
                 act:"zooming",
                 cpos:[(a.cpos[0] + b.cpos[0])/2, (a.cpos[1] + b.cpos[1])/2],

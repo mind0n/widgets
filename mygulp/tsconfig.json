@@ -25,6 +25,7 @@
         "./src/wo/builder/uicreator.ts",
         "./src/fingers/patterns.ts",
         "./src/fingers/recognizer.ts",
+        "./src/fingers/touch.ts",
         "./src/fingers/finger.ts",
         "./src/wo/wo.ts",
         "./src/wo/widgets/cover/cover.ts",

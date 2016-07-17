@@ -21,6 +21,9 @@ namespace wo{
                     delete this.$child;
                 }
                 this.style.display = 'none';
+                if (this.onhide){
+                    this.onhide();
+                }
             },made: function(){
                 let cv = (document.body as any).$gcv$;
                 if (cv){
@@ -47,5 +50,6 @@ namespace wo{
         cv.show(function(el:any){
             wo.centerScreen(el.$box || el.$child);
         });
+        cv.onhide = json.onhide;
     }
 }

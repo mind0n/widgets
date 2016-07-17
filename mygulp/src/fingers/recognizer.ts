@@ -18,7 +18,7 @@ namespace fingers{
         cfg:any;
 
         constructor(cfg:any){
-            let defpatterns = ["touched"];
+            let defpatterns = ["zoomend", "zoomstart", "zooming", "dbltouched", "touched", "dropped", "dragging"];
             
             if (!cfg){
                 cfg = {patterns:defpatterns};
@@ -47,6 +47,10 @@ namespace fingers{
                 this.inqueue.splice(this.inqueue.length - 1, 1);
             }
             
+            if (acts.length == 1 && acts[0].act == "touchstart" && this.cfg.on && this.cfg.on.tap){
+                this.cfg.on.tap(acts[0]);
+            }
+
             for(let pattern of this.patterns){
                 if (pattern.verify(acts, this.inqueue, this.outqueue)){
                     let rlt = pattern.recognize(this.inqueue, this.outqueue);
@@ -58,6 +62,9 @@ namespace fingers{
                         let q = this.inqueue;
                         this.inqueue = [];
                         q.clear();
+                        if (this.cfg.on && this.cfg.on[rlt.act]){
+                            this.cfg.on[rlt.act](rlt);
+                        }
                         if (this.cfg.onrecognized){
                             this.cfg.onrecognized(rlt);
                         }
