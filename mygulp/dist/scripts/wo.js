@@ -816,6 +816,98 @@ var fingers;
         };
         return DblTouchedPattern;
     }());
+    var ZoomStartPattern = (function () {
+        function ZoomStartPattern() {
+        }
+        ZoomStartPattern.prototype.verify = function (acts, queue, outq) {
+            var rlt = acts.length == 2
+                && (acts[0].act == "touchstart" || acts[1].act == "touchstart");
+            return rlt;
+        };
+        ZoomStartPattern.prototype.recognize = function (queue, outq) {
+            var acts = queue[0];
+            var a = acts[0];
+            var b = acts[1];
+            var len = Math.sqrt((b.cpos[0] - a.cpos[0]) * (b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1]) * (b.cpos[1] - a.cpos[1]));
+            var ag = Math.asin((b.cpos[1] - a.cpos[1]) / len) / Math.PI * 180;
+            var r = {
+                act: "zoomstart",
+                cpos: [(a.cpos[0] + b.cpos[0]) / 2, (a.cpos[1] + b.cpos[1]) / 2],
+                len: len,
+                angle: ag,
+                time: a.time
+            };
+            console.log(r.cpos, r.len, r.angle);
+            return r;
+        };
+        return ZoomStartPattern;
+    }());
+    var ZoomPattern = (function () {
+        function ZoomPattern() {
+        }
+        ZoomPattern.prototype.verify = function (acts, queue, outq) {
+            var rlt = acts.length == 2
+                && (acts[0].act != "touchend" && acts[1].act != "touchend")
+                && (acts[0].act == "touchmove" || acts[1].act == "touchmove")
+                && outq.length > 0
+                && (outq[0].act == "zoomstart" || outq[0].act == "zooming");
+            return rlt;
+        };
+        ZoomPattern.prototype.recognize = function (queue, outq) {
+            var acts = queue[0];
+            var a = acts[0];
+            var b = acts[1];
+            var len = Math.sqrt((b.cpos[0] - a.cpos[0]) * (b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1]) * (b.cpos[1] - a.cpos[1]));
+            var ag = Math.asin((b.cpos[1] - a.cpos[1]) / len) / Math.PI * 180;
+            var r = {
+                act: "zooming",
+                cpos: [(a.cpos[0] + b.cpos[0]) / 2, (a.cpos[1] + b.cpos[1]) / 2],
+                len: len,
+                angle: ag,
+                time: a.time
+            };
+            console.log(r.cpos, r.len, r.angle);
+            return r;
+        };
+        return ZoomPattern;
+    }());
+    var ZoomEndPattern = (function () {
+        function ZoomEndPattern() {
+        }
+        ZoomEndPattern.prototype.verify = function (acts, queue, outq) {
+            var rlt = outq.length > 0
+                && (outq[0].act == "zoomstart" || outq[0].act == "zooming")
+                && acts.length <= 2;
+            if (rlt) {
+                if (acts.length < 2) {
+                    return true;
+                }
+                else {
+                    for (var _i = 0, acts_1 = acts; _i < acts_1.length; _i++) {
+                        var i = acts_1[_i];
+                        if (i.act == "touchend") {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        };
+        ZoomEndPattern.prototype.recognize = function (queue, outq) {
+            var r = {
+                act: "zoomend",
+                cpos: [0, 0],
+                len: 0,
+                angle: 0,
+                time: new Date().getTime()
+            };
+            return r;
+        };
+        return ZoomEndPattern;
+    }());
+    fingers.Patterns.zoomend = new ZoomEndPattern();
+    fingers.Patterns.zooming = new ZoomPattern();
+    fingers.Patterns.zoomstart = new ZoomStartPattern();
     fingers.Patterns.dragging = new DraggingPattern();
     fingers.Patterns.dropped = new DropPattern();
     fingers.Patterns.touched = new TouchedPattern();

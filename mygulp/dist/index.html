@@ -48,7 +48,7 @@
                 $("#pc").append(psr);
 
                 var cfg = finger({
-                    patterns:["dbltouched", "touched", "dropped", "dragging"],
+                    patterns:["zoomend", "zoomstart", "zooming", "dbltouched", "touched", "dropped", "dragging"],
                     onact:function(inq){
                         if (rawenable){
                             $("#rcc")[0].setval({body:''});

@@ -127,7 +127,7 @@ namespace fingers{
 
         recognize(queue:any[], outq:iact[]):any{
             let prev = queue[1];
-            //debugger;
+            // debugger;
             if (prev && prev.length == 1){
                 let act = prev[0];
                 //console.log("pact ...", act.act);
@@ -156,6 +156,99 @@ namespace fingers{
         }
     }
 
+    class ZoomStartPattern implements ipattern{
+        verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
+            let rlt = acts.length == 2 
+                && (acts[0].act == "touchstart" || acts[1].act == "touchstart");
+                //&& (outq.length < 1 || (outq[0].act != "")); 
+            //console.log("verify zoomstart ...", rlt);
+            return rlt;
+        }
+
+        recognize(queue:any[], outq:iact[]):any{
+            let acts = queue[0];
+            let a:iact = acts[0];
+            let b:iact = acts[1];
+            let len = Math.sqrt((b.cpos[0] - a.cpos[0])*(b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1])*(b.cpos[1] - a.cpos[1]));
+            let ag = Math.asin((b.cpos[1] - a.cpos[1])/len) / Math.PI * 180;
+            let r:iact = {
+                act:"zoomstart",
+                cpos:[(a.cpos[0] + b.cpos[0])/2, (a.cpos[1] + b.cpos[1])/2],
+                len:len,
+                angle:ag,
+                time:a.time
+            };
+            console.log(r.cpos, r.len, r.angle);
+            return r;
+        }
+    }
+
+    class ZoomPattern implements ipattern{
+        verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
+            let rlt = acts.length == 2 
+                && (acts[0].act != "touchend" && acts[1].act != "touchend")
+                && (acts[0].act == "touchmove" || acts[1].act == "touchmove")
+                && outq.length > 0
+                && (outq[0].act == "zoomstart" || outq[0].act == "zooming");
+                //&& (outq.length < 1 || (outq[0].act != "")); 
+            //console.log("verify zoomstart ...", rlt);
+            return rlt;
+        }
+
+        recognize(queue:any[], outq:iact[]):any{
+            let acts = queue[0];
+            let a:iact = acts[0];
+            let b:iact = acts[1];
+            let len = Math.sqrt((b.cpos[0] - a.cpos[0])*(b.cpos[0] - a.cpos[0]) + (b.cpos[1] - a.cpos[1])*(b.cpos[1] - a.cpos[1]));
+            let ag = Math.asin((b.cpos[1] - a.cpos[1])/len) / Math.PI * 180;
+            let r:iact = {
+                act:"zooming",
+                cpos:[(a.cpos[0] + b.cpos[0])/2, (a.cpos[1] + b.cpos[1])/2],
+                len:len,
+                angle:ag,
+                time:a.time
+            };
+            console.log(r.cpos, r.len, r.angle);
+            return r;
+        }
+    }
+
+    class ZoomEndPattern implements ipattern{
+        verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
+            let rlt = outq.length > 0 
+                && (outq[0].act == "zoomstart" || outq[0].act == "zooming")
+                && acts.length <=2;
+            if (rlt){
+                //console.dir(acts);
+                if (acts.length < 2){
+                    return true;
+                }else{
+                    for(let i of acts){
+                        if (i.act == "touchend"){
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        recognize(queue:any[], outq:iact[]):any{
+            let r:iact = {
+                act:"zoomend",
+                cpos:[0, 0],
+                len:0,
+                angle:0,
+                time:new Date().getTime()
+            };
+
+            return r;
+        }
+    }
+
+    Patterns.zoomend = new ZoomEndPattern();
+    Patterns.zooming = new ZoomPattern();
+    Patterns.zoomstart = new ZoomStartPattern();
     Patterns.dragging = new DraggingPattern();
     Patterns.dropped = new DropPattern();
     Patterns.touched = new TouchedPattern();

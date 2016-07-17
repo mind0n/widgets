@@ -6,6 +6,8 @@ namespace fingers{
         act:string,
         cpos:number[],
         rpos?:number[],
+        len?:number,
+        angle?:number,
         time?:number
     }
 
