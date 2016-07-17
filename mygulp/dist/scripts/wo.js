@@ -918,6 +918,14 @@ var fingers;
     }(zoomsim));
     var zs = null;
     var os = null;
+    function getouches(event, isend) {
+        if (isend) {
+            return event.changedTouches;
+        }
+        else {
+            return event.touches;
+        }
+    }
     function finger(cfg) {
         var rg = new fingers.Recognizer(cfg);
         function createAct(name, x, y) {
@@ -985,7 +993,8 @@ var fingers;
             else {
                 document.addEventListener("touchstart", function (event) {
                     var acts = [];
-                    for (var i = 0; i < event.changedTouches.length; i++) {
+                    var touches = getouches(event);
+                    for (var i = 0; i < touches.length; i++) {
                         var item = event.changedTouches[i];
                         var act = createAct("touchstart", item.clientX, item.clientY);
                         acts.add(act);
@@ -995,7 +1004,8 @@ var fingers;
                 }, true);
                 document.addEventListener("touchmove", function (event) {
                     var acts = [];
-                    for (var i = 0; i < event.changedTouches.length; i++) {
+                    var touches = getouches(event);
+                    for (var i = 0; i < touches.length; i++) {
                         var item = event.changedTouches[i];
                         var act = createAct("touchmove", item.clientX, item.clientY);
                         acts.add(act);
@@ -1008,7 +1018,8 @@ var fingers;
                 }, true);
                 document.addEventListener("touchend", function (event) {
                     var acts = [];
-                    for (var i = 0; i < event.changedTouches.length; i++) {
+                    var touches = getouches(event, true);
+                    for (var i = 0; i < touches.length; i++) {
                         var item = event.changedTouches[i];
                         var act = createAct("touchend", item.clientX, item.clientY);
                         acts.add(act);

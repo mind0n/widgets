@@ -2,6 +2,7 @@
 
 namespace fingers{
     let inited:boolean = false;
+    
     class zoomsim{
         oppo:iact;
         protected create(act:iact):void{
@@ -27,8 +28,18 @@ namespace fingers{
             this.oppo = {act:act.act, cpos:[act.cpos[0] + 100, act.cpos[1] + 100], time:act.time};
         }
     }
+
     let zs:zoomsim = null;
     let os:offsetsim = null;
+
+    function getouches(event:any, isend?:boolean):any{
+        if (isend){
+            return event.changedTouches;
+        }else{
+            return event.touches;
+        }
+    }
+
     export function finger(cfg:any):any{
         let rg:Recognizer = new Recognizer(cfg);
 
@@ -95,7 +106,8 @@ namespace fingers{
             }else{
                 document.addEventListener("touchstart", function(event){
                     let acts:iact[] = [];
-                    for(let i=0; i<event.changedTouches.length; i++){
+                    let touches = getouches(event);
+                    for(let i=0; i<touches.length; i++){
                         let item = event.changedTouches[i];
                         let act:iact = createAct("touchstart", item.clientX, item.clientY);
                         acts.add(act);
@@ -105,7 +117,8 @@ namespace fingers{
                 }, true);
                 document.addEventListener("touchmove", function(event){
                     let acts:iact[] = [];
-                    for(let i=0; i<event.changedTouches.length; i++){
+                    let touches = getouches(event);
+                    for(let i=0; i < touches.length; i++){
                         let item = event.changedTouches[i];
                         let act:iact = createAct("touchmove", item.clientX, item.clientY);
                         acts.add(act);
@@ -118,7 +131,8 @@ namespace fingers{
                 }, true);
                 document.addEventListener("touchend", function(event){
                     let acts:iact[] = [];
-                    for(let i=0; i<event.changedTouches.length; i++){
+                    let touches = getouches(event, true);
+                    for(let i=0; i < touches.length; i++){
                         let item = event.changedTouches[i];
                         let act:iact = createAct("touchend", item.clientX, item.clientY);
                         acts.add(act);
