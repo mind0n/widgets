@@ -678,10 +678,8 @@ var fingers;
     var TouchedPattern = (function () {
         function TouchedPattern() {
         }
-        TouchedPattern.prototype.verify = function (acts, queue) {
+        TouchedPattern.prototype.verify = function (acts, queue, outq) {
             var rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0;
-            if (rlt) {
-            }
             return rlt;
         };
         TouchedPattern.prototype.recognize = function (queue, outq) {
@@ -695,12 +693,17 @@ var fingers;
                         drag = true;
                     }
                 }
-                if (!drag && (act.act == "touchstart" || act.act == "touchmove")) {
-                    return {
-                        act: "touched",
-                        cpos: [act.cpos[0], act.cpos[1]],
-                        time: act.time
-                    };
+                if (!drag) {
+                    for (var i = 0; i < 3; i++) {
+                        var q = queue[i];
+                        if (q[0].act == "touchstart") {
+                            return {
+                                act: "touched",
+                                cpos: [act.cpos[0], act.cpos[1]],
+                                time: act.time
+                            };
+                        }
+                    }
                 }
             }
             return null;
@@ -821,7 +824,12 @@ var fingers;
         }
         ZoomStartPattern.prototype.verify = function (acts, queue, outq) {
             var rlt = acts.length == 2
-                && (acts[0].act == "touchstart" || acts[1].act == "touchstart");
+                && ((acts[0].act == "touchstart" || acts[1].act == "touchstart")
+                    || (outq.length > 0
+                        && acts[0].act == "touchmove"
+                        && acts[1].act == "touchmove"
+                        && outq[0].act != "zooming"
+                        && outq[0].act != "zoomstart"));
             return rlt;
         };
         ZoomStartPattern.prototype.recognize = function (queue, outq) {

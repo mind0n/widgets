@@ -8,12 +8,8 @@ namespace fingers{
     export let Patterns:any = {};
     
     class TouchedPattern implements ipattern{
-        verify(acts:iact[], queue:any[]):boolean{
+        verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
             let rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0;
-            //console.log("verify touched ...", rlt);
-            if (rlt){
-                //debugger;
-            }
             return rlt;
         }
 
@@ -30,11 +26,16 @@ namespace fingers{
                         drag = true;
                     }
                 }
-                if (!drag && (act.act == "touchstart" || act.act == "touchmove")){
-                    return {
-                        act:"touched",
-                        cpos:[act.cpos[0], act.cpos[1]],
-                        time:act.time
+                if (!drag){ //(act.act == "touchstart" || act.act == "touchmove")
+                    for(let i=0; i<3; i++){
+                        let q = queue[i];
+                        if (q[0].act == "touchstart"){
+                            return {
+                                act:"touched",
+                                cpos:[act.cpos[0], act.cpos[1]],
+                                time:act.time
+                            }
+                        }
                     }
                 }
             }
@@ -159,7 +160,12 @@ namespace fingers{
     class ZoomStartPattern implements ipattern{
         verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
             let rlt = acts.length == 2 
-                && (acts[0].act == "touchstart" || acts[1].act == "touchstart");
+                && ((acts[0].act == "touchstart" || acts[1].act == "touchstart")
+                    ||(outq.length > 0 
+                        && acts[0].act == "touchmove" 
+                        && acts[1].act == "touchmove" 
+                        && outq[0].act != "zooming" 
+                        && outq[0].act != "zoomstart" ));
                 //&& (outq.length < 1 || (outq[0].act != "")); 
             //console.log("verify zoomstart ...", rlt);
             return rlt;
