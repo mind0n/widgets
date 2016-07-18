@@ -70,21 +70,11 @@
                         $("#pcc")[0].setval({body:{mode:"prepend", target:el}});
                     }
                 });
+                cfg.enabled = true;
                 $("#bpri").click(function(){
                     rawenable = true;
                     cfg.enabled = true;
                     console.log("enable");
-                    // wo.cover({
-                    //     ui:"card",
-                    //     alias:"box",
-                    //     style:{width:"80%", display:"none"},
-                    //     made:function(){
-                    //         this.setval({
-                    //             title: "Card Title",
-                    //             body:"Card Body Content"
-                    //         })
-                    //     }
-                    // });
                 });
                 $("#bdsb").click(function(){
                     rawenable = false;

@@ -29,26 +29,30 @@ namespace fingers{
     }
 
     let activeEl:any;
-    let cfg = touch({
-        on:{ 
-            tap:function(act:iact){
-                activeEl = elAtPos(act.cpos);
-            }
-        },onact:function(inq:any){
-        },onrecognized:function(act:iact){
-            if (activeEl && activeEl.$zoomer$){
-                let zm = activeEl.$zoomer$;
-                for(let i of zm){
-                    if (i.mapping[act.act]){
-                        i.mapping[act.act](act, activeEl);
-                    }
-                }
-            }
-        }
-    });
-    cfg.enabled = true;
+    let inited:boolean=false;
+    let cfg:any = null;
 
     export function finger(el:any):any{
+        if (!cfg){
+            touch({
+                on:{ 
+                    tap:function(act:iact){
+                        activeEl = elAtPos(act.cpos);
+                    }
+                },onact:function(inq:any){
+                },onrecognized:function(act:iact){
+                    if (activeEl && activeEl.$zoomer$){
+                        let zm = activeEl.$zoomer$;
+                        for(let i of zm){
+                            if (i.mapping[act.act]){
+                                i.mapping[act.act](act, activeEl);
+                            }
+                        }
+                    }
+                }
+            });
+            cfg.enabled = true;
+        }
         el.$touchable$ = true;
         return {
             zoomable:function(){

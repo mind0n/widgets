@@ -1355,26 +1355,30 @@ var fingers;
         return rlt;
     }
     var activeEl;
-    var cfg = fingers.touch({
-        on: {
-            tap: function (act) {
-                activeEl = elAtPos(act.cpos);
-            }
-        }, onact: function (inq) {
-        }, onrecognized: function (act) {
-            if (activeEl && activeEl.$zoomer$) {
-                var zm = activeEl.$zoomer$;
-                for (var _i = 0, zm_1 = zm; _i < zm_1.length; _i++) {
-                    var i = zm_1[_i];
-                    if (i.mapping[act.act]) {
-                        i.mapping[act.act](act, activeEl);
+    var inited = false;
+    var cfg = null;
+    function finger(el) {
+        if (!cfg) {
+            fingers.touch({
+                on: {
+                    tap: function (act) {
+                        activeEl = elAtPos(act.cpos);
+                    }
+                }, onact: function (inq) {
+                }, onrecognized: function (act) {
+                    if (activeEl && activeEl.$zoomer$) {
+                        var zm = activeEl.$zoomer$;
+                        for (var _i = 0, zm_1 = zm; _i < zm_1.length; _i++) {
+                            var i = zm_1[_i];
+                            if (i.mapping[act.act]) {
+                                i.mapping[act.act](act, activeEl);
+                            }
+                        }
                     }
                 }
-            }
+            });
+            cfg.enabled = true;
         }
-    });
-    cfg.enabled = true;
-    function finger(el) {
         el.$touchable$ = true;
         return {
             zoomable: function () {
