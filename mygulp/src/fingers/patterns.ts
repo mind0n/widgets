@@ -18,7 +18,6 @@ namespace fingers{
             //debugger;
             if (prev && prev.length == 1){
                 let act = prev[0];
-                //console.log("pact ...", act.act);
                 let drag = false;
                 if (outq != null && outq.length > 0){
                     let pact:any = outq[0];
@@ -26,7 +25,7 @@ namespace fingers{
                         drag = true;
                     }
                 }
-                if (!drag){ //(act.act == "touchstart" || act.act == "touchmove")
+                if (!drag){ 
                     for(let i=0; i<3; i++){
                         let q = queue[i];
                         if (q[0].act == "touchstart"){
@@ -65,10 +64,6 @@ namespace fingers{
                     }
                 } 
             }
-            // if (rlt && queue[1][0] && queue[1][0].act == "touchstart"){
-            //     debugger;
-            // }
-            //console.log("Verify dragging ...", rlt);
             return rlt;
         }
 
@@ -101,7 +96,6 @@ namespace fingers{
     class DropPattern implements ipattern{
         verify(acts:iact[], queue:any[], outq?:iact[]):boolean{
             let rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0 && outq.length > 0;
-            //console.log("Verifying drop ...", rlt);
             return rlt;
         }
 
@@ -122,16 +116,13 @@ namespace fingers{
     class DblTouchedPattern implements ipattern{
         verify(acts:iact[], queue:any[]):boolean{
             let rlt = acts.length == 1 && acts[0].act == "touchend" && queue.length > 0;
-            //console.log("verify dbltouched ...", rlt);
             return rlt;
         }
 
         recognize(queue:any[], outq:iact[]):any{
             let prev = queue[1];
-            // debugger;
             if (prev && prev.length == 1){
                 let act = prev[0];
-                //console.log("pact ...", act.act);
                 if (outq != null && outq.length > 0){
                     let pact:any = outq[0];
                     if (pact && pact.act == "touched"){
@@ -174,8 +165,6 @@ namespace fingers{
                         && acts[1].act == "touchmove" 
                         && outq[0].act != "zooming" 
                         && outq[0].act != "zoomstart" ));
-                //&& (outq.length < 1 || (outq[0].act != "")); 
-            //console.log("verify zoomstart ...", rlt);
             return rlt;
         }
 
@@ -192,7 +181,6 @@ namespace fingers{
                 angle:ag,
                 time:a.time
             };
-            console.log(r.cpos, r.len, r.angle);
             return r;
         }
     }
@@ -204,8 +192,6 @@ namespace fingers{
                 && (acts[0].act == "touchmove" || acts[1].act == "touchmove")
                 && outq.length > 0
                 && (outq[0].act == "zoomstart" || outq[0].act == "zooming");
-                //&& (outq.length < 1 || (outq[0].act != "")); 
-            //console.log("verify zoomstart ...", rlt);
             return rlt;
         }
 
@@ -222,7 +208,6 @@ namespace fingers{
                 angle:ag,
                 time:a.time
             };
-            console.log(r.cpos, r.len, r.angle);
             return r;
         }
     }

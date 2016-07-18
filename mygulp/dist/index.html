@@ -13,7 +13,6 @@
         <script src="scripts/velocity.js"></script>
         <script src="scripts/wo.js"></script>
         <script>
-            var rawenable = false;
             $(function(){
                 var h = "300px";
                 var raw = wo.use({
@@ -47,33 +46,8 @@
                 $("#rc").append(raw);
                 $("#pc").append(psr);
 
-                var cfg = touch({
-                    on:{tap:function(act){
-                        console.log("Tapped at ", act.cpos);
-                    }},
-                    onact:function(inq){
-                        if (rawenable){
-                            $("#rcc")[0].setval({body:''});
-                            for(var j=0; j<inq.length; j++){
-                                var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
-                                var acts = inq[j];
-                                for(var i=0; i<acts.length; i++){
-                                    var act = acts[i];
-                                    el.innerHTML += act.act + "<br />";
-                                }
-                                $("#rcc")[0].setval({body:{mode:"append", target:el}});
-                            }
-                        }
-                    },onrecognized:function(act){
-                        var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
-                        el.innerHTML = act.act;
-                        $("#pcc")[0].setval({body:{mode:"prepend", target:el}});
-                    }
-                });
                 $("#bpri").click(function(){
-                    rawenable = true;
-                    cfg.enabled = true;
-                    console.log("enable");
+
                 });
                 $("#bdef").click(function(){
                     wo.cover({
@@ -84,14 +58,12 @@
                             this.setval({
                                 title: "Card Title",
                                 body:"Card Body Content"
-                            })
+                            });
+                            finger(this);
                         }
                     });
                 });
                 $("#bdsb").click(function(){
-                    rawenable = false;
-                    cfg.enabled = false;
-                    console.log("disable");
                 });
             });
         </script>
