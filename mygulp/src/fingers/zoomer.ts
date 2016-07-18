@@ -21,21 +21,23 @@ namespace fingers{
                     zoomer.sact = act;
                     zoomer.pact = act;
                     zoomer.started = true;
-                },zooming:function(act:iact, el:any){
+                }, zooming:function(act:iact, el:any){
                     if (zoomer.started){
-                        let p = zoomer.pact;
+                        let p = zoomer.sact;
                         let offset = [act.cpos[0] - p.cpos[0], act.cpos[1] - p.cpos[1]];
                         let rot = act.angle - p.angle;
                         let scale = act.len / p.len;
                         let delta = {offset: offset, angle:rot, scale:scale}; 
+                        zoomer.pact = act;
                         console.dir(delta);
                     }
-                },zoomend:function(act:iact, el:any){
+                }, zoomend:function(act:iact, el:any){
                     zoomer.started = false;
                 }
             }
         }
     }
+    
     export class Zsize extends Zoomer{
         delta:any;
         constructor(el:any){
@@ -56,6 +58,7 @@ namespace fingers{
                         let h = el.astyle(["height"]);
                         el.style.width = parseInt(w) + delta.resize[0] + "px";
                         el.style.height = parseInt(h) + delta.resize[1] + "px";
+                        zoomer.pact = act;
                         console.log(delta.resize);
                     }
                 },zoomend:function(act:iact, el:any){
