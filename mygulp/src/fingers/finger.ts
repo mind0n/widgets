@@ -1,4 +1,5 @@
 /// <reference path="touch.ts" />
+/// <reference path="zoomer.ts" />
 
 namespace fingers{
     function elAtPos(pos:number[]):any{
@@ -13,7 +14,8 @@ namespace fingers{
                 rlt = null;
                 break;
             }else if (el.$touchable$){
-                rlt = el;
+                rlt = el.getarget?el.getarget():el
+                rlt.$touchel$ = el;
                 break;
             }else{
                 el.style.display = "none";
@@ -25,20 +27,37 @@ namespace fingers{
         }
         return rlt;
     }
-    let activeEl:Element;
+
+    let activeEl:any;
     let cfg = touch({
-        on:{ tap:function(act:iact){
-            activeEl = elAtPos(act.cpos);
-            if (activeEl){
-                console.log(activeEl);
+        on:{ 
+            tap:function(act:iact){
+                activeEl = elAtPos(act.cpos);
             }
-        }},onact:function(inq:any){
+        },onact:function(inq:any){
         },onrecognized:function(act:iact){
+            console.log("Recognized:", act.act);
+            if (activeEl && activeEl.$zoomer$){
+                let zm = activeEl.$zoomer$;
+                if (zm.mapping[act.act]){
+                    zm.mapping[act.act](act, activeEl);
+                }
+            }
         }
     });
     cfg.enabled = true;
-    export function finger(el:any):void{
+
+    export function finger(el:any):any{
         el.$touchable$ = true;
+        return {
+            zoomable:function(){
+                let zoomer = new Zoom(el);
+                return this;
+            },zsizable:function(){
+                let zsize = new Zsize(el);
+                return this;
+            }
+        };
     }
 }
 

@@ -26,6 +26,7 @@
         "./src/fingers/patterns.ts",
         "./src/fingers/recognizer.ts",
         "./src/fingers/touch.ts",
+        "./src/fingers/zoomer.ts",
         "./src/fingers/finger.ts",
         "./src/wo/wo.ts",
         "./src/wo/widgets/cover/cover.ts",
