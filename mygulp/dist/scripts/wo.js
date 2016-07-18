@@ -1359,7 +1359,7 @@ var fingers;
     var cfg = null;
     function finger(el) {
         if (!cfg) {
-            fingers.touch({
+            cfg = fingers.touch({
                 on: {
                     tap: function (act) {
                         activeEl = elAtPos(act.cpos);

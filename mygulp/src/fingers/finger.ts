@@ -34,7 +34,7 @@ namespace fingers{
 
     export function finger(el:any):any{
         if (!cfg){
-            touch({
+            cfg = touch({
                 on:{ 
                     tap:function(act:iact){
                         activeEl = elAtPos(act.cpos);
