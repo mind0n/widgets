@@ -23,6 +23,7 @@ namespace fingers{
             return [act, this.oppo];
         }
     }
+    
     class offsetsim extends zoomsim{
         protected create(act:iact):void{
             this.oppo = {act:act.act, cpos:[act.cpos[0] + 100, act.cpos[1] + 100], time:act.time};

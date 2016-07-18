@@ -54,10 +54,19 @@ namespace fingers{
                         let offset = [act.cpos[0] - p.cpos[0], act.cpos[1] - p.cpos[1]];
                         let resize = [act.owidth - p.owidth, act.oheight - p.oheight];
                         let delta = {offset: offset, resize:resize};
+                        
                         let w = el.astyle(["width"]);
                         let h = el.astyle(["height"]);
+                        
+                        let l = el.astyle(["left"]);
+                        let t = el.astyle(["top"]);
+                        
                         el.style.width = parseInt(w) + delta.resize[0] + "px";
                         el.style.height = parseInt(h) + delta.resize[1] + "px";
+
+                        el.style.left = parseInt(l) + delta.offset[0] + "px";
+                        el.style.top = parseInt(t) + delta.offset[1] + "px";
+                        
                         zoomer.pact = act;
                         console.log(delta.resize);
                     }
