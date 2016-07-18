@@ -36,11 +36,12 @@ namespace fingers{
             }
         },onact:function(inq:any){
         },onrecognized:function(act:iact){
-            console.log("Recognized:", act.act);
             if (activeEl && activeEl.$zoomer$){
                 let zm = activeEl.$zoomer$;
-                if (zm.mapping[act.act]){
-                    zm.mapping[act.act](act, activeEl);
+                for(let i of zm){
+                    if (i.mapping[act.act]){
+                        i.mapping[act.act](act, activeEl);
+                    }
                 }
             }
         }
@@ -55,6 +56,9 @@ namespace fingers{
                 return this;
             },zsizable:function(){
                 let zsize = new Zsize(el);
+                return this;
+            },draggable:function(){
+                let drag = new Drag(el);
                 return this;
             }
         };

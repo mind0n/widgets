@@ -8,11 +8,42 @@ namespace fingers{
         protected started:boolean;
         mapping:{};
         constructor(el:any){
-            el.$zoomer$ = this;
+            if (!el.$zoomer$){
+                el.$zoomer$ = [this];
+            }else{
+                el.$zoomer$[el.$zoomer$.length] = this;
+            }
         }
     }
+
+    export class Drag extends Zoomer{
+        constructor(el:any){
+            super(el);
+            let zoomer = this;
+            this.mapping = {
+                dragstart:function(act:iact, el:any){
+                    zoomer.sact = act;
+                    zoomer.pact = act;
+                    zoomer.started = true;
+                }, dragging:function(act:iact, el:any){
+                    if (zoomer.started){
+                        let p = zoomer.pact;
+                        let offset = [act.cpos[0] - p.cpos[0], act.cpos[1] - p.cpos[1]];
+                        let delta = {offset: offset}; 
+                        let l = el.astyle(["left"]);
+                        let t = el.astyle(["top"]);
+                        el.style.left = parseInt(l) + delta.offset[0] + "px";
+                        el.style.top = parseInt(t) + delta.offset[1] + "px";
+                        zoomer.pact = act;
+                    }
+                }, dragend:function(act:iact, el:any){
+                    zoomer.started = false;
+                }
+            }
+        }
+    }
+
     export class Zoom extends Zoomer{
-        delta:any;
         constructor(el:any){
             super(el);
             let zoomer = this;
@@ -39,7 +70,6 @@ namespace fingers{
     }
     
     export class Zsize extends Zoomer{
-        delta:any;
         constructor(el:any){
             super(el);
             let zoomer = this;
@@ -68,7 +98,6 @@ namespace fingers{
                         el.style.top = parseInt(t) + delta.offset[1] + "px";
                         
                         zoomer.pact = act;
-                        console.log(delta.resize);
                     }
                 },zoomend:function(act:iact, el:any){
                     zoomer.started = false;

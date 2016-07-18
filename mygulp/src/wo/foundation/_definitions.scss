@@ -12,6 +12,14 @@ $desktop-lg:"min-width:1280";
     width:100%;
 }
 
+.noselect{
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
 $bradius:.2em;
 $bradius-large: 1em;
 $weight-default:normal;

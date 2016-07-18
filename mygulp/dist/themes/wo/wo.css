@@ -15,6 +15,13 @@ body {
 .wo .fill-x {
   width: 100%; }
 
+.noselect {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none; }
+
 @media (phone-p) {
   .wo .row .col-phone-p-1 {
     width: 8.33333%;
@@ -501,7 +508,8 @@ body {
   padding: 8px; }
 
 .wo .card .title .txt {
-  font-weight: 600; }
+  font-weight: 600;
+  cursor: default; }
 
 .wo .card .title .ctrls {
   position: absolute;
