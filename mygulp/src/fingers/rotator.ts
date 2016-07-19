@@ -7,7 +7,8 @@ namespace fingers{
 
         protected status:any[];
 
-        protected target:any;
+        target:any;
+
         protected center:any;
         protected offset:number[];
         constructor(el:any){
@@ -46,17 +47,73 @@ namespace fingers{
 
             this.center = document.createElement("div");
             this.center.style.position = 'absolute';
-			this.center.style.left = '50%';
-			this.center.style.top = '50%';
-			this.center.style.width = '0px';
-			this.center.style.height = '0px';
-			this.center.style.border = 'solid 0px blue';
+            this.center.style.left = '50%';
+            this.center.style.top = '50%';
+            this.center.style.width = '0px';
+            this.center.style.height = '0px';
+            this.center.style.border = 'solid 0px blue';
 
-			el.appendChild(this.center);
+            el.appendChild(this.center);
             this.setOrigin(this.origin.center);
             el.style.transform = "rotate(0deg)";
             this.pushStatus();
         }
+
+        rotate(arg:any, undef?:any){
+            if (!arg){
+                return this;
+            }
+  			let cache = this.cache;
+			let origin = this.cmt;
+			let offset = this.offset;
+			let angle = arg.angle, 
+                center = arg.center, 
+                scale = arg.scale, 
+                pos = arg.pos, 
+                resize = arg.resize;
+            if (!offset){
+                offset = [0, 0];
+            }
+            if (center !== undef){
+                this.pushStatus();
+                this.setOrigin(center);
+                let cstatus = this.pushStatus();
+                offset = this.correct(cstatus, offset);
+            }
+            if (angle || angle === 0){
+                cache.angle = origin.angle + angle;
+                cache.angle = cache.angle % 360;
+            }
+            if (resize){
+                cache.size = [origin.size[0] + resize[0], origin.size[1] + resize[1]];
+                if (cache.size[0] < 10){
+                    cache.size[0] = 10;
+                }
+                if (cache.size[1] < 10){
+                    cache.size[1] = 10;
+                }
+            }
+            if (scale){
+                if (!(scale instanceof Array)){
+                    let n = parseFloat(scale);
+                    scale = [n, n];
+                }
+                cache.scale = [origin.scale[0] * scale[0], origin.scale[1] * scale[1]];
+            }
+            if (pos){
+                cache.pos = [origin.pos[0] + pos[0] - offset[0], origin.pos[1] + pos[1] - offset[1]];
+            }
+            this.target.style.transform = 'rotateZ(' + cache.angle + 'deg) scale(' + cache.scale[0] + ',' + cache.scale[1] + ')';
+			this.target.style.left = cache.pos[0] + 'px';
+			this.target.style.top = cache.pos[1] + 'px';
+            if (resize){
+                this.target.style.width = cache.size[0] + 'px';
+                this.target.style.height = cache.size[1] + 'px';
+            }
+            this.pushStatus();
+            return this;
+        }
+
         protected getCenter():number[]{
             let rc = this.center.getBoundingClientRect();
             return [rc.left, rc.top];
@@ -99,7 +156,7 @@ namespace fingers{
         }
     }
     export function Rotator(el:any):any{
-        let r = new Rot(el);
+        let r = el.$rot$ || new Rot(el);
         return r;
     }
 }
