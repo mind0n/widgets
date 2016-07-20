@@ -49,8 +49,14 @@ namespace fingers{
                 this.inqueue.splice(this.inqueue.length - 1, 1);
             }
             
-            if (acts.length == 1 && acts[0].act == "touchstart" && this.cfg.on && this.cfg.on.tap){
-                this.cfg.on.tap(acts[0]);
+            if (this.cfg.on && this.cfg.on.tap){
+                for(let i of acts){
+                    //acts.length >= 1 && acts[0].act == "touchstart" &&
+                    if (i.act == "touchstart"){
+                        this.cfg.on.tap(acts[0]);
+                        break;
+                    }
+                }
             }
 
             for(let pattern of this.patterns){
