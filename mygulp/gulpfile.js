@@ -7,7 +7,10 @@ var map     =   require("gulp-sourcemaps");
 var web     =   require("gulp-webserver");
 var bnd     =   require("gulp-concat");
 var nocmt   =   require("gulp-strip-comments");
+var jade    =   require("gulp-jade");
+
 var tsproj = ts.createProject("tsconfig.json");
+
 
 function buildev(){
     gulp.src(["./node_modules/jquery/dist/jquery.js", "./src/lib/velocity.js"])
@@ -15,6 +18,14 @@ function buildev(){
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
         .pipe(gulp.dest("./dist/themes"));
+    gulp.src("./src/**/*.jade")
+        .pipe(jade({
+            pretty:true,
+            compileDebug:true,
+            doctype:"html",
+            locals:{mode:"dev"}
+        }))
+        .pipe(gulp.dest("./dist"));
 
     var tsResult = tsproj.src()
         .pipe(map.init())
@@ -27,13 +38,21 @@ function buildev(){
 }
 
 function buildtest(){
-    gulp.src(["./node_modules/jquery/dist/jquery.js"])
+    gulp.src(["./node_modules/jquery/dist/jquery.js", "./src/lib/velocity.js"])
         .pipe(minify({ext:{src:".js", min:"-min.js"}, ignoreFiles:["-min.js"], exclude:["tasks"]}))
         .pipe(gulp.dest("./dist/scripts"))
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
         .pipe(mcss({compatibility:"ie8"}))
         .pipe(gulp.dest("./dist/themes"));
+
+    gulp.src("./src/**/*.jade")
+        .pipe(jade({
+            pretty:false,
+            doctype:"html",
+            locals:{mode:"test"}
+        }))
+        .pipe(gulp.dest("./dist"));
 
     var tsResult = tsproj.src()
         .pipe(ts(tsproj));
@@ -49,22 +68,21 @@ gulp.task("default", function(){
     buildev();
 });
 
-gulp.task("test", function(){
-    buildtest();
-});
-
 gulp.task("deploy", function(){
-    gulp.src(["./dist/scripts/*.*"])
+    gulp.src(["./dist/scripts/*-min.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/scripts"));
     gulp.src(["./dist/themes/lib/*.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/themes/lib"));
-    gulp.src(["./dist/themes/wo/*.*"])
+    gulp.src(["./dist/themes/wo/*-min.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/themes/wo"));
     gulp.src(["./dist/*.html"])
         .pipe(gulp.dest("../../widgetonline.github.io"));
 });
 
 
+gulp.task("test", function(){
+    buildtest();
+});
 
 gulp.task("dev", function(){
     buildev();
@@ -78,6 +96,6 @@ gulp.task("dev", function(){
     }));
 });
 
-gulp.task("watch", ["default"], function(){
-    gulp.watch("./src/**/*.*", ["default"]);
-});
+// gulp.task("watch", ["default"], function(){
+//     gulp.watch("./src/**/*.*", ["default"]);
+// });
