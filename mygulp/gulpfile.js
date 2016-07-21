@@ -73,7 +73,7 @@ gulp.task("deploy", function(){
         .pipe(gulp.dest("../../widgetonline.github.io/scripts"));
     gulp.src(["./dist/themes/lib/*.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/themes/lib"));
-    gulp.src(["./dist/themes/wo/*-min.*"])
+    gulp.src(["./dist/themes/wo/*.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/themes/wo"));
     gulp.src(["./dist/*.html"])
         .pipe(gulp.dest("../../widgetonline.github.io"));
