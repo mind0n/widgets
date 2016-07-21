@@ -1,0 +1,22 @@
+    ,"files": [
+        "./typings/index.d.ts",
+        "./src/wo/tests/test.ts",
+        "./src/wo/foundation/definitions.ts",
+        "./src/wo/foundation/device.ts",
+        "./src/wo/foundation/elements.ts",
+        "./src/wo/foundation/string.ts",
+        "./src/wo/builder/use.ts",
+        "./src/wo/builder/domcreator.ts",
+        "./src/wo/builder/svgcreator.ts",
+        "./src/wo/builder/uicreator.ts",
+        "./src/fingers/rotator.ts",
+        "./src/fingers/patterns.ts",
+        "./src/fingers/recognizer.ts",
+        "./src/fingers/touch.ts",
+        "./src/fingers/zoomer.ts",
+        "./src/fingers/finger.ts",
+        "./src/wo/wo.ts",
+        "./src/wo/widgets/cover/cover.ts",
+        "./src/wo/widgets/card/card.ts",
+        "./src/wo/widgets/loading/loading.ts"
+    ]

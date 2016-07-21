@@ -1,5 +1,3 @@
-var test = $("div");
-
 Array.prototype.add = function (item) {
     this[this.length] = item;
 };
@@ -10,813 +8,6 @@ Array.prototype.clear = function (keepalive) {
         tmp = null;
     }
 };
-
-var MobileDevice = (function () {
-    function MobileDevice() {
-    }
-    Object.defineProperty(MobileDevice, "Android", {
-        get: function () {
-            var r = navigator.userAgent.match(/Android/i);
-            if (r) {
-                console.log('match Android');
-            }
-            return r != null && r.length > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MobileDevice, "BlackBerry", {
-        get: function () {
-            var r = navigator.userAgent.match(/BlackBerry/i);
-            if (r) {
-                console.log('match Android');
-            }
-            return r != null && r.length > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MobileDevice, "iOS", {
-        get: function () {
-            var r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
-            if (r) {
-                console.log('match Android');
-            }
-            return r != null && r.length > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MobileDevice, "Opera", {
-        get: function () {
-            var r = navigator.userAgent.match(/Opera Mini/i);
-            if (r) {
-                console.log('match Android');
-            }
-            return r != null && r.length > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MobileDevice, "Windows", {
-        get: function () {
-            var r = navigator.userAgent.match(/IEMobile/i);
-            if (r) {
-                console.log('match Android');
-            }
-            return r != null && r.length > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MobileDevice, "any", {
-        get: function () {
-            return (MobileDevice.Android || MobileDevice.BlackBerry || MobileDevice.iOS || MobileDevice.Opera || MobileDevice.Windows);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return MobileDevice;
-}());
-var Browser = (function () {
-    function Browser() {
-    }
-    Object.defineProperty(Browser, "isOpera", {
-        get: function () {
-            return (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isFirefox", {
-        get: function () {
-            return typeof window.InstallTrigger !== 'undefined';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isSafari", {
-        get: function () {
-            return Object.prototype.toString.call(HTMLElement).indexOf('Constructor') > 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isIE", {
-        get: function () {
-            return false || !!document.documentMode;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isEdge", {
-        get: function () {
-            return !Browser.isIE && !!window.StyleMedia;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isChrome", {
-        get: function () {
-            return !!window.chrome && !!window.chrome.webstore;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Browser, "isBlink", {
-        get: function () {
-            return (Browser.isChrome || Browser.isOpera) && !!window.CSS;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Browser;
-}());
-
-Element.prototype.astyle = function actualStyle(props) {
-    var el = this;
-    var compStyle = window.getComputedStyle(el, null);
-    for (var i = 0; i < props.length; i++) {
-        var style = compStyle.getPropertyValue(props[i]);
-        if (style != null) {
-            return style;
-        }
-    }
-    return null;
-};
-var wo;
-(function (wo) {
-    var Destroyer = (function () {
-        function Destroyer() {
-        }
-        Destroyer.destroy = function (target) {
-            if (!target.destroyStatus) {
-                target.destroyStatus = new Destroyer();
-            }
-            if (target.dispose && !target.destroyStatus.disposing) {
-                target.destroyStatus.disposing = true;
-                target.dispose();
-            }
-            if (!target.destroyStatus.destroying) {
-                target.destroyStatus.destroying = true;
-                Destroyer.container.appendChild(target);
-                for (var i in target) {
-                    if (i.indexOf('$') == 0) {
-                        var tmp = target[i];
-                        if (tmp instanceof HTMLElement) {
-                            target[i] = null;
-                            tmp = null;
-                        }
-                        else {
-                            delete target[i];
-                        }
-                    }
-                }
-                Destroyer.container.innerHTML = '';
-            }
-        };
-        Destroyer.container = document.createElement("div");
-        return Destroyer;
-    }());
-    function destroy(target) {
-        if (target.length > 0 || target instanceof Array) {
-            for (var _i = 0, target_1 = target; _i < target_1.length; _i++) {
-                var i = target_1[_i];
-                Destroyer.destroy(i);
-            }
-        }
-        else if (target instanceof Element) {
-            Destroyer.destroy(target);
-        }
-    }
-    wo.destroy = destroy;
-    function centerScreen(target) {
-        var rect = target.getBoundingClientRect();
-        target.style.position = "fixed";
-        target.style.left = "50%";
-        target.style.top = "50%";
-        target.style.marginTop = -rect.height / 2 + "px";
-        target.style.marginLeft = -rect.width / 2 + "px";
-    }
-    wo.centerScreen = centerScreen;
-})(wo || (wo = {}));
-
-String.prototype.startsWith = function (str) {
-    return this.indexOf(str) == 0;
-};
-String.prototype.format = function () {
-    var args = arguments;
-    var s = this;
-    if (!args || args.length < 1) {
-        return s;
-    }
-    var r = s;
-    for (var i = 0; i < args.length; i++) {
-        var reg = new RegExp('\\{' + i + '\\}');
-        r = r.replace(reg, args[i]);
-    }
-    return r;
-};
-
-var wo;
-(function (wo) {
-    wo.Creators = [];
-    function get(selector) {
-        var rlt = [];
-        if (selector) {
-            try {
-                rlt = document.querySelectorAll(selector);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        }
-        return rlt;
-    }
-    var Cursor = (function () {
-        function Cursor() {
-        }
-        return Cursor;
-    }());
-    wo.Cursor = Cursor;
-    var Creator = (function () {
-        function Creator() {
-        }
-        Object.defineProperty(Creator.prototype, "Id", {
-            get: function () {
-                return this.id;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Creator.prototype.Create = function (json, cs) {
-            if (!json) {
-                return null;
-            }
-            var o = this.create(json);
-            if (!cs) {
-                cs = new Cursor();
-                cs.root = o;
-                cs.parent = null;
-                cs.border = o;
-                cs.curt = o;
-                o.cursor = cs;
-            }
-            else {
-                var ncs = new Cursor();
-                ncs.root = cs.root;
-                ncs.parent = cs.curt;
-                ncs.border = cs.border;
-                ncs.curt = o;
-                o.cursor = ncs;
-                cs = ncs;
-            }
-            if (json.alias) {
-                var n = json.alias;
-                if (json.alias.startsWith("$")) {
-                    n = json.alias.substr(1, json.alias.length - 1);
-                }
-                cs.border["$" + n] = o;
-                if (json.alias.startsWith("$")) {
-                    cs.border = o;
-                }
-            }
-            delete json[this.Id];
-            this.extend(o, json);
-            if (json.made) {
-                json.made.call(o);
-            }
-            o.$root = cs.root;
-            o.$border = cs.border;
-            return o;
-        };
-        return Creator;
-    }());
-    wo.Creator = Creator;
-    function append(el, child) {
-        if (el.append && typeof (el.append) == 'function') {
-            el.append(child);
-        }
-        else {
-            el.appendChild(child);
-        }
-    }
-    wo.append = append;
-    function use(json, cs) {
-        var rlt = null;
-        if (!json) {
-            return rlt;
-        }
-        var container = null;
-        if (json.$container$) {
-            container = json.$container$;
-            delete json.$container$;
-        }
-        if (typeof (json) == 'string') {
-            rlt = get(json);
-        }
-        for (var _i = 0, Creators_1 = wo.Creators; _i < Creators_1.length; _i++) {
-            var i = Creators_1[_i];
-            if (json[i.Id]) {
-                rlt = i.Create(json, cs);
-                break;
-            }
-        }
-        if (container) {
-            container.appendChild(rlt);
-        }
-        return rlt;
-    }
-    wo.use = use;
-    function objextend(o, json) {
-        for (var i in json) {
-            if (o[i] && typeof (o[i]) == 'object') {
-                objextend(o[i], json[i]);
-            }
-            else {
-                o[i] = json[i];
-            }
-        }
-    }
-    wo.objextend = objextend;
-})(wo || (wo = {}));
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var wo;
-(function (wo) {
-    var DomCreator = (function (_super) {
-        __extends(DomCreator, _super);
-        function DomCreator() {
-            _super.call(this);
-            this.id = "tag";
-        }
-        DomCreator.prototype.create = function (json) {
-            if (json == null) {
-                return null;
-            }
-            var tag = json[this.id];
-            var el;
-            if (tag == '#text') {
-                el = document.createTextNode(tag);
-            }
-            else {
-                el = document.createElement(tag);
-            }
-            return el;
-        };
-        DomCreator.prototype.extend = function (o, json) {
-            if (json instanceof Node || json instanceof Element) {
-                debugger;
-                return;
-            }
-            if (o instanceof HTMLElement) {
-                domextend(o, json);
-            }
-            else if (json.$ && o instanceof Node) {
-                o.nodeValue = json.$;
-            }
-            else if (o.extend) {
-                o.extend(json);
-            }
-        };
-        return DomCreator;
-    }(wo.Creator));
-    wo.DomCreator = DomCreator;
-    function domextend(el, json) {
-        var cs = el.cursor;
-        for (var i in json) {
-            if (i.startsWith("$$")) {
-                var target = el[i];
-                var type_1 = typeof target;
-                if (type_1 == 'object') {
-                    var vtype = typeof json[i];
-                    if (vtype == 'object') {
-                        domextend(target, json[i]);
-                    }
-                    else {
-                        el[i] = json[i];
-                    }
-                }
-                else {
-                    el[i] = json[i];
-                }
-            }
-            else if (i == "$") {
-                var type_2 = typeof json[i];
-                if (json[i] instanceof Array) {
-                    for (var _i = 0, _a = json[i]; _i < _a.length; _i++) {
-                        var j = _a[_i];
-                        var child = wo.use(j, cs);
-                        if (child != null) {
-                            wo.append(el, child);
-                        }
-                    }
-                }
-                else if (type_2 == 'object') {
-                    var child = wo.use(json[i], cs);
-                    if (child != null) {
-                        wo.append(el, child);
-                    }
-                    else {
-                        debugger;
-                    }
-                }
-                else {
-                    el.innerHTML = json[i];
-                }
-            }
-            else if (i.startsWith("$")) {
-                el[i] = json[i];
-            }
-            else {
-                var type = typeof json[i];
-                if (type == "function") {
-                    el[i] = json[i];
-                }
-                else {
-                    if (el[i] && typeof (el[i]) == 'object') {
-                        wo.objextend(el[i], json[i]);
-                    }
-                    else {
-                        el.setAttribute(i, json[i]);
-                    }
-                }
-            }
-        }
-    }
-    wo.domextend = domextend;
-})(wo || (wo = {}));
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var wo;
-(function (wo) {
-    var SvgCreator = (function (_super) {
-        __extends(SvgCreator, _super);
-        function SvgCreator() {
-            _super.call(this);
-            this.id = "sg";
-        }
-        SvgCreator.prototype.create = function (json) {
-            if (json == null) {
-                return null;
-            }
-            var tag = json[this.id];
-            var el;
-            if (tag == "svg") {
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
-            }
-            else {
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
-            }
-            return el;
-        };
-        SvgCreator.prototype.extend = function (o, json) {
-            if (json instanceof Node || json instanceof Element) {
-                debugger;
-                return;
-            }
-            if (o instanceof SVGElement) {
-                svgextend(o, json);
-            }
-            else if (json.$ && o instanceof Node) {
-                o.nodeValue = json.$;
-            }
-            else if (o.extend) {
-                o.extend(json);
-            }
-        };
-        return SvgCreator;
-    }(wo.Creator));
-    wo.SvgCreator = SvgCreator;
-    function svgextend(el, json) {
-        var cs = el.cursor;
-        for (var i in json) {
-            if (i.startsWith("$$")) {
-                var target = el[i];
-                var type_1 = typeof target;
-                if (type_1 == 'object') {
-                    var vtype = typeof json[i];
-                    if (vtype == 'object') {
-                        svgextend(target, json[i]);
-                    }
-                    else {
-                        el[i] = json[i];
-                    }
-                }
-                else {
-                    el[i] = json[i];
-                }
-            }
-            else if (i == "$") {
-                var type_2 = typeof json[i];
-                if (json[i] instanceof Array) {
-                    for (var _i = 0, _a = json[i]; _i < _a.length; _i++) {
-                        var j = _a[_i];
-                        var child = wo.use(j, cs);
-                        if (child != null) {
-                            wo.append(el, child);
-                        }
-                    }
-                }
-                else if (type_2 == 'object') {
-                    var child = wo.use(json[i], cs);
-                    if (child != null) {
-                        wo.append(el, child);
-                    }
-                    else {
-                        debugger;
-                    }
-                }
-                else {
-                    el.innerHTML = json[i];
-                }
-            }
-            else if (i.startsWith("$")) {
-                el[i] = json[i];
-            }
-            else {
-                var type = typeof json[i];
-                if (type == "function") {
-                    el[i] = json[i];
-                }
-                else {
-                    if (el[i] && typeof (el[i]) == 'object') {
-                        wo.objextend(el[i], json[i]);
-                    }
-                    else {
-                        el.setAttributeNS(null, i, json[i]);
-                    }
-                }
-            }
-        }
-    }
-})(wo || (wo = {}));
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var wo;
-(function (wo) {
-    wo.Widgets = {};
-    var UiCreator = (function (_super) {
-        __extends(UiCreator, _super);
-        function UiCreator() {
-            _super.call(this);
-            this.id = "ui";
-        }
-        UiCreator.prototype.create = function (json) {
-            if (json == null) {
-                return null;
-            }
-            var wg = json[this.id];
-            if (!wo.Widgets[wg]) {
-                return null;
-            }
-            var el = wo.use(wo.Widgets[wg]());
-            return el;
-        };
-        UiCreator.prototype.extend = function (o, json) {
-            if (json instanceof Node || json instanceof Element) {
-                debugger;
-                return;
-            }
-            if (o instanceof HTMLElement) {
-                domapply(o, json);
-            }
-            else if (json.$ && o instanceof Node) {
-                o.nodeValue = json.$;
-            }
-            else if (o.extend) {
-                o.extend(json);
-            }
-        };
-        return UiCreator;
-    }(wo.Creator));
-    wo.UiCreator = UiCreator;
-    function domapply(el, json) {
-        var cs = el.cursor;
-        for (var i in json) {
-            if (i.startsWith("$$")) {
-                var target = el[i];
-                var type_1 = typeof target;
-                if (type_1 == 'object') {
-                    var vtype = typeof json[i];
-                    if (vtype == 'object') {
-                        domapply(target, json[i]);
-                    }
-                    else {
-                        el[i] = json[i];
-                    }
-                }
-                else {
-                    el[i] = json[i];
-                }
-            }
-            else if (i == "$") {
-                var type_2 = typeof json[i];
-                var ji = json[i];
-                if (type_2 == 'object') {
-                    ji = [ji];
-                }
-                if (ji instanceof Array) {
-                    var nodes = el.childNodes;
-                    for (var j = 0; j < ji.length; j++) {
-                        var item = ji[j];
-                        if (j < nodes.length) {
-                            domapply(nodes[j], item);
-                        }
-                        else {
-                            var child = wo.use(item, cs);
-                            if (child != null) {
-                                wo.append(el, child);
-                            }
-                        }
-                    }
-                }
-                else {
-                    el.innerHTML = json[i];
-                }
-            }
-            else if (i.startsWith("$")) {
-                el[i] = json[i];
-            }
-            else if (i == "style") {
-                wo.objextend(el[i], json[i]);
-            }
-            else {
-                var type = typeof json[i];
-                if (type == "function") {
-                    el[i] = json[i];
-                }
-                else {
-                    if (el[i] && typeof (el[i]) == 'object') {
-                        wo.objextend(el[i], json[i]);
-                    }
-                    else {
-                        el.setAttribute(i, json[i]);
-                    }
-                }
-            }
-        }
-    }
-    wo.domapply = domapply;
-})(wo || (wo = {}));
-
-var fingers;
-(function (fingers) {
-    var Rot = (function () {
-        function Rot(el) {
-            if (!el) {
-                return;
-            }
-            this.target = el;
-            el.$rot$ = this;
-            var pos = [el.astyle(["left"]), el.astyle(["top"])];
-            el.style.left = pos[0];
-            el.style.top = pos[1];
-            var rc = el.getBoundingClientRect();
-            this.origin = {
-                center: [rc.width / 2, rc.height / 2],
-                angle: 0,
-                scale: [1, 1],
-                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
-                size: [rc.width, rc.height]
-            };
-            this.cmt = {
-                center: [rc.width / 2, rc.height / 2],
-                angle: 0,
-                scale: [1, 1],
-                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
-                size: [rc.width, rc.height]
-            };
-            this.cache = {
-                center: [rc.width / 2, rc.height / 2],
-                angle: 0,
-                scale: [1, 1],
-                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
-                size: [rc.width, rc.height]
-            };
-            this.status = [];
-            this.center = document.createElement("div");
-            this.center.style.position = 'absolute';
-            this.center.style.left = '50%';
-            this.center.style.top = '50%';
-            this.center.style.width = '0px';
-            this.center.style.height = '0px';
-            this.center.style.border = 'solid 0px blue';
-            el.appendChild(this.center);
-            this.setOrigin(this.origin.center);
-            el.style.transform = "rotate(0deg)";
-            this.pushStatus();
-        }
-        Rot.prototype.rotate = function (arg, undef) {
-            if (!arg) {
-                return this;
-            }
-            var cache = this.cache;
-            var origin = this.cmt;
-            var offset = this.offset;
-            var angle = arg.angle, center = arg.center, scale = arg.scale, pos = arg.pos, resize = arg.resize;
-            if (!offset) {
-                offset = [0, 0];
-            }
-            if (center !== undef) {
-                this.pushStatus();
-                this.setOrigin(center);
-                var cstatus = this.pushStatus();
-                offset = this.correct(cstatus, offset);
-            }
-            if (angle || angle === 0) {
-                cache.angle = origin.angle + angle;
-                cache.angle = cache.angle % 360;
-            }
-            if (resize) {
-                cache.size = [origin.size[0] + resize[0], origin.size[1] + resize[1]];
-                if (cache.size[0] < 10) {
-                    cache.size[0] = 10;
-                }
-                if (cache.size[1] < 10) {
-                    cache.size[1] = 10;
-                }
-            }
-            if (scale) {
-                if (!(scale instanceof Array)) {
-                    var n = parseFloat(scale);
-                    scale = [n, n];
-                }
-                cache.scale = [origin.scale[0] * scale[0], origin.scale[1] * scale[1]];
-            }
-            if (pos) {
-                cache.pos = [origin.pos[0] + pos[0] - offset[0], origin.pos[1] + pos[1] - offset[1]];
-            }
-            this.target.style.transform = 'rotateZ(' + cache.angle + 'deg) scale(' + cache.scale[0] + ',' + cache.scale[1] + ')';
-            this.target.style.left = cache.pos[0] + 'px';
-            this.target.style.top = cache.pos[1] + 'px';
-            if (resize) {
-                this.target.style.width = cache.size[0] + 'px';
-                this.target.style.height = cache.size[1] + 'px';
-            }
-            this.pushStatus();
-            return this;
-        };
-        Rot.prototype.getCenter = function () {
-            var rc = this.center.getBoundingClientRect();
-            return [rc.left, rc.top];
-        };
-        Rot.prototype.setOrigin = function (p) {
-            this.target.style.transformOrigin = p[0] + "px " + p[1] + "px";
-        };
-        Rot.prototype.correct = function (status, poffset) {
-            if (!poffset) {
-                poffset = [0, 0];
-            }
-            var d = status.delta;
-            var x = parseFloat(this.target.astyle["left"]) - d.center[0];
-            var y = parseFloat(this.target.astyle["top"]) - d.center[1];
-            this.offset = [poffset[0] + d.center[0], poffset[1] + d.center[1]];
-            this.target.style.left = x + "px";
-            this.target.style.top = y + "px";
-            return this.offset;
-        };
-        Rot.prototype.commitStatus = function () {
-            this.cmt = this.cache;
-            this.cmt.pos = [parseFloat(this.target.style.left), parseFloat(this.target.style.top)];
-            this.cmt.size = [parseFloat(this.target.style.width), parseFloat(this.target.style.height)];
-            this.cache = { angle: 0, scale: [1, 1], pos: [0, 0], size: [0, 0] };
-            this.offset = [0, 0];
-        };
-        Rot.prototype.pushStatus = function () {
-            var c = this.getCenter();
-            var l = [parseFloat(this.target.astyle(["left"])), parseFloat(this.target.astyle(["top"]))];
-            var s = { center: [c[0], c[1]], pos: l };
-            var q = this.status;
-            var p = q.length > 0 ? q[q.length - 1] : s;
-            s.delta = { center: [s.center[0] - p.center[0], s.center[1] - p.center[1]],
-                pos: [s.pos[0] - p.pos[0], s.pos[1] - p.pos[1]] };
-            q[q.length] = s;
-            if (q.length > 6) {
-                q.splice(0, 1);
-            }
-            return s;
-        };
-        return Rot;
-    }());
-    function Rotator(el) {
-        var r = el.$rot$ || new Rot(el);
-        return r;
-    }
-    fingers.Rotator = Rotator;
-})(fingers || (fingers = {}));
 
 var fingers;
 (function (fingers) {
@@ -1566,9 +757,863 @@ var fingers;
 })(fingers || (fingers = {}));
 var finger = fingers.finger;
 
+var fingers;
+(function (fingers) {
+    var Rot = (function () {
+        function Rot(el) {
+            if (!el) {
+                return;
+            }
+            this.target = el;
+            el.$rot$ = this;
+            var pos = [el.astyle(["left"]), el.astyle(["top"])];
+            el.style.left = pos[0];
+            el.style.top = pos[1];
+            var rc = el.getBoundingClientRect();
+            this.origin = {
+                center: [rc.width / 2, rc.height / 2],
+                angle: 0,
+                scale: [1, 1],
+                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
+                size: [rc.width, rc.height]
+            };
+            this.cmt = {
+                center: [rc.width / 2, rc.height / 2],
+                angle: 0,
+                scale: [1, 1],
+                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
+                size: [rc.width, rc.height]
+            };
+            this.cache = {
+                center: [rc.width / 2, rc.height / 2],
+                angle: 0,
+                scale: [1, 1],
+                pos: [parseFloat(pos[0]), parseFloat(pos[1])],
+                size: [rc.width, rc.height]
+            };
+            this.status = [];
+            this.center = document.createElement("div");
+            this.center.style.position = 'absolute';
+            this.center.style.left = '50%';
+            this.center.style.top = '50%';
+            this.center.style.width = '0px';
+            this.center.style.height = '0px';
+            this.center.style.border = 'solid 0px blue';
+            el.appendChild(this.center);
+            this.setOrigin(this.origin.center);
+            el.style.transform = "rotate(0deg)";
+            this.pushStatus();
+        }
+        Rot.prototype.rotate = function (arg, undef) {
+            if (!arg) {
+                return this;
+            }
+            var cache = this.cache;
+            var origin = this.cmt;
+            var offset = this.offset;
+            var angle = arg.angle, center = arg.center, scale = arg.scale, pos = arg.pos, resize = arg.resize;
+            if (!offset) {
+                offset = [0, 0];
+            }
+            if (center !== undef) {
+                this.pushStatus();
+                this.setOrigin(center);
+                var cstatus = this.pushStatus();
+                offset = this.correct(cstatus, offset);
+            }
+            if (angle || angle === 0) {
+                cache.angle = origin.angle + angle;
+                cache.angle = cache.angle % 360;
+            }
+            if (resize) {
+                cache.size = [origin.size[0] + resize[0], origin.size[1] + resize[1]];
+                if (cache.size[0] < 10) {
+                    cache.size[0] = 10;
+                }
+                if (cache.size[1] < 10) {
+                    cache.size[1] = 10;
+                }
+            }
+            if (scale) {
+                if (!(scale instanceof Array)) {
+                    var n = parseFloat(scale);
+                    scale = [n, n];
+                }
+                cache.scale = [origin.scale[0] * scale[0], origin.scale[1] * scale[1]];
+            }
+            if (pos) {
+                cache.pos = [origin.pos[0] + pos[0] - offset[0], origin.pos[1] + pos[1] - offset[1]];
+            }
+            this.target.style.transform = 'rotateZ(' + cache.angle + 'deg) scale(' + cache.scale[0] + ',' + cache.scale[1] + ')';
+            this.target.style.left = cache.pos[0] + 'px';
+            this.target.style.top = cache.pos[1] + 'px';
+            if (resize) {
+                this.target.style.width = cache.size[0] + 'px';
+                this.target.style.height = cache.size[1] + 'px';
+            }
+            this.pushStatus();
+            return this;
+        };
+        Rot.prototype.getCenter = function () {
+            var rc = this.center.getBoundingClientRect();
+            return [rc.left, rc.top];
+        };
+        Rot.prototype.setOrigin = function (p) {
+            this.target.style.transformOrigin = p[0] + "px " + p[1] + "px";
+        };
+        Rot.prototype.correct = function (status, poffset) {
+            if (!poffset) {
+                poffset = [0, 0];
+            }
+            var d = status.delta;
+            var x = parseFloat(this.target.astyle["left"]) - d.center[0];
+            var y = parseFloat(this.target.astyle["top"]) - d.center[1];
+            this.offset = [poffset[0] + d.center[0], poffset[1] + d.center[1]];
+            this.target.style.left = x + "px";
+            this.target.style.top = y + "px";
+            return this.offset;
+        };
+        Rot.prototype.commitStatus = function () {
+            this.cmt = this.cache;
+            this.cmt.pos = [parseFloat(this.target.style.left), parseFloat(this.target.style.top)];
+            this.cmt.size = [parseFloat(this.target.style.width), parseFloat(this.target.style.height)];
+            this.cache = { angle: 0, scale: [1, 1], pos: [0, 0], size: [0, 0] };
+            this.offset = [0, 0];
+        };
+        Rot.prototype.pushStatus = function () {
+            var c = this.getCenter();
+            var l = [parseFloat(this.target.astyle(["left"])), parseFloat(this.target.astyle(["top"]))];
+            var s = { center: [c[0], c[1]], pos: l };
+            var q = this.status;
+            var p = q.length > 0 ? q[q.length - 1] : s;
+            s.delta = { center: [s.center[0] - p.center[0], s.center[1] - p.center[1]],
+                pos: [s.pos[0] - p.pos[0], s.pos[1] - p.pos[1]] };
+            q[q.length] = s;
+            if (q.length > 6) {
+                q.splice(0, 1);
+            }
+            return s;
+        };
+        return Rot;
+    }());
+    function Rotator(el) {
+        var r = el.$rot$ || new Rot(el);
+        return r;
+    }
+    fingers.Rotator = Rotator;
+})(fingers || (fingers = {}));
+
+String.prototype.startsWith = function (str) {
+    return this.indexOf(str) == 0;
+};
+String.prototype.format = function () {
+    var args = arguments;
+    var s = this;
+    if (!args || args.length < 1) {
+        return s;
+    }
+    var r = s;
+    for (var i = 0; i < args.length; i++) {
+        var reg = new RegExp('\\{' + i + '\\}');
+        r = r.replace(reg, args[i]);
+    }
+    return r;
+};
+
+var wo;
+(function (wo) {
+    wo.Creators = [];
+    function get(selector) {
+        var rlt = [];
+        if (selector) {
+            try {
+                rlt = document.querySelectorAll(selector);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+        return rlt;
+    }
+    var Cursor = (function () {
+        function Cursor() {
+        }
+        return Cursor;
+    }());
+    wo.Cursor = Cursor;
+    var Creator = (function () {
+        function Creator() {
+        }
+        Object.defineProperty(Creator.prototype, "Id", {
+            get: function () {
+                return this.id;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Creator.prototype.Create = function (json, cs) {
+            if (!json) {
+                return null;
+            }
+            var o = this.create(json);
+            if (!cs) {
+                cs = new Cursor();
+                cs.root = o;
+                cs.parent = null;
+                cs.border = o;
+                cs.curt = o;
+                o.cursor = cs;
+            }
+            else {
+                var ncs = new Cursor();
+                ncs.root = cs.root;
+                ncs.parent = cs.curt;
+                ncs.border = cs.border;
+                ncs.curt = o;
+                o.cursor = ncs;
+                cs = ncs;
+            }
+            if (json.alias) {
+                var n = json.alias;
+                if (json.alias.startsWith("$")) {
+                    n = json.alias.substr(1, json.alias.length - 1);
+                }
+                cs.border["$" + n] = o;
+                if (json.alias.startsWith("$")) {
+                    cs.border = o;
+                }
+            }
+            delete json[this.Id];
+            this.extend(o, json);
+            if (json.made) {
+                json.made.call(o);
+            }
+            o.$root = cs.root;
+            o.$border = cs.border;
+            return o;
+        };
+        return Creator;
+    }());
+    wo.Creator = Creator;
+    function append(el, child) {
+        if (el.append && typeof (el.append) == 'function') {
+            el.append(child);
+        }
+        else {
+            el.appendChild(child);
+        }
+    }
+    wo.append = append;
+    function use(json, cs) {
+        var rlt = null;
+        if (!json) {
+            return rlt;
+        }
+        var container = null;
+        if (json.$container$) {
+            container = json.$container$;
+            delete json.$container$;
+        }
+        if (typeof (json) == 'string') {
+            rlt = get(json);
+        }
+        for (var _i = 0, Creators_1 = wo.Creators; _i < Creators_1.length; _i++) {
+            var i = Creators_1[_i];
+            if (json[i.Id]) {
+                rlt = i.Create(json, cs);
+                break;
+            }
+        }
+        if (container) {
+            container.appendChild(rlt);
+        }
+        return rlt;
+    }
+    wo.use = use;
+    function objextend(o, json) {
+        for (var i in json) {
+            if (o[i] && typeof (o[i]) == 'object') {
+                objextend(o[i], json[i]);
+            }
+            else {
+                o[i] = json[i];
+            }
+        }
+    }
+    wo.objextend = objextend;
+})(wo || (wo = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var wo;
+(function (wo) {
+    var DomCreator = (function (_super) {
+        __extends(DomCreator, _super);
+        function DomCreator() {
+            _super.call(this);
+            this.id = "tag";
+        }
+        DomCreator.prototype.create = function (json) {
+            if (json == null) {
+                return null;
+            }
+            var tag = json[this.id];
+            var el;
+            if (tag == '#text') {
+                el = document.createTextNode(tag);
+            }
+            else {
+                el = document.createElement(tag);
+            }
+            return el;
+        };
+        DomCreator.prototype.extend = function (o, json) {
+            if (json instanceof Node || json instanceof Element) {
+                debugger;
+                return;
+            }
+            if (o instanceof HTMLElement) {
+                domextend(o, json);
+            }
+            else if (json.$ && o instanceof Node) {
+                o.nodeValue = json.$;
+            }
+            else if (o.extend) {
+                o.extend(json);
+            }
+        };
+        return DomCreator;
+    }(wo.Creator));
+    wo.DomCreator = DomCreator;
+    function domextend(el, json) {
+        var cs = el.cursor;
+        for (var i in json) {
+            if (i.startsWith("$$")) {
+                var target = el[i];
+                var type_1 = typeof target;
+                if (type_1 == 'object') {
+                    var vtype = typeof json[i];
+                    if (vtype == 'object') {
+                        domextend(target, json[i]);
+                    }
+                    else {
+                        el[i] = json[i];
+                    }
+                }
+                else {
+                    el[i] = json[i];
+                }
+            }
+            else if (i == "$") {
+                var type_2 = typeof json[i];
+                if (json[i] instanceof Array) {
+                    for (var _i = 0, _a = json[i]; _i < _a.length; _i++) {
+                        var j = _a[_i];
+                        var child = wo.use(j, cs);
+                        if (child != null) {
+                            wo.append(el, child);
+                        }
+                    }
+                }
+                else if (type_2 == 'object') {
+                    var child = wo.use(json[i], cs);
+                    if (child != null) {
+                        wo.append(el, child);
+                    }
+                    else {
+                        debugger;
+                    }
+                }
+                else {
+                    el.innerHTML = json[i];
+                }
+            }
+            else if (i.startsWith("$")) {
+                el[i] = json[i];
+            }
+            else {
+                var type = typeof json[i];
+                if (type == "function") {
+                    el[i] = json[i];
+                }
+                else {
+                    if (el[i] && typeof (el[i]) == 'object') {
+                        wo.objextend(el[i], json[i]);
+                    }
+                    else {
+                        el.setAttribute(i, json[i]);
+                    }
+                }
+            }
+        }
+    }
+    wo.domextend = domextend;
+})(wo || (wo = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var wo;
+(function (wo) {
+    var SvgCreator = (function (_super) {
+        __extends(SvgCreator, _super);
+        function SvgCreator() {
+            _super.call(this);
+            this.id = "sg";
+        }
+        SvgCreator.prototype.create = function (json) {
+            if (json == null) {
+                return null;
+            }
+            var tag = json[this.id];
+            var el;
+            if (tag == "svg") {
+                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+            }
+            else {
+                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+            }
+            return el;
+        };
+        SvgCreator.prototype.extend = function (o, json) {
+            if (json instanceof Node || json instanceof Element) {
+                debugger;
+                return;
+            }
+            if (o instanceof SVGElement) {
+                svgextend(o, json);
+            }
+            else if (json.$ && o instanceof Node) {
+                o.nodeValue = json.$;
+            }
+            else if (o.extend) {
+                o.extend(json);
+            }
+        };
+        return SvgCreator;
+    }(wo.Creator));
+    wo.SvgCreator = SvgCreator;
+    function svgextend(el, json) {
+        var cs = el.cursor;
+        for (var i in json) {
+            if (i.startsWith("$$")) {
+                var target = el[i];
+                var type_1 = typeof target;
+                if (type_1 == 'object') {
+                    var vtype = typeof json[i];
+                    if (vtype == 'object') {
+                        svgextend(target, json[i]);
+                    }
+                    else {
+                        el[i] = json[i];
+                    }
+                }
+                else {
+                    el[i] = json[i];
+                }
+            }
+            else if (i == "$") {
+                var type_2 = typeof json[i];
+                if (json[i] instanceof Array) {
+                    for (var _i = 0, _a = json[i]; _i < _a.length; _i++) {
+                        var j = _a[_i];
+                        var child = wo.use(j, cs);
+                        if (child != null) {
+                            wo.append(el, child);
+                        }
+                    }
+                }
+                else if (type_2 == 'object') {
+                    var child = wo.use(json[i], cs);
+                    if (child != null) {
+                        wo.append(el, child);
+                    }
+                    else {
+                        debugger;
+                    }
+                }
+                else {
+                    el.innerHTML = json[i];
+                }
+            }
+            else if (i.startsWith("$")) {
+                el[i] = json[i];
+            }
+            else {
+                var type = typeof json[i];
+                if (type == "function") {
+                    el[i] = json[i];
+                }
+                else {
+                    if (el[i] && typeof (el[i]) == 'object') {
+                        wo.objextend(el[i], json[i]);
+                    }
+                    else {
+                        el.setAttributeNS(null, i, json[i]);
+                    }
+                }
+            }
+        }
+    }
+})(wo || (wo = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var wo;
+(function (wo) {
+    wo.Widgets = {};
+    var UiCreator = (function (_super) {
+        __extends(UiCreator, _super);
+        function UiCreator() {
+            _super.call(this);
+            this.id = "ui";
+        }
+        UiCreator.prototype.create = function (json) {
+            if (json == null) {
+                return null;
+            }
+            var wg = json[this.id];
+            if (!wo.Widgets[wg]) {
+                return null;
+            }
+            var el = wo.use(wo.Widgets[wg]());
+            return el;
+        };
+        UiCreator.prototype.extend = function (o, json) {
+            if (json instanceof Node || json instanceof Element) {
+                debugger;
+                return;
+            }
+            if (o instanceof HTMLElement) {
+                domapply(o, json);
+            }
+            else if (json.$ && o instanceof Node) {
+                o.nodeValue = json.$;
+            }
+            else if (o.extend) {
+                o.extend(json);
+            }
+        };
+        return UiCreator;
+    }(wo.Creator));
+    wo.UiCreator = UiCreator;
+    function domapply(el, json) {
+        var cs = el.cursor;
+        for (var i in json) {
+            if (i.startsWith("$$")) {
+                var target = el[i];
+                var type_1 = typeof target;
+                if (type_1 == 'object') {
+                    var vtype = typeof json[i];
+                    if (vtype == 'object') {
+                        domapply(target, json[i]);
+                    }
+                    else {
+                        el[i] = json[i];
+                    }
+                }
+                else {
+                    el[i] = json[i];
+                }
+            }
+            else if (i == "$") {
+                var type_2 = typeof json[i];
+                var ji = json[i];
+                if (type_2 == 'object') {
+                    ji = [ji];
+                }
+                if (ji instanceof Array) {
+                    var nodes = el.childNodes;
+                    for (var j = 0; j < ji.length; j++) {
+                        var item = ji[j];
+                        if (j < nodes.length) {
+                            domapply(nodes[j], item);
+                        }
+                        else {
+                            var child = wo.use(item, cs);
+                            if (child != null) {
+                                wo.append(el, child);
+                            }
+                        }
+                    }
+                }
+                else {
+                    el.innerHTML = json[i];
+                }
+            }
+            else if (i.startsWith("$")) {
+                el[i] = json[i];
+            }
+            else if (i == "style") {
+                wo.objextend(el[i], json[i]);
+            }
+            else {
+                var type = typeof json[i];
+                if (type == "function") {
+                    el[i] = json[i];
+                }
+                else {
+                    if (el[i] && typeof (el[i]) == 'object') {
+                        wo.objextend(el[i], json[i]);
+                    }
+                    else {
+                        el.setAttribute(i, json[i]);
+                    }
+                }
+            }
+        }
+    }
+    wo.domapply = domapply;
+})(wo || (wo = {}));
+
 wo.Creators.add(new wo.DomCreator());
 wo.Creators.add(new wo.SvgCreator());
 wo.Creators.add(new wo.UiCreator());
+
+var MobileDevice = (function () {
+    function MobileDevice() {
+    }
+    Object.defineProperty(MobileDevice, "Android", {
+        get: function () {
+            var r = navigator.userAgent.match(/Android/i);
+            if (r) {
+                console.log('match Android');
+            }
+            return r != null && r.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MobileDevice, "BlackBerry", {
+        get: function () {
+            var r = navigator.userAgent.match(/BlackBerry/i);
+            if (r) {
+                console.log('match Android');
+            }
+            return r != null && r.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MobileDevice, "iOS", {
+        get: function () {
+            var r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            if (r) {
+                console.log('match Android');
+            }
+            return r != null && r.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MobileDevice, "Opera", {
+        get: function () {
+            var r = navigator.userAgent.match(/Opera Mini/i);
+            if (r) {
+                console.log('match Android');
+            }
+            return r != null && r.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MobileDevice, "Windows", {
+        get: function () {
+            var r = navigator.userAgent.match(/IEMobile/i);
+            if (r) {
+                console.log('match Android');
+            }
+            return r != null && r.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MobileDevice, "any", {
+        get: function () {
+            return (MobileDevice.Android || MobileDevice.BlackBerry || MobileDevice.iOS || MobileDevice.Opera || MobileDevice.Windows);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return MobileDevice;
+}());
+var Browser = (function () {
+    function Browser() {
+    }
+    Object.defineProperty(Browser, "isOpera", {
+        get: function () {
+            return (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isFirefox", {
+        get: function () {
+            return typeof window.InstallTrigger !== 'undefined';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isSafari", {
+        get: function () {
+            return Object.prototype.toString.call(HTMLElement).indexOf('Constructor') > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isIE", {
+        get: function () {
+            return false || !!document.documentMode;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isEdge", {
+        get: function () {
+            return !Browser.isIE && !!window.StyleMedia;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isChrome", {
+        get: function () {
+            return !!window.chrome && !!window.chrome.webstore;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Browser, "isBlink", {
+        get: function () {
+            return (Browser.isChrome || Browser.isOpera) && !!window.CSS;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Browser;
+}());
+
+Element.prototype.astyle = function actualStyle(props) {
+    var el = this;
+    var compStyle = window.getComputedStyle(el, null);
+    for (var i = 0; i < props.length; i++) {
+        var style = compStyle.getPropertyValue(props[i]);
+        if (style != null) {
+            return style;
+        }
+    }
+    return null;
+};
+var wo;
+(function (wo) {
+    var Destroyer = (function () {
+        function Destroyer() {
+        }
+        Destroyer.destroy = function (target) {
+            if (!target.destroyStatus) {
+                target.destroyStatus = new Destroyer();
+            }
+            if (target.dispose && !target.destroyStatus.disposing) {
+                target.destroyStatus.disposing = true;
+                target.dispose();
+            }
+            if (!target.destroyStatus.destroying) {
+                target.destroyStatus.destroying = true;
+                Destroyer.container.appendChild(target);
+                for (var i in target) {
+                    if (i.indexOf('$') == 0) {
+                        var tmp = target[i];
+                        if (tmp instanceof HTMLElement) {
+                            target[i] = null;
+                            tmp = null;
+                        }
+                        else {
+                            delete target[i];
+                        }
+                    }
+                }
+                Destroyer.container.innerHTML = '';
+            }
+        };
+        Destroyer.container = document.createElement("div");
+        return Destroyer;
+    }());
+    function destroy(target) {
+        if (target.length > 0 || target instanceof Array) {
+            for (var _i = 0, target_1 = target; _i < target_1.length; _i++) {
+                var i = target_1[_i];
+                Destroyer.destroy(i);
+            }
+        }
+        else if (target instanceof Element) {
+            Destroyer.destroy(target);
+        }
+    }
+    wo.destroy = destroy;
+    function centerScreen(target) {
+        var rect = target.getBoundingClientRect();
+        target.style.position = "fixed";
+        target.style.left = "50%";
+        target.style.top = "50%";
+        target.style.marginTop = -rect.height / 2 + "px";
+        target.style.marginLeft = -rect.width / 2 + "px";
+    }
+    wo.centerScreen = centerScreen;
+})(wo || (wo = {}));
+
+var test = $("div");
+
+var wo;
+(function (wo) {
+    wo.Widgets.card = function () {
+        return {
+            tag: "div",
+            class: "card",
+            setval: function (val) {
+                for (var i in val) {
+                    var v = val[i];
+                    var t = this["$" + i];
+                    if (t) {
+                        if (typeof (v) == 'object') {
+                            if (!v.mode || (v.mode == "prepend" && t.childNodes.length < 1)) {
+                                v.mode = "append";
+                            }
+                            if (v.mode == "replace") {
+                                t.innerHTML = "";
+                                v.mode = "append";
+                            }
+                            if (v.mode == "prepend") {
+                                t.insertBefore(v.target, t.childNodes[0]);
+                            }
+                            else {
+                                t.appendChild(v.target);
+                            }
+                        }
+                        else {
+                            $(t).text(v);
+                        }
+                    }
+                }
+            },
+            $: [
+                { tag: "div", class: "title noselect", $: [
+                        { tag: "div", class: "txt", alias: "title" },
+                        { tag: "div", class: "ctrls", $: [
+                                { tag: "div", class: "wbtn", onclick: function (event) { wo.destroy(this.$border); }, $: "X" }
+                            ] }
+                    ] },
+                { tag: "div", class: "body", alias: "body" }
+            ]
+        };
+    };
+})(wo || (wo = {}));
 
 var wo;
 (function (wo) {
@@ -1623,51 +1668,6 @@ var wo;
         cv.onhide = json.onhide;
     }
     wo.cover = cover;
-})(wo || (wo = {}));
-
-var wo;
-(function (wo) {
-    wo.Widgets.card = function () {
-        return {
-            tag: "div",
-            class: "card",
-            setval: function (val) {
-                for (var i in val) {
-                    var v = val[i];
-                    var t = this["$" + i];
-                    if (t) {
-                        if (typeof (v) == 'object') {
-                            if (!v.mode || (v.mode == "prepend" && t.childNodes.length < 1)) {
-                                v.mode = "append";
-                            }
-                            if (v.mode == "replace") {
-                                t.innerHTML = "";
-                                v.mode = "append";
-                            }
-                            if (v.mode == "prepend") {
-                                t.insertBefore(v.target, t.childNodes[0]);
-                            }
-                            else {
-                                t.appendChild(v.target);
-                            }
-                        }
-                        else {
-                            $(t).text(v);
-                        }
-                    }
-                }
-            },
-            $: [
-                { tag: "div", class: "title noselect", $: [
-                        { tag: "div", class: "txt", alias: "title" },
-                        { tag: "div", class: "ctrls", $: [
-                                { tag: "div", class: "wbtn", onclick: function (event) { wo.destroy(this.$border); }, $: "X" }
-                            ] }
-                    ] },
-                { tag: "div", class: "body", alias: "body" }
-            ]
-        };
-    };
 })(wo || (wo = {}));
 
 var wo;
