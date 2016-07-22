@@ -8,6 +8,7 @@ var web     =   require("gulp-webserver");
 var bnd     =   require("gulp-concat");
 var nocmt   =   require("gulp-strip-comments");
 var jade    =   require("gulp-jade");
+var b64     =   require("gulp-base64");
 
 var tsproj = ts.createProject("tsconfig.json");
 
@@ -17,6 +18,10 @@ function buildev(){
         .pipe(gulp.dest("./dist/scripts"))
     gulp.src(["./src/**/*.scss"])
         .pipe(scss().on("error", scss.logError))
+        .pipe(b64({
+            maxImageSize: 8*1024,
+            deleteAfterEncoding: false
+        }))
         .pipe(gulp.dest("./dist/themes"));
     gulp.src("./src/**/*.jade")
         .pipe(jade({
