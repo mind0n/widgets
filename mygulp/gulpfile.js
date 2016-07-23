@@ -2,6 +2,7 @@ var gulp    =   require("gulp");
 var mcss    =   require("gulp-clean-css");
 var scss    =   require("gulp-sass");
 var ts      =   require("gulp-typescript");
+var ut      =   require("gulp-typescript");
 var minify  =   require("gulp-minify");
 var map     =   require("gulp-sourcemaps");
 var web     =   require("gulp-webserver");
@@ -11,6 +12,7 @@ var jade    =   require("gulp-jade");
 var b64     =   require("gulp-base64");
 
 var tsproj = ts.createProject("tsconfig.json");
+var utproj = ut.createProject("tsconfig.test.json");
 
 
 function buildev(){
@@ -73,6 +75,27 @@ gulp.task("default", function(){
     buildev();
 });
 
+gulp.task("ut", function(){
+    buildev();
+    var tsResult = utproj.src()
+        .pipe(ts(utproj));
+
+    tsResult.js
+        .pipe(nocmt())
+        .pipe(bnd("tests.js"))
+        .pipe(minify({ext:{src:".js", min:"-min.js"}, ignoreFiles:["-min.js"], exclude:["tasks"]}))
+        .pipe(gulp.dest("./dist/tests"));
+
+    gulp.src('./').pipe(web({
+        fallback:"spec/specrunner.html",
+        host:"127.0.0.1",
+        port:9999,
+        livereload:true,
+        directoryListing:false,
+        open:true
+    }));    
+});
+
 gulp.task("deploy", function(){
     gulp.src(["./dist/scripts/*-min.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/scripts"));
@@ -101,6 +124,6 @@ gulp.task("dev", function(){
     }));
 });
 
-// gulp.task("watch", ["default"], function(){
-//     gulp.watch("./src/**/*.*", ["default"]);
-// });
+gulp.task("watch", ["default"], function(){
+    gulp.watch("./src/**/*.*", ["default"]);
+});
