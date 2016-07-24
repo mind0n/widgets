@@ -1,11 +1,11 @@
 // Karma configuration
-// Generated on Sat Jul 23 2016 18:03:42 GMT+0800 (中国标准时间)
+// Generated on Sun Jul 24 2016 22:15:07 GMT+0800 (中国标准时间)
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: './',
+    basePath: '',
 
 
     // frameworks to use
@@ -15,26 +15,44 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "spec/karmaspec.html",
-      {pattern:"./**/*.*", watched:true, included:false, served:true, nocache:true }
+      "dist/scripts/**/*.js",
+      'dist/tests/tests.js'
     ],
+
 
     // list of files to exclude
     exclude: [
-      'scripts/**/*.*'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      "dist/tests/tests.js":["coverage"]
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    // reporters: ['progress','coverage', 'jasmine-spec-runner'],
+    // jasmineSpecRunnerReporter:{
+    //   jasmineCoreDir:'jasmine-core'
+    // },
+    reporters: ['spec', 'coverage'],
+    specReporter: {
+        maxLogLines: 5,         // limit number of lines logged per test
+        suppressErrorSummary: true,  // do not print error summary
+        suppressFailed: false,  // do not print information about failed tests
+        suppressPassed: false,  // do not print information about passed tests
+        suppressSkipped: true,  // do not print information about skipped tests
+        showSpecTiming: false // print the time elapsed for each spec
+    },
+    //plugins: ["karma-spec-reporter"],
+
+    coverageReporter:{
+      type:'html',
+      dir:'coverage/'
+    },
 
 
     // web server port
