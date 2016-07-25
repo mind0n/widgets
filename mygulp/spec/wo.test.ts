@@ -1,9 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
 
-// describe('1st tests', () => {
-//   it('true is true', () => expect(true).toEqual(true));
-// });
-
 describe("wo.js test suite", function(){
     it("wo should exist", function(){
         expect(wo).toBeTruthy();
