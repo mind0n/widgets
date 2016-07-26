@@ -6,7 +6,7 @@ namespace wo{
         return  {
             tag:"div",
             class:"dropdown",
-            setval: function(val:any):void{
+            set: function(val:any):void{
                 for(let i in val){
                     let v = val[i];
                     let t = this["$" + i];

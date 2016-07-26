@@ -1,5 +1,35 @@
 /// <reference path="../foundation/string.ts" />
 
+Element.prototype.set = function(val:any):void{
+	for(let i in val){
+		let v = val[i];
+		let t = this["$" + i];
+		if (t){
+			if (typeof (v) == 'object'){
+				let tmp = wo.use(v.target);
+                if (tmp){
+                    v.target = tmp;
+                }
+				if (!v.mode || (v.mode == "prepend" && t.childNodes.length < 1)){
+					v.mode = "append";
+				}
+				if (v.mode == "replace"){
+					t.innerHTML = "";
+					v.mode = "append";
+				}
+				if (v.mode == "prepend"){
+					t.insertBefore(v.target, t.childNodes[0]);
+				}else{
+					t.appendChild(v.target);
+				}                            
+			}else{
+                console.log(v);
+				$(t).text(v);
+			}
+		}
+	}            
+};
+
 namespace wo{
     /// Contains creator instance object
     export let Creators:Creator[] = [];
@@ -84,7 +114,7 @@ namespace wo{
 
     export function use(json:any, cs?:Cursor):any{
         let rlt:any = null;
-        if (!json){
+        if (!json || json instanceof Element){
             return rlt;
         }
         let container:any = null;

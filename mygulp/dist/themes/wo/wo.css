@@ -539,18 +539,49 @@ body {
 .sass-issue {
   cursor: default; }
 
-.wo.basic .loading, .wo .basic .loading {
-  border: solid 1px #ccc;
-  border-radius: 1em;
-  width: 64px;
-  height: 64px;
-  overflow: hidden;
-  background-color: #eee; }
-  .wo.basic .loading .arc, .wo .basic .loading .arc {
-    fill: none;
-    stroke: #000;
-    stroke-width: 4;
-    stroke-opacity: .5; }
+.wo .card {
+  position: relative;
+  padding: 0px;
+  border-radius: 0.2em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  min-height: 100px; }
+
+.wo .card .title, .wo .card .body {
+  position: relative;
+  padding: 8px; }
+
+.wo .card .title .txt {
+  font-weight: 600;
+  cursor: default; }
+
+.wo .card .title .ctrls {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  display: none; }
+
+.wo .card.form .title .ctrls {
+  display: initial; }
+
+.wo .card .title .ctrls .wbtn {
+  font: 12px arial;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 0.2em;
+  padding: 0;
+  width: 24px;
+  height: 24px; }
+
+.wo .card.static .body {
+  position: absolute;
+  top: 33px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px; }
+
+.sass-issue {
+  cursor: default; }
 
 .sass-issue {
   cursor: default; }
@@ -603,3 +634,16 @@ body {
 
 .wo.basic .card .title .ctrls .wbtn, .wo .basic .card .title .ctrls .wbtn {
   color: #bbb; }
+
+.wo.basic .loading, .wo .basic .loading {
+  border: solid 1px #ccc;
+  border-radius: 1em;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  background-color: #eee; }
+  .wo.basic .loading .arc, .wo .basic .loading .arc {
+    fill: none;
+    stroke: #000;
+    stroke-width: 4;
+    stroke-opacity: .5; }

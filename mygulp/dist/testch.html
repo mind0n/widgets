@@ -24,7 +24,7 @@
                     style:{height:h, overflow:"hidden"},
                     made:function(){
                         this.$body.style.overflow = "auto";
-                        this.setval({
+                        this.set({
                             title: "Raw Events",
                             body:""
                         })
@@ -37,7 +37,7 @@
                     id:"pcc",
                     style:{height:h, overflow:"auto"},
                     made:function(){
-                        this.setval({
+                        this.set({
                             title: "Recognized Events",
                             body:""
                         })
@@ -53,7 +53,7 @@
                     }},
                     onact:function(inq){
                         if (rawenable){
-                            $("#rcc")[0].setval({body:''});
+                            $("#rcc")[0].set({body:''});
                             for(var j=0; j<inq.length; j++){
                                 var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
                                 var acts = inq[j];
@@ -61,13 +61,13 @@
                                     var act = acts[i];
                                     el.innerHTML += act.act + "<br />";
                                 }
-                                $("#rcc")[0].setval({body:{mode:"append", target:el}});
+                                $("#rcc")[0].set({body:{mode:"append", target:el}});
                             }
                         }
                     },onrecognized:function(act){
                         var el = wo.use({tag:"div", style:{border:"solid 1px silver"}});
                         el.innerHTML = act.act;
-                        $("#pcc")[0].setval({body:{mode:"prepend", target:el}});
+                        $("#pcc")[0].set({body:{mode:"prepend", target:el}});
                     }
                 });
                 cfg.enabled = true;

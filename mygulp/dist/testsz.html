@@ -23,7 +23,7 @@
                     style:{height:h, overflow:"hidden"},
                     made:function(){
                         this.$body.style.overflow = "auto";
-                        this.setval({
+                        this.set({
                             title: "Raw Events",
                             body:""
                         })
@@ -36,7 +36,7 @@
                     id:"pcc",
                     style:{height:h, overflow:"auto"},
                     made:function(){
-                        this.setval({
+                        this.set({
                             title: "Recognized Events",
                             body:""
                         })
@@ -55,7 +55,7 @@
                         alias:"box",
                         style:{width:"80%", display:"none"},
                         made:function(){
-                            this.setval({
+                            this.set({
                                 title: "Card Title",
                                 body:"Card Body Content"
                             });

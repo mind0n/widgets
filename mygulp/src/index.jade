@@ -20,10 +20,19 @@ html
                     style:{height:h, overflow:"hidden"},
                     made:function(){
                         this.$body.style.overflow = "auto";
-                        this.setval({
+                        this.set({
                             title: "Raw Events",
-                            body:""
-                        })
+                            body:{
+                                    mode:"append", target:{
+                                    ui:"card",
+                                    class:"card static",
+                                    alias:"inbox",
+                                    made:function(){
+                                        this.set({title:"Content"});
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
 
@@ -33,7 +42,7 @@ html
                     id:"pcc",
                     style:{height:h, overflow:"auto"},
                     made:function(){
-                        this.setval({
+                        this.set({
                             title: "Recognized Events",
                             body:""
                         })
@@ -52,7 +61,7 @@ html
                         alias:"box",
                         style:{width:"80%", display:"none"},
                         made:function(){
-                            this.setval({
+                            this.set({
                                 title: "Card Title",
                                 body:"Card Body Content"
                             });

@@ -15,6 +15,7 @@ interface Document{
 interface Element{
 	[name:string]:any;
 	astyle(styles:string[]):string;
+	set(val:any):void;
 	destroyStatus:any;
 	dispose():any;
 }
