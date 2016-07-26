@@ -1,0 +1,45 @@
+.sass-issue{cursor:default;}
+
+#{$root}{
+    .card{
+        position:relative;
+        padding:0px;
+        border-radius: $bradius;
+        margin-bottom:1em;
+        margin-top:1em;
+        min-height:100px;
+    }
+    .card .title, .card .body{
+        position: relative;
+        padding:8px;
+    }
+    .card .title .txt{
+        font-weight: $weight-title; 
+        cursor:default;
+    }
+    .card .title .ctrls{
+        position: absolute;
+        right:4px;
+        top:4px;
+        display:none;
+    }
+    .card.form .title .ctrls{
+        display:initial;
+    }
+    .card .title .ctrls .wbtn{
+        font:12px arial;
+        text-align: center;
+        line-height: 24px;
+        border-radius: $bradius;
+        padding:0;
+        width:24px;
+        height:24px;
+    }
+    .card.static .body{
+        position: absolute;
+        top: 33px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+}

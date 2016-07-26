@@ -19,19 +19,4 @@ $cl-disable:#bbb;
 
 $cl-highlight:#14c;
 
-#{$root}.basic, #{$root} .basic{
-    .loading{
-        border:$bd-default;
-        border-radius: $bradius-large;
-        width:64px;
-        height:64px;
-        overflow: hidden;
-        background-color:$bg-default;
-        .arc{
-            fill:none;
-            stroke:#000;
-            stroke-width: 4;
-            stroke-opacity: .5;
-        }
-    }
-}
+
