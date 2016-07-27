@@ -36,6 +36,19 @@ namespace wo{
             }
         }
     }
+    
+    export function iswidget(json:any):boolean{
+        if (!json || !json.ui){
+            return false;
+        }
+
+        for(let i in Widgets){
+            if (i == json.ui){
+                return true;
+            }
+        }
+        return false;
+    }
 
     export function domapply(el:any, json:any){
         let cs = el.cursor;
@@ -59,17 +72,31 @@ namespace wo{
                 if (type == 'object'){
                     ji = [ji];
                 }
-                
                 if (ji instanceof Array){
                     let nodes = el.childNodes;
                     for(let j = 0; j<ji.length; j++){
                         let item = ji[j];
-                        if (j < nodes.length){
-                            domapply(nodes[j], item);
+                        if (wo.iswidget(item)){
+                            if (el.use){
+                                el.use(item, cs);
+                            }else{
+                                let child = use(item, cs);
+                                if (child != null){
+                                    append(el, child);
+                                }
+                            }
                         }else{
-                            let child = use(item, cs);
-                            if (child != null){
-                                append(el, child);
+                            if (j < nodes.length){
+                                domapply(nodes[j], item);
+                            }else{
+                                if (el.use){
+                                    el.use(item, cs);
+                                }else{
+                                    let child = use(item, cs);
+                                    if (child != null){
+                                        append(el, child);
+                                    }
+                                }
                             }
                         }
                     }

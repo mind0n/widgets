@@ -35,19 +35,34 @@ html
                         });
                     }
                 });
-
+                raw.set({
+                    title: "Raw Events",
+                    body:{
+                            mode:"append", target:{
+                            ui:"card",
+                            class:"card static",
+                            alias:"inbox",
+                            made:function(){
+                                this.set({title:"Content"});
+                            }
+                        }
+                    }
+                });
                 var psr = wo.use({
                     ui:"card",
                     alias:"box",
                     id:"pcc",
                     style:{height:h, overflow:"auto"},
-                    made:function(){
-                        this.set({
-                            title: "Recognized Events",
-                            body:""
-                        })
+                    $:{
+                        ui:"card",
+                        class:"card static",
+                        alias:"testbox",
+                        made:function(){
+                            this.set({title:"Content"});
+                        }
                     }
                 });
+                psr.set({title:"Caption"});
 
                 $("#rc").append(raw);
                 $("#pc").append(psr);

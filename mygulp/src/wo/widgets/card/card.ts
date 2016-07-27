@@ -6,6 +6,10 @@ namespace wo{
         return  {
             tag:"div",
             class:"card",
+            use:function(json:any){
+                let child = wo.use(json);
+                this.$body.appendChild(child);
+            },
             $:[
                 {tag:"div", class:"title noselect", $:[
                     {tag:"div", class:"txt", alias:"title"},

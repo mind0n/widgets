@@ -1,9 +1,7 @@
 /// <reference path="../foundation/string.ts" />
 
 Element.prototype.set = function(val:any):void{
-	for(let i in val){
-		let v = val[i];
-		let t = this["$" + i];
+    function add(t:any, v:any):void{
 		if (t){
 			if (typeof (v) == 'object'){
 				let tmp = wo.use(v.target);
@@ -23,10 +21,18 @@ Element.prototype.set = function(val:any):void{
 					t.appendChild(v.target);
 				}                            
 			}else{
-                console.log(v);
 				$(t).text(v);
 			}
 		}
+
+    }
+    if (wo.usable(val)){
+        add(this, val);
+    }
+	for(let i in val){
+		let v = val[i];
+    	let t = this["$" + i];
+        add(t, v);
 	}            
 };
 
@@ -84,7 +90,6 @@ namespace wo{
                 if (json.alias.startsWith("$")){
                     n = json.alias.substr(1, json.alias.length - 1);
                 }
-                //console.log(cs.border, n);
                 cs.border["$" + n] = o;
                 if (json.alias.startsWith("$")){
                     cs.border = o;
@@ -110,6 +115,15 @@ namespace wo{
         }else{
             el.appendChild(child);
         }
+    }
+
+    export function usable(json:any):boolean{
+        for(var i of Creators){
+            if (json[i.Id]){
+                return true;
+            }
+        }
+        return false;
     }
 
     export function use(json:any, cs?:Cursor):any{
