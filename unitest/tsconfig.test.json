@@ -5,7 +5,7 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "rootDir": "./spec",
-        "module": "commonjs",
+        "module": "es2015",
         "moduleResolution": "node",
         "target": "es5",
         "experimentalDecorators": true

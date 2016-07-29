@@ -1,12 +1,11 @@
 /// <reference path="../typings/index.d.ts" />
+import ajax from "../src/src.ts";
 
-describe("wo.js test suite", function(){
-    it("wo should exist", function(){
-        //expect(wo).toBeTruthy();
-        //expect(wo.use).toBeTruthy();
+describe("Unit test demo", function(){
+    it("jQuery should exist", function(){
+        expect($).toBeTruthy();
     });
-    it("Widget card should exist", function(){
-        //var cd = wo.use({ui:"card"});
-        //expect(cd).toBeTruthy();
+    it("ajax util should exist", function(){
+        expect(ajax).toBeTruthy();
     });    
 });

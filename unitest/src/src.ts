@@ -41,7 +41,7 @@ class AjaxUtil{
     }
 }
 
-export function ajax(success:Function, error:Function):AjaxUtil{
+export default function ajax(success:Function, error:Function):AjaxUtil{
     let rlt = new AjaxUtil(success, error);
     return rlt;
 }
