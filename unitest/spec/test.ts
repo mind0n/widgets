@@ -1,5 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
-import ajax from "../src/src.ts";
+/// <reference path="../src/src.ts" />
+import ajax from ajax;
 
 describe("Unit test demo", function(){
     it("jQuery should exist", function(){
