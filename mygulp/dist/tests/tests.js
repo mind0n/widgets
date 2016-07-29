@@ -3,8 +3,8 @@ describe("wo.js test suite", function () {
         expect(wo).toBeTruthy();
         expect(wo.use).toBeTruthy();
     });
-    it("Widget card should exist", function () {
-        var cd = wo.use({ ui: "card" });
-        expect(cd).toBeTruthy();
+    it("UiCreator should exist", function () {
+        var creator = new wo.UiCreator();
+        expect(creator).toBeTruthy();
     });
 });

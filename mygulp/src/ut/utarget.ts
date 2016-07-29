@@ -1,0 +1,3 @@
+function testfunc(){
+    return true;
+}

@@ -84,8 +84,10 @@ gulp.task("ut", function(){
         .pipe(nocmt())
         .pipe(bnd("tests.js"))
         .pipe(minify({ext:{src:".js", min:"-min.js"}, ignoreFiles:["-min.js"], exclude:["tasks"]}))
-        .pipe(gulp.dest("./dist/tests"));
+        .pipe(gulp.dest("./dist/tests"));    
+});
 
+gulp.task("utspec", function(){
     gulp.src('./').pipe(web({
         fallback:"spec/specrunner.html",
         host:"127.0.0.1",
@@ -95,6 +97,7 @@ gulp.task("ut", function(){
         open:true
     }));    
 });
+
 
 gulp.task("deploy", function(){
     gulp.src(["./dist/scripts/*-min.*"])
@@ -126,4 +129,8 @@ gulp.task("dev", function(){
 
 gulp.task("watch", ["default"], function(){
     gulp.watch("./src/**/*.*", ["default"]);
+});
+
+gulp.task("utwatch", ["ut"], function(){
+    gulp.watch("./spec/**/*.ts", ["ut"]);
 });

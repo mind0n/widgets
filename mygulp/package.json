@@ -4,7 +4,9 @@
   "description": "Lab project of Gulp",
   "scripts": {
     "build": "gulp",
-    "ut": "gulp ut",
+    "buildut": "gulp ut",
+    "spec": "gulp ut && gulp utspec",
+    "ut": "gulp ut && shell-exec \"gulp utspec\" \"gulp utwatch\"",
     "dev": "shell-exec \"gulp dev\" \"gulp watch\" ",
     "test": "gulp test",
     "deploy": "gulp test && gulp deploy"
