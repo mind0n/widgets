@@ -1,8 +1,4 @@
-import { sayHello } from "./greet";
+import { sayHello } from "./component/greet";
+import { showHello } from "./component/greet";
 
-function showHello(divName: string, name: string) {
-    const elt = document.getElementById(divName);
-    elt.innerText = sayHello(name);
-}
-
-showHello("greeting", "TypeScript");
+showHello("greeting", "js");

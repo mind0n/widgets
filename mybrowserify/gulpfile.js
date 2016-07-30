@@ -7,7 +7,8 @@ var tsify       = require("tsify");
 var web         = require("gulp-webserver");
 
 var paths = {
-    pages: ['src/*.html']
+    pages: ['src/*.html'],
+    specs: ['spec/*.html']
 };
 
 gulp.task("copy-html", function () {
@@ -26,7 +27,7 @@ gulp.task("default", ["copy-html"], function () {
     .plugin(tsify)
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest("dist/scripts"));
 });
 
 gulp.task("dev", ["default"], function(){
@@ -38,4 +39,42 @@ gulp.task("dev", ["default"], function(){
         directoryListing:false,
         open:false
     }));
+});
+
+gulp.task("watch", ["default"], function(){
+    gulp.watch("./src/**/*.*", ["default"]);
+});
+
+gulp.task("copy-ut-html", function () {
+    return gulp.src(paths.specs)
+        .pipe(gulp.dest("dist/tests"));
+});
+
+gulp.task("ut", ["copy-ut-html"], function () {
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: ['spec/tests.ts'],
+        cache: {},
+        packageCache: {}
+    })
+    .plugin(tsify)
+    .bundle()
+    .pipe(source('tests.js'))
+    .pipe(gulp.dest("dist/tests"));
+});
+
+gulp.task("spec", ["ut"], function(){
+    gulp.src('./').pipe(web({
+        fallback:"dist/tests/specrunner.html",
+        host:"127.0.0.1",
+        port:9999,
+        livereload:true,
+        directoryListing:false,
+        open:true
+    }));
+});
+
+gulp.task("utwatch", ["ut"], function(){
+    gulp.watch("./spec/**/*.*", ["ut"]);
 });
