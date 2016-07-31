@@ -86,6 +86,7 @@ namespace wo{
                 cs = ncs;
             }
             if (json.alias){
+                //console.dir(json.alias);
                 let n = json.alias;
                 if (json.alias.startsWith("$")){
                     n = json.alias.substr(1, json.alias.length - 1);
@@ -152,14 +153,5 @@ namespace wo{
         return rlt;
     }
 
-    export function objextend(o:any, json:any){
-        for(let i in json){
-            if (o[i] && typeof(o[i]) == 'object'){
-                objextend(o[i], json[i]);
-            }else{
-                o[i] = json[i];
-            }
-        }
-    }
 
 }
