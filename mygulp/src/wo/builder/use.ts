@@ -108,6 +108,36 @@ namespace wo{
         }
         protected abstract create(json:any):any;
         protected abstract extend(o:any, json:any):void;
+        protected applyattr(el:any, json:any, i:string, cs:any){
+            let target = el[i];
+            if (target){
+                let type = typeof target;
+                if (type == 'object'){
+                    let vtype = typeof json[i];
+                    if (vtype == 'object'){
+                        jextend(target, json[i], this);
+                    }else{
+                        el[i] = json[i];
+                    }
+                }else{
+                    el[i] = json[i];
+                }
+            }else{
+                el[i] = json[i];
+            }
+        }
+        protected applyprop(el:any, json:any, i:string, cs:any){
+            var type = typeof json[i];
+            if (type == "function"){
+                el[i] = json[i];
+            }else{
+                if (el[i] && typeof(el[i]) == 'object'){
+                    objextend(el[i], json[i]);
+                }else{
+                    el.setAttribute(i, json[i]);
+                }
+            }
+        }
     }
 
     export function append(el:any, child:any){
