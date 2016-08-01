@@ -1,5 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-/// <reference path="../src/main.ts" />
+
 import {sayHello} from "../src/component/greet.ts";
 import {showHello} from "../src/component/greet.ts";
 
