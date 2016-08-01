@@ -1,10 +1,17 @@
 /// <reference path="../foundation/string.ts" />
 
-Element.prototype.set = function(val:any):void{
+Element.prototype.set = function(val:any, undef?:any):void{
+    if (val === undef){
+        return;
+    }
 	for(let i in val){
 		let v = val[i];
 		let t = this["$" + i];
 		if (t){
+            if (v === undef){
+                t.innerHTML = '';
+                continue;
+            }
 			if (typeof (v) == 'object'){
 				let tmp = wo.use(v.target);
                 if (tmp){
@@ -23,7 +30,6 @@ Element.prototype.set = function(val:any):void{
 					t.appendChild(v.target);
 				}                            
 			}else{
-                console.log(v);
 				$(t).text(v);
 			}
 		}
