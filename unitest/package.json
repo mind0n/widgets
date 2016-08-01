@@ -1,22 +1,16 @@
 {
-  "name": "mygulp",
+  "name": "UnitTestResearch",
   "version": "1.0.0",
   "description": "Lab project of Gulp",
   "scripts": {
-    "build": "gulp",
-    "buildut": "gulp ut",
-    "spec": "gulp ut && gulp utspec",
-    "ut": "gulp ut && shell-exec \"gulp utspec\" \"gulp utwatch\"",
-    "dev": "shell-exec \"gulp dev\" \"gulp watch\" ",
-    "test": "gulp test",
-    "deploy": "gulp test && gulp deploy"
+    "build": "gulp && gulp ut",
+    "test": "gulp ut && shell-exec \"gulp utreport\" \"gulp utwatch\" "
   },
   "author": "Michael Yuan",
   "license": "Mozilla Public License Version 2.0",
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-base64": "^0.1.3",
-    "gulp-browserify": "^0.5.1",
     "gulp-clean-css": "^2.0.10",
     "gulp-concat": "^2.6.0",
     "gulp-jade": "^1.1.0",
@@ -36,6 +30,7 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "shell-executor": "^0.3.2",
+    "systemjs": "^0.19.35",
     "typings": "^1.3.1"
   },
   "devDependencies": {}

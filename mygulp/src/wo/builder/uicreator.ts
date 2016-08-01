@@ -36,63 +36,18 @@ namespace wo{
             }
         }
     }
+    
+    export function iswidget(json:any):boolean{
+        if (!json || !json.ui){
+            return false;
+        }
 
-    export function domapply(el:any, json:any){
-        let cs = el.cursor;
-        for(let i in json){
-            if (i.startsWith("$$")){
-                let target = el[i];
-                let type = typeof target;
-                if (type == 'object'){
-                    let vtype = typeof json[i];
-                    if (vtype == 'object'){
-                        domapply(target, json[i]);
-                    }else{
-                        el[i] = json[i];
-                    }
-                }else{
-                    el[i] = json[i];
-                }
-            }else if (i == "$"){
-                let type = typeof json[i];
-                let ji = json[i];
-                if (type == 'object'){
-                    ji = [ji];
-                }
-                
-                if (ji instanceof Array){
-                    let nodes = el.childNodes;
-                    for(let j = 0; j<ji.length; j++){
-                        let item = ji[j];
-                        if (j < nodes.length){
-                            domapply(nodes[j], item);
-                        }else{
-                            let child = use(item, cs);
-                            if (child != null){
-                                append(el, child);
-                            }
-                        }
-                    }
-                }else{
-                    el.innerHTML = json[i];
-                }
-
-            }else if (i.startsWith("$")){
-                el[i] = json[i];
-            }else if (i == "style"){
-                objextend(el[i], json[i]);
-            }else{
-                var type = typeof json[i];
-                if (type == "function"){
-                    el[i] = json[i];
-                }else{
-                    if (el[i] && typeof(el[i]) == 'object'){
-                        objextend(el[i], json[i]);
-                    }else{
-                        el.setAttribute(i, json[i]);
-                    }
-                }
+        for(let i in Widgets){
+            if (i == json.ui){
+                return true;
             }
         }
+        return false;
     }
+
 }

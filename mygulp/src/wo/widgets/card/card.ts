@@ -6,6 +6,14 @@ namespace wo{
         return  {
             tag:"div",
             class:"card",
+            use:function(json:any){
+                let child = wo.use(json);
+                if (this.$body){
+                    this.$body.appendChild(child);
+                }else{
+                    debugger;
+                }
+            },
             $:[
                 {tag:"div", class:"title noselect", $:[
                     {tag:"div", class:"txt", alias:"title"},
@@ -13,7 +21,7 @@ namespace wo{
                         {tag:"div", class:"wbtn", onclick: function(event:any){wo.destroy(this.$border);}, $:"X"}
                     ]}
                 ]},
-                {tag:"div", class:"body", alias:"body"}
+                { tag:"div", class:"body", alias:"body" }
             ]
         };
     }

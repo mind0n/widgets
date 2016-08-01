@@ -4,9 +4,7 @@ Element.prototype.set = function(val:any, undef?:any):void{
     if (val === undef){
         return;
     }
-	for(let i in val){
-		let v = val[i];
-		let t = this["$" + i];
+    function add(t:any, v:any):void{
 		if (t){
             if (v === undef){
                 t.innerHTML = '';
@@ -33,6 +31,15 @@ Element.prototype.set = function(val:any, undef?:any):void{
 				$(t).text(v);
 			}
 		}
+
+    }
+    if (wo.usable(val)){
+        add(this, val);
+    }
+	for(let i in val){
+		let v = val[i];
+    	let t = this["$" + i];
+        add(t, v);
 	}            
 };
 
@@ -86,11 +93,11 @@ namespace wo{
                 cs = ncs;
             }
             if (json.alias){
+                //console.dir(json.alias);
                 let n = json.alias;
                 if (json.alias.startsWith("$")){
                     n = json.alias.substr(1, json.alias.length - 1);
                 }
-                //console.log(cs.border, n);
                 cs.border["$" + n] = o;
                 if (json.alias.startsWith("$")){
                     cs.border = o;
@@ -116,6 +123,15 @@ namespace wo{
         }else{
             el.appendChild(child);
         }
+    }
+
+    export function usable(json:any):boolean{
+        for(var i of Creators){
+            if (json[i.Id]){
+                return true;
+            }
+        }
+        return false;
     }
 
     export function use(json:any, cs?:Cursor):any{
@@ -144,14 +160,5 @@ namespace wo{
         return rlt;
     }
 
-    export function objextend(o:any, json:any){
-        for(let i in json){
-            if (o[i] && typeof(o[i]) == 'object'){
-                objextend(o[i], json[i]);
-            }else{
-                o[i] = json[i];
-            }
-        }
-    }
 
 }
