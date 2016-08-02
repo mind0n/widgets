@@ -17,19 +17,20 @@ var web         = require("gulp-webserver");
 require('babel-register');
 
 // Files to process
-var TEST_FILES = 'dist/tests/**/*.js';
-var SRC_FILES = 'dist/tests/**/*.js';
+var TEST_FILES = 'dist/tests/**/*test*.js';
+var SRC_FILES = 'dist/tests/**/*test*.js';
 
 gulp.task("ut", function () {
     return browserify({
         basedir: '.',
         debug: true,
-        entries: ['spec/tests.ts'],
+        entries: ['spec/tests.ts', 'spec/tests2.ts'],
         cache: {},
         packageCache: {}
     })
+    .external(["chai"])
     .plugin(tsify)
-    //.plugin(factor, {o:['dist/tests/tests.js']})
+    //.plugin(factor, {o:['dist/tests/tests.js', 'dist/tests/tests2.js']})
     .bundle()
     //.pipe(source('common.js'))
     .pipe(source('tests.js'))
@@ -71,6 +72,7 @@ gulp.task('test', function() {
   return gulp.src(TEST_FILES, {read: false})
     .pipe(mocha({
       //require: [__dirname + '/lib/jsdom'] // Prepare environement for React/JSX testing
+      //require:[__dirname + "\\dist\\tests\\common.js"]
     }));
 });
 
