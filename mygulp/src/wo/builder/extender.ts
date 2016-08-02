@@ -8,7 +8,7 @@ namespace wo{
             if (!handler){
                 handler = objextend;
             }
-            handler(target, json, i, cs);
+            handler.call(this, target, json, i, cs);
         }
     }
 }

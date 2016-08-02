@@ -39,7 +39,7 @@ namespace wo{
                 return;
             }
             if (o instanceof HTMLElement){
-                jextend(o, json, this);
+                jextend.call(this, o, json, this);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;
             }else if (o.extend){
@@ -67,7 +67,7 @@ namespace wo{
                         }
                     }else{
                         if (j < nodes.length){
-                            jextend(nodes[j], item, this);
+                            jextend.call(this, nodes[j], item, this);
                         }else{
                             if (el.use){
                                 el.use(item, cs);
