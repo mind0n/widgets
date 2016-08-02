@@ -152,8 +152,10 @@ namespace wo{
             if (type == "function"){
                 el[i] = json[i];
             }else{
-                if (el[i] && typeof(el[i]) == 'object'){
+                if (el[i] && typeof(el[i]) == 'object' && type == 'object'){
                     objextend(el[i], json[i]);
+                }else if (type == 'object'){
+                    el[i] = json[i];
                 }else{
                     this.setattr(el, json, i);
                 }

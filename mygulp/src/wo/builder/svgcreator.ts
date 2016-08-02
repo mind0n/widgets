@@ -45,14 +45,6 @@ namespace wo{
                 o.extend(json);
             } 
         }
-        protected applyprop(el:any, json:any, i:string, cs:any){
-            var type = typeof json[i];
-            if (type == "function"){
-                el[i] = json[i];
-            }else{
-                this.setattr(el, json, i);
-            }
-        }
         protected setattr(el:any, json:any, i:string){
             return el.setAttributeNS(null, i, json[i]);
         }
