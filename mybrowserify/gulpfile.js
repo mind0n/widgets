@@ -5,6 +5,7 @@ var browserify  = require("browserify");
 var source      = require('vinyl-source-stream');
 var tsify       = require("tsify");
 var web         = require("gulp-webserver");
+var factor      = require("factor-bundle");
 
 var paths = {
     pages: ['src/*.html'],
@@ -54,13 +55,16 @@ gulp.task("ut", ["copy-ut-html"], function () {
     return browserify({
         basedir: '.',
         debug: true,
-        entries: ['spec/tests.ts'],
+        entries: ['spec/1st.tests.ts', 'spec/2nd.tests.ts'],
         cache: {},
         packageCache: {}
     })
+    .external(["jquery","jasmine","react","react-dom"])
     .plugin(tsify)
+    //.plugin(factor, {o:["dist/tests/1st.tests.js", "dist/tests/2nd.tests.js"]})
     .bundle()
     .pipe(source('tests.js'))
+    //.pipe(source('common.js'))
     .pipe(gulp.dest("dist/tests"));
 });
 

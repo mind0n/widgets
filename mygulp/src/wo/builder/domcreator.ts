@@ -20,6 +20,17 @@ namespace wo{
             }
             return el;
         }
+        verify(i:string, json:any){
+            if (i.startsWith("$$")){
+                return this.applyattr;
+            }else if (i == "$"){
+                return this.applychild;
+            }else if (i.startsWith("$")){
+                return objextend;
+            }else{
+                return this.applyprop;
+            }
+        }
         extend(o:any, json:any):void{
             if (json instanceof Node || json instanceof Element){
                 debugger;
@@ -27,7 +38,8 @@ namespace wo{
             }
 
             if (o instanceof HTMLElement){
-                domextend(o, json);
+                //domextend(o, json);
+                jextend.call(this, o, json, this);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;
             }else if (o.extend){
@@ -35,5 +47,4 @@ namespace wo{
             }
         }
     }
-
 }

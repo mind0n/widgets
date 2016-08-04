@@ -115,6 +115,62 @@ namespace wo{
         }
         protected abstract create(json:any):any;
         protected abstract extend(o:any, json:any):void;
+        protected applyattr(el:any, json:any, i:string, cs:any){
+            let target = el[i];
+            if (target){
+                let type = typeof target;
+                if (type == 'object'){
+                    let vtype = typeof json[i];
+                    if (vtype == 'object'){
+                        jextend.call(this, target, json[i], this);
+                    }else{
+                        el[i] = json[i];
+                    }
+                }else{
+                    el[i] = json[i];
+                }
+            }else{
+                el[i] = json[i];
+            }
+        }
+        protected applychild(el:any, json:any, i:string, cs:any){
+            let type = typeof json[i];
+            if (json[i] instanceof Array){
+                for(let j of json[i]){
+                    let child = use(j, cs);
+                    if (child != null){
+                        append(el, child);
+                    }
+                }
+            }else if (type == 'object'){
+                let child = use(json[i], cs);
+                if (child != null){
+                    append(el, child);
+                }else{
+                    debugger;
+                }
+            }else{
+                el.innerHTML = json[i];
+            }
+        }
+
+        protected applyprop(el:any, json:any, i:string, cs:any){
+            var type = typeof json[i];
+            if (type == "function"){
+                el[i] = json[i];
+            }else{
+                if (el[i] && typeof(el[i]) == 'object' && type == 'object'){
+                    objextend(el[i], json[i]);
+                }else if (type == 'object'){
+                    el[i] = json[i];
+                }else{
+                    this.setattr(el, json, i);
+                }
+            }
+        }
+        protected setattr(el:any, json:any, i:string){
+            el.setAttribute(i, json[i]);
+        }
     }
 
     export function append(el:any, child:any){
