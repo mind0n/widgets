@@ -4,11 +4,18 @@ Element.prototype.set = function(val:any, undef?:any):void{
     if (val === undef){
         return;
     }
-    function add(t:any, v:any):void{
+    function add(t:any, v:any):boolean{
+        function _add(t:any, v:any, mode:string){
+            if (v.mode == "prepend"){
+                t.insertBefore(v, t.childNodes[0]);
+            }else{
+                t.appendChild(v);
+            }                            
+        }
 		if (t){
             if (v === undef){
                 t.innerHTML = '';
-                continue;
+                return true;
             }
 			if (typeof (v) == 'object'){
 				let tmp = wo.use(v.target);
@@ -22,16 +29,19 @@ Element.prototype.set = function(val:any, undef?:any):void{
 					t.innerHTML = "";
 					v.mode = "append";
 				}
-				if (v.mode == "prepend"){
-					t.insertBefore(v.target, t.childNodes[0]);
-				}else{
-					t.appendChild(v.target);
-				}                            
+                let vals = val.target;
+                if (!vals.length){
+                    _add(t, vals, v.mode);
+                }else{
+                    for(let i of vals){
+                        _add(t, i, v.mode);
+                    }
+                }
 			}else{
 				$(t).text(v);
 			}
 		}
-
+        return false;
     }
     if (wo.usable(val)){
         add(this, val);
