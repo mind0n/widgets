@@ -6,11 +6,12 @@ var source      = require('vinyl-source-stream');
 var tsify       = require("tsify");
 var web         = require("gulp-webserver");
 var factor      = require("factor-bundle");
+var jade        = require("gulp-jade");
 var env         = require("./env.js");
 
 var paths = {
     pages: ['src/*.html'],
-    specs: ['spec/*.html']
+    specs: ['spec/*.jade']
 };
 
 gulp.task("copy-html", function () {
@@ -44,11 +45,17 @@ gulp.task("dev", ["default"], function(){
 });
 
 gulp.task("watch", ["default"], function(){
-    gulp.watch("./src/**/*.*", ["default"]);
+    gulp.watch("./src/**/*.ts", ["default"]);
 });
 
 gulp.task("copy-ut-html", function () {
     return gulp.src(paths.specs)
+        .pipe(jade({
+            pretty:true,
+            compileDebug:true,
+            doctype:"html",
+            locals:{env:env}
+        }))
         .pipe(gulp.dest("dist/tests"));
 });
 
@@ -68,18 +75,22 @@ gulp.task("ut", ["copy-ut-html"], function () {
     //.pipe(source('common.js'))
     .pipe(gulp.dest(env.gulp.browserify.outdir));
 });
-
+console.log(env.gulp.browserify.basedir + '/');
 gulp.task("spec", ["ut"], function(){
-    gulp.src(env.gulp.browserify.basedir + '/').pipe(web({
-        fallback: env.gulp.browserify.dir("dist/tests/specrunner.html"),
+    gulp.src(env.gulp.browserify.basedir + '/')
+    //gulp.src('../../../')
+    .pipe(web({
+        fallback: 
+            env.gulp.browserify.dir("dist/tests/specrunner.html"), 
+            //'/' + env.gulp.browserify.dir("dist/tests/specrunner.html"),
         host:"127.0.0.1",
         port:9999,
-        livereload:true,
+        livereload:false,
         directoryListing:false,
         open:true
     }));
 });
 
 gulp.task("utwatch", ["ut"], function(){
-    gulp.watch("./spec/**/*.*", ["ut"]);
+    gulp.watch("./spec/**/*.ts", ["ut"]);
 });

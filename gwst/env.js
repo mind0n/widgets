@@ -18,8 +18,8 @@ exports.karma = {
 
 exports.gulp = {
     browserify:{
-        basedir: '..'
-        ,root: 'gdc.web.spa.test'
+        basedir: '../../..'
+        ,root: 'git/widgets/gwst'
         ,entries: function(){
             var rlt = [
                 this.dir('spec/1st.tests.ts'), 
@@ -35,5 +35,19 @@ exports.gulp = {
             return rlt;
         }
     }
+};
+
+exports.ts = {
+    root: "ld-76/DotNet/Web_Solutions/Gdc.Web.SPA"
+};
+
+exports.srcroot = function(){
+    var rlt = this.ts.root;
+    return rlt;
+};
+
+exports.testroot = function(){
+    var rlt = this.gulp.browserify.root;
+    return rlt;
 };
 

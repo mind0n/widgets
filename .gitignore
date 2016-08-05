@@ -2,3 +2,6 @@ node_modules
 *.log
 npm-debug.log*
 test-coverage
+dist
+gwst/dist/tests/SpecRunner.html
+gwst/dist/tests/tests.js
