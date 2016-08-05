@@ -6,6 +6,7 @@ var source      = require('vinyl-source-stream');
 var tsify       = require("tsify");
 var web         = require("gulp-webserver");
 var factor      = require("factor-bundle");
+var env         = require("./env.js");
 
 var paths = {
     pages: ['src/*.html'],
@@ -53,24 +54,24 @@ gulp.task("copy-ut-html", function () {
 
 gulp.task("ut", ["copy-ut-html"], function () {
     return browserify({
-        basedir: '..',
+        basedir: env.gulp.browserify.basedir,
         debug: true,
-        entries: ['gdc.web.spa.test/spec/1st.tests.ts', 'gdc.web.spa.test/spec/2nd.tests.ts'],
+        entries: env.gulp.browserify.entries(),
         cache: {},
         packageCache: {}
     })
-    .external(["jquery","jasmine","react","react-dom"])
+    .external(env.gulp.browserify.externals)
     .plugin(tsify)
     //.plugin(factor, {o:["dist/tests/1st.tests.js", "dist/tests/2nd.tests.js"]})
     .bundle()
-    .pipe(source('tests.js'))
+    .pipe(source(env.gulp.browserify.outname))
     //.pipe(source('common.js'))
-    .pipe(gulp.dest("dist/tests"));
+    .pipe(gulp.dest(env.gulp.browserify.outdir));
 });
 
 gulp.task("spec", ["ut"], function(){
-    gulp.src('../').pipe(web({
-        fallback:"gdc.web.spa.test/dist/tests/specrunner.html",
+    gulp.src(env.gulp.browserify.basedir + '/').pipe(web({
+        fallback: env.gulp.browserify.dir("dist/tests/specrunner.html"),
         host:"127.0.0.1",
         port:9999,
         livereload:true,

@@ -1,22 +1,20 @@
 // Karma configuration
-// Generated on Sun Jul 24 2016 22:15:07 GMT+0800 (中国标准时间)
 
+var env = require("./env.js");
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: env.karma.basepath,
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['angular','jasmine'],
+    frameworks: env.karma.frameworks,
 
 
     // list of files / patterns to load in the browser
-    files: [
-      'dist/tests/*tests.js'
-    ],
+    files: env.karma.files,
 
 
     // list of files to exclude
@@ -27,10 +25,7 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      // "dist/scripts/*.js":["coverage"],
-      "dist/tests/*tests.js":["coverage"]
-    },
+    preprocessors: env.karma.preprocessors,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -39,7 +34,7 @@ module.exports = function(config) {
     // jasmineSpecRunnerReporter:{
     //   jasmineCoreDir:'jasmine-core'
     // },
-    reporters: ['spec', 'coverage'],
+    reporters: env.karma.reporters.names,
     specReporter: {
         maxLogLines: 5,         // limit number of lines logged per test
         suppressErrorSummary: true,  // do not print error summary
@@ -50,10 +45,7 @@ module.exports = function(config) {
     },
     //plugins: ["karma-spec-reporter"],
 
-    coverageReporter:{
-      type:'html',
-      dir:'test-coverage/'
-    },
+    coverageReporter:env.karma.reporters.coverageReporter,
 
 
     // web server port
@@ -75,7 +67,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: env.karma.browsers,
 
 
     // Continuous Integration mode
