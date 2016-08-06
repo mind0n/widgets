@@ -76,10 +76,16 @@
                   alias:"box",
                   style:{width:"80%", display:"none"},
                   made:function(){
+                      let dp = wo.use({
+                          ui:"dropdown",
+                          "item-template":"dropdown.simpleitem"
+                      });
                       this.set({
                           title: "Card Title",
-                          body:"Card Body Content"
+                          body:dp
                       });
+                      dp.bind(["item 1", "item 2"]);
+      
                       finger(this).zoomable();
                   }
               });

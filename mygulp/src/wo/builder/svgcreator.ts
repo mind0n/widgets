@@ -37,7 +37,6 @@ namespace wo{
                 return;
             }
             if (o instanceof SVGElement){
-                //svgextend(o, json);
                 jextend.call(this, o, json, this);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;

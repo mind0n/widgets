@@ -5,22 +5,13 @@
 namespace wo{
     export let Widgets:any = {};
 
-    export class UiCreator extends Creator{
+    export class UiCreator extends RepoCreator{
         constructor(){
             super();
             this.id = "ui";
         }
-        create(json:any):Node{
-            if (json == null){
-                return null;
-            }
-            let wg = json[this.id];
-            if (!Widgets[wg]){
-                return null;
-            }
-
-            let el:Node = use(Widgets[wg]());
-            return el;
+        getrepo():any{
+            return Widgets;
         }
         verify(i:string, json:any){
             if (i.startsWith("$$")){

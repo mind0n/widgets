@@ -38,7 +38,6 @@ namespace wo{
             }
 
             if (o instanceof HTMLElement){
-                //domextend(o, json);
                 jextend.call(this, o, json, this);
             }else if (json.$ && o instanceof Node){
                 o.nodeValue = json.$;
