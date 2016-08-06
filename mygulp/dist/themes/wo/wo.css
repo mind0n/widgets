@@ -539,46 +539,29 @@ body {
 .sass-issue {
   cursor: default; }
 
-.wo .card {
+.wo .dropdown {
   position: relative;
-  padding: 0px;
+  padding: 4px;
   border-radius: 0.2em;
   margin-bottom: 1em;
-  margin-top: 1em;
-  min-height: 100px; }
+  margin-top: 1em; }
 
-.wo .card .title, .wo .card .body {
-  position: relative;
-  padding: 8px; }
-
-.wo .card .title .txt {
-  font-weight: 600;
-  cursor: default; }
-
-.wo .card .title .ctrls {
+.wo .dropdown .toggle {
   position: absolute;
   right: 4px;
   top: 4px;
-  display: none; }
-
-.wo .card.form .title .ctrls {
-  display: initial; }
-
-.wo .card .title .ctrls .wbtn {
-  font: 12px arial;
   text-align: center;
-  line-height: 24px;
-  border-radius: 0.2em;
-  padding: 0;
-  width: 24px;
-  height: 24px; }
+  font: 10px arial;
+  line-height: 16px;
+  width: 16px;
+  height: 16px;
+  border: solid 0px blue; }
 
-.wo .card.static .body {
-  position: absolute;
-  top: 33px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px; }
+.wo .simple-menu {
+  position: absolute; }
+
+.wo .simple-item {
+  padding: 4px; }
 
 .sass-issue {
   cursor: default; }
@@ -647,3 +630,13 @@ body {
     stroke: #000;
     stroke-width: 4;
     stroke-opacity: .5; }
+
+.wo.basic .dropdown, .wo .basic .dropdown {
+  border: solid 1px #ccc; }
+
+.wo.basic .simple-menu, .wo .basic .simple-menu {
+  border: solid 1px #ccc;
+  background-color: white; }
+
+.wo.basic .simple-item:hover, .wo .basic .simple-item:hover {
+  background-color: #eeeeee; }
