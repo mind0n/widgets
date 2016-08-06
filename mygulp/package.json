@@ -24,6 +24,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-strip-comments": "^2.4.3",
+    "gulp-svg-symbols": "^1.0.0",
     "gulp-typescript": "^2.13.6",
     "gulp-webserver": "^0.9.1",
     "jasmine-core": "^2.4.1",

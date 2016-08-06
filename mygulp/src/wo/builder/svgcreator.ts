@@ -24,10 +24,11 @@ namespace wo{
             }
             let tag = json[this.id];
             let el:Node;
+            let xmlns = "http://www.w3.org/2000/svg";
             if (tag == "svg"){
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+                el = document.createElementNS(xmlns, tag);
             }else{
-                el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+                el = document.createElementNS(xmlns, tag);
             }
             return el;
         }
@@ -45,7 +46,12 @@ namespace wo{
             } 
         }
         protected setattr(el:any, json:any, i:string){
-            return el.setAttributeNS(null, i, json[i]);
+            if (el instanceof SVGElement){
+                return el.setAttributeNS(null, i, json[i]);
+            }else{
+                console.dir(el);
+                return el.setAttribute(i, json[i]);
+            }
         }
     }
 }

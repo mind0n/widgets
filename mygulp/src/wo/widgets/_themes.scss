@@ -75,6 +75,10 @@
     .dropdown{
         border:$bd-default;
     }
+    .dropdown .toggle svg, .dropdown .toggle svg *{
+        color:$cl-toggle;
+        fill:$cl-toggle;
+    }
 
     .simple-menu{
         border:$bd-default;
