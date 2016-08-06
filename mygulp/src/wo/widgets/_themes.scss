@@ -71,4 +71,19 @@
             stroke-opacity: .5;
         }
     }
+
+    .dropdown{
+        border:$bd-default;
+    }
+
+    .simple-menu{
+        border:$bd-default;
+        background-color:$bg;
+    }
+
+    .simple-item{
+    }
+    .simple-item:hover{
+        background-color:$bg-hover;
+    }
 }

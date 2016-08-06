@@ -20,6 +20,11 @@ html
                     style:{height:h, overflow:"hidden"},
                     made:function(){
                         this.$body.style.overflow = "auto";
+                        let dp = wo.use({
+                            ui:"dropdown",
+                            "item-template":"dropdown.simpleitem"
+                        });
+                        dp.bind(["item 1", "item 2"]);
                         this.set({
                             title: "Raw Events",
                             body:{
@@ -28,7 +33,10 @@ html
                                     class:"card static",
                                     alias:"inbox",
                                     made:function(){
-                                        this.set({title:"Content", body:"Card Body"});
+                                        this.set({
+                                            title:"Content", 
+                                            body:dp
+                                        });
                                     }
                                 }
                             }
@@ -76,15 +84,10 @@ html
                         alias:"box",
                         style:{width:"80%", display:"none"},
                         made:function(){
-                            let dp = wo.use({
-                                ui:"dropdown",
-                                "item-template":"dropdown.simpleitem"
-                            });
                             this.set({
                                 title: "Card Title",
-                                body:dp
+                                body:'Card content ...'
                             });
-                            dp.bind(["item 1", "item 2"]);
 
                             finger(this).zoomable();
                         }
