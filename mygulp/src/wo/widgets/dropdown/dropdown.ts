@@ -42,7 +42,8 @@ namespace wo{
                 let mel = wo.use({ui:menu});
                 this.$menu = mel;
                 let dd = this;
-                mel.onselect = function(val:any){
+                mel.onselect = function(item:any){
+                    let val = item.get();
                     dd.select(val);
                 };
             },
@@ -95,8 +96,7 @@ namespace wo{
                         it.bind(i);
                         it.onclick = function(){
                             if (menu.onselect){
-                                let val = this.getval();
-                                menu.onselect(val);
+                                menu.onselect(this);
                             }
                         }
                         list.add(it);

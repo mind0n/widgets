@@ -20,7 +20,11 @@ Element.prototype.set = function(val:any, undef?:any):void{
                 t.innerHTML = '';
                 return true;
             }
-			if (typeof (v) == 'object'){
+            if (v instanceof Array){
+                for(let it of v){
+                    add(t, it);
+                }
+            }else if (typeof (v) == 'object'){
                 if (v.target){
                     if (!v.mode || (v.mode == "prepend" && t.childNodes.length < 1)){
                         v.mode = "append";
@@ -54,6 +58,32 @@ Element.prototype.set = function(val:any, undef?:any):void{
     	let t = this["$" + i];
         add(t, v);
 	}            
+};
+
+Element.prototype.get = function(keys:string[]){
+    let val:any;
+    let item = this;
+    if (!keys || keys.length < 1){
+        return this.innerHTML;
+    }
+    for(let i of keys){
+        if (i == '='){
+            return item;
+        }else if (i == '$'){
+            item = item.childNodes;
+        }else if (typeof(i) == 'function'){
+            item = (i as any)(item);
+        }else{
+            item = item[i];
+        }
+        if (!item){
+            return null;
+        }
+    }
+    if (item.getval){
+        return item.getval();
+    }
+    return item.innerHTML;
 };
 
 namespace wo{
@@ -264,5 +294,12 @@ namespace wo{
         }
         return rlt;
     }
-
+}
+function use(json:any, ctx?:any, cs?:wo.Cursor):any{
+    if (!ctx){
+        ctx = document.body;
+    }
+    let rlt = wo.use(json, cs);
+    rlt.$ctx = ctx;
+    return rlt;
 }

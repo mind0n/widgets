@@ -7,6 +7,12 @@ namespace wo{
             tag:"div",
             class:"loading",
             made: function(){
+                let rd = wo.use({sg:"circle", class:"rd"});
+                rd.setAttributeNS(null, "cx", 32);
+                rd.setAttributeNS(null, "cy", 32);
+                rd.setAttributeNS(null, "r", 16);
+                this.$sbox.appendChild(rd);
+
                 let p1 = wo.use({ui:"arc"});
                 p1.setAttributeNS(null, "class", "arc p1");
                 p1.update([16, 48], 16, 270);

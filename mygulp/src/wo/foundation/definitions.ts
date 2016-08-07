@@ -16,6 +16,7 @@ interface Element{
 	[name:string]:any;
 	astyle(styles:string[]):string;
 	set(val:any):void;
+	get(keys:string[]):any;
 	destroyStatus:any;
 	dispose():any;
 }
