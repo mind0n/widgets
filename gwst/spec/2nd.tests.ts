@@ -1,7 +1,6 @@
-/// <reference path="../typings/index.d.ts" />
 
 angular.module('app', [])
-.controller('PasswordController', function PasswordController($scope) {
+.controller('PasswordController', function PasswordController($scope:any) {
   $scope.password = '';
   $scope.grade = function() {
     var size = $scope.password.length;
@@ -25,7 +24,7 @@ describe("Angular Unit Test", function(){
 
     beforeEach(angular.mock.module('app'));
     let $controller:any;
-    beforeEach(inject(function(_$controller_){
+    beforeEach(inject(function(_$controller_:any){
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $controller = _$controller_;
     }));

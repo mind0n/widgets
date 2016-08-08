@@ -1,3 +1,6 @@
+if (!exports){
+    exports = {};
+}
 exports.karma = {
     files: ['dist/tests/*tests.js']
     ,preprocessors: {
@@ -22,9 +25,11 @@ exports.gulp = {
         ,root: 'git/widgets/gwst'
         ,entries: function(){
             var rlt = [
+                this.dir('typings/index.d.ts'),
                 this.dir('spec/1st.tests.ts'), 
                 this.dir('spec/2nd.tests.ts'),
-                this.dir('spec/component.tests.ts')
+                this.dir('spec/component.tests.ts'),
+                this.dir('spec/auto-input.tests.ts')
             ];
             return rlt;
         }
@@ -52,3 +57,7 @@ exports.testroot = function(){
     return rlt;
 };
 
+// function t(file){
+//     var rlt = exports.gulp.browserify.basedir + "/" + exports.ts.root + "/" + file;
+//     return rlt;
+// };

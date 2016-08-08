@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 
 import {sayHello} from "../src/component/greet.ts";
 import {showHello} from "../src/component/greet.ts";

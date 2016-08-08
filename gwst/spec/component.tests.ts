@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 
 angular.module('myComponentModule', [])
 .component('myComponent', {
@@ -17,7 +16,7 @@ describe('Component: myComponent', function () {
     let element:any;
     let scope:any;
     let controller:any;
-    beforeEach(inject(function($rootScope, $compile){
+    beforeEach(inject(function($rootScope:any, $compile:any){
         scope = $rootScope.$new();
         element = angular.element('<my-component my-binding="{{outside}}"></my-component>');
         element = $compile(element)(scope);
