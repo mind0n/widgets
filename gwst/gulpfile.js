@@ -75,7 +75,6 @@ gulp.task("ut", ["copy-ut-html"], function () {
     //.pipe(source('common.js'))
     .pipe(gulp.dest(env.gulp.browserify.outdir));
 });
-console.log(env.gulp.browserify.basedir + '/');
 gulp.task("spec", ["ut"], function(){
     gulp.src(env.gulp.browserify.basedir + '/')
     //gulp.src('../../../')

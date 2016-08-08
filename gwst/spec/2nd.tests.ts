@@ -1,8 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
 
-// import {sayHello} from "../src/component/greet.ts";
-// import {showHello} from "../src/component/greet.ts";
-
 angular.module('app', [])
 .controller('PasswordController', function PasswordController($scope) {
   $scope.password = '';

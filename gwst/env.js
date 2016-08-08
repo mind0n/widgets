@@ -23,7 +23,8 @@ exports.gulp = {
         ,entries: function(){
             var rlt = [
                 this.dir('spec/1st.tests.ts'), 
-                this.dir('spec/2nd.tests.ts')
+                this.dir('spec/2nd.tests.ts'),
+                this.dir('spec/component.tests.ts')
             ];
             return rlt;
         }
