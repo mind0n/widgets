@@ -16,7 +16,7 @@ namespace wo{
             },
             onclick:function(){
                 this.$menu.attach(this);
-                if ($(this.$menu).is(":visible")){
+                if (this.$menu.visible()){
                     this.$menu.hide();
                 }else{
                     this.$menu.show();
@@ -33,6 +33,16 @@ namespace wo{
                     this.set({box:val})
                     this.$menu.hide();
                 }
+                let v = this.get(["$box"]);
+                if (this.$model){
+                    this.$ctx.owrite(this.$model, v);
+                }
+                if (this.onchange){
+                    this.onchange(v);
+                }
+            },
+            model:function(keys:string[]){
+                this.$model = keys;
             },
             made:function(){
                 let menu = this.getAttribute("menu-template");

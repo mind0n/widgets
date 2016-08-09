@@ -10,7 +10,10 @@ interface Window{
 interface Document{
 	documentMode:any;
 }
-
+interface Object{
+	oread(keys:string[]):any;
+	owrite(keys:string[], val:any):void;
+}
 // Element.ts
 interface Element{
 	[name:string]:any;
@@ -19,6 +22,7 @@ interface Element{
 	get(keys:string[]):any;
 	destroyStatus:any;
 	dispose():any;
+	visible():boolean;
 }
 
 interface Node{

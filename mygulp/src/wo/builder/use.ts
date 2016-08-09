@@ -1,4 +1,36 @@
 /// <reference path="../foundation/string.ts" />
+function read(target:any, keys:string[], isSet?:boolean, callback?:Function, undef?:any):any{
+    if (!target){
+        return null;
+    }
+    let item = target;
+    let parent:any = null;
+    let key:string;
+    for(let i of keys){
+        key = i;
+        parent = item;
+        item = item[i];
+        if (item === undef){
+            if (isSet){
+                parent[key] = {};
+            }else{
+                return null;
+            }
+        }
+    }
+    if (callback){
+        callback(parent, key, item);
+    }
+    return item;
+}
+Object.prototype.oread = function(keys:string[]){
+    return read(this, keys);
+};
+Object.prototype.owrite = function(keys:string[], val:any){
+    read(this, keys, true, function(p:any, k:string, i:any){
+        p[k] = val;
+    })
+};
 
 Element.prototype.set = function(val:any, undef?:any):void{
     if (val === undef){
@@ -59,8 +91,7 @@ Element.prototype.set = function(val:any, undef?:any):void{
         add(t, v);
 	}            
 };
-
-Element.prototype.get = function(keys:string[]){
+Element.prototype.get = function(keys:string[], undef?:any){
     let val:any;
     let item = this;
     if (!keys || keys.length < 1){
@@ -82,6 +113,8 @@ Element.prototype.get = function(keys:string[]){
     }
     if (item.getval){
         return item.getval();
+    }else if (item.value){
+        return item.value;
     }
     return item.innerHTML;
 };

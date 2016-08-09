@@ -13,6 +13,8 @@ html
             $(function(){
                 Context.new("default", function(ctx){
                     var h = "300px";
+                    ctx.dp1model = "";
+                    ctx.dp2model = "";
                     var raw = ctx.use({
                         ui:"card",
                         class:"card static",
@@ -25,13 +27,21 @@ html
                                 ui:"dropdown",
                                 "item-template":"dropdown.simpleitem"
                             });
+                            dp.onchange = function(v){
+                                console.log(ctx.dp1model);
+                            };
                             dp.bind(["item 1", "item 2"]);
+                            dp.model(["dp1model"]);
                             dp.select(0, true);
                             let dp2 = ctx.use({
                                 ui:"dropdown",
                                 "item-template":"dropdown.simpleitem"
                             });
+                            dp2.onchange = function(v){
+                                console.log(ctx.dp2model);
+                            };
                             dp2.bind(["item 3", "item 4"]);
+                            dp2.model(["dp2model"]);
                             dp2.select(0, true);
                             this.set({
                                 title: "Raw Events",

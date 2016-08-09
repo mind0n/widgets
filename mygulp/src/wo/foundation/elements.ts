@@ -12,6 +12,10 @@ Element.prototype.astyle = function actualStyle(props:string[]) {
 	return null;
 };
 
+Element.prototype.visible = function ():boolean{
+	return this.style.display != 'none' && this.style.visibility != 'hidden'; 
+};
+
 namespace wo{
 	class Destroyer{
 		disposing:boolean;
