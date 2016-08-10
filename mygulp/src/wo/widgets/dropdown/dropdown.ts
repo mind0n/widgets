@@ -3,13 +3,15 @@
 
 namespace wo{
     function changeCompleted(el:any, v?:any){
-        if (el.$model){
-            el.$ctx.write(el.$model, v);
-        }
+        // if (el.$model){
+        //     el.$ctx.write(el.$model, v);
+        // }
+        el.value = v;
         if (el.onchange){
             el.onchange(v);
         }
     }
+    let value:any;
     Widgets.dropdown = function():any{
         return  {
             tag:"div",
@@ -38,7 +40,21 @@ namespace wo{
                 this.$menu.hide();
             },
             model:function(keys:string[]){
-                this.$model = keys;
+                let dd = this;
+                dd.$model = keys;
+                dd.$ctx.read(keys, true, function(p:any, k:string, i:any){
+                    Object.defineProperty(p, k, {
+                        get:function(){
+                            return value;
+                        },
+                        set:function(newValue){
+                            value = newValue;
+                            dd.select(value);
+                        },
+                        enumerable:true,
+                        configurable:true
+                    });
+                });
             },
             made:function(){
                 let menu = this.getAttribute("menu-template");
@@ -46,8 +62,18 @@ namespace wo{
                     menu = "simplemenu";
                 }
                 let mel = wo.use({ui:menu});
-                this.$menu = mel;
                 let dd = this;
+                dd.$menu = mel;
+                Object.defineProperty(this, "value", {
+                    get:function(){
+                        return value;
+                    },
+                    set: function(newValue){
+                        value = newValue;
+                    },
+                    enumerable:true,
+                    configurable:true
+                });
                 mel.onselect = function(item:any, undef?:any){
                     if (item !== undef){
                         let val = item.get();

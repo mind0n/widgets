@@ -12,7 +12,8 @@ function read(target:any, keys:string[], isSet?:boolean, callback?:Function, und
         item = item[i];
         if (item === undef){
             if (isSet){
-                parent[key] = {};
+                item = {};
+                parent[key] = item;
             }else{
                 return null;
             }
@@ -23,8 +24,8 @@ function read(target:any, keys:string[], isSet?:boolean, callback?:Function, und
     }
     return item;
 }
-Object.prototype.read = function(keys:string[]){
-    return read(this, keys);
+Object.prototype.read = function(keys:string[], isSet?:boolean, callback?:Function){
+    return read(this, keys, isSet, callback);
 };
 Object.prototype.write = function(keys:string[], val:any){
     read(this, keys, true, function(p:any, k:string, i:any){
