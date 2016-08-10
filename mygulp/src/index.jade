@@ -12,6 +12,17 @@ html
         script().
             $(function(){
                 Context.new("default", function(ctx){
+                    let dp = ctx.use({
+                        ui:"dropdown",
+                        "item-template":"dropdown.simpleitem"
+                    });
+                    dp.onchange = function(v){
+                        console.log(ctx.dp1model);
+                    };
+                    dp.bind(["item 1", "item 2"]);
+                    dp.model(["dp1model"]);
+                    dp.selectAt(0);
+
                     var h = "300px";
                     ctx.dp1model = "";
                     ctx.dp2model = "";
@@ -23,16 +34,6 @@ html
                         style:{height:h, overflow:"hidden"},
                         made:function(){
                             this.$body.style.overflow = "auto";
-                            let dp = ctx.use({
-                                ui:"dropdown",
-                                "item-template":"dropdown.simpleitem"
-                            });
-                            dp.onchange = function(v){
-                                console.log(ctx.dp1model);
-                            };
-                            dp.bind(["item 1", "item 2"]);
-                            dp.model(["dp1model"]);
-                            dp.select(0, true);
                             let dp2 = ctx.use({
                                 ui:"dropdown",
                                 "item-template":"dropdown.simpleitem"
@@ -42,7 +43,7 @@ html
                             };
                             dp2.bind(["item 3", "item 4"]);
                             dp2.model(["dp2model"]);
-                            dp2.select(0, true);
+                            dp2.selectAt(0);
                             this.set({
                                 title: "Raw Events",
                                 body:[dp, dp2]
@@ -71,12 +72,16 @@ html
                     psr.set({title:"Caption"});
                     $("#rc").append(raw);
                     $("#pc").append(psr);
-                });
-                $("#bpri").click(function(){
-                });
-                $("#bdef").click(function(){
-                });
-                $("#bdsb").click(function(){
+
+                    $("#bpri").click(function(){
+                        dp.select("item 3");
+                    });
+                    $("#bdef").click(function(){
+                    });
+                    $("#bdsb").click(function(){
+                        window.open('/test-cover-finger.html', '_top');
+                    });
+                    
                 });
             });
 

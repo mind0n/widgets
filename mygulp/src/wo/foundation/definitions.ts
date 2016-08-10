@@ -11,8 +11,8 @@ interface Document{
 	documentMode:any;
 }
 interface Object{
-	oread(keys:string[]):any;
-	owrite(keys:string[], val:any):void;
+	read(keys:string[]):any;
+	write(keys:string[], val:any):void;
 }
 // Element.ts
 interface Element{

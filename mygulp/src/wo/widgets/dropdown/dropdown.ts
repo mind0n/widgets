@@ -2,7 +2,14 @@
 /// <reference path="../../builder/uicreator.ts" />
 
 namespace wo{
-    
+    function changeCompleted(el:any, v?:any){
+        if (el.$model){
+            el.$ctx.write(el.$model, v);
+        }
+        if (el.onchange){
+            el.onchange(v);
+        }
+    }
     Widgets.dropdown = function():any{
         return  {
             tag:"div",
@@ -22,24 +29,13 @@ namespace wo{
                     this.$menu.show();
                 }
             },
-            select:function(val:any, index?:boolean){
-                if (index){
-                    let idx = val as number;
-                    if (this.$menu.$items && idx >= 0 && idx < this.$menu.$items.length){
-                        let it = this.$menu.$items[idx];
-                        this.set({box:it.getval()});
-                    }
-                }else{
-                    this.set({box:val})
-                    this.$menu.hide();
-                }
-                let v = this.get(["$box"]);
-                if (this.$model){
-                    this.$ctx.owrite(this.$model, v);
-                }
-                if (this.onchange){
-                    this.onchange(v);
-                }
+            selectAt:function(idx:number){
+                this.$menu.selectAt(idx);
+                this.$menu.hide();
+            },
+            select:function(val:any){
+                this.$menu.select(val);
+                this.$menu.hide();
             },
             model:function(keys:string[]){
                 this.$model = keys;
@@ -52,9 +48,16 @@ namespace wo{
                 let mel = wo.use({ui:menu});
                 this.$menu = mel;
                 let dd = this;
-                mel.onselect = function(item:any){
-                    let val = item.get();
-                    dd.select(val);
+                mel.onselect = function(item:any, undef?:any){
+                    if (item !== undef){
+                        let val = item.get();
+                        dd.set({box:val});
+                        this.hide();
+                        changeCompleted(dd, val);
+                    }else{
+                        dd.set({box:'　'});
+                        changeCompleted(dd);
+                    }
                 };
             },
             $:[
@@ -114,6 +117,27 @@ namespace wo{
                 }
                 this.$items = list;
                 this.set({body:{target:list}});
+            },
+            selectAt:function(idx:number){
+                if (this.onselect){
+                    if (idx >= 0 && idx < this.$items.length){
+                        let i = this.$items[idx];
+                        this.onselect(i);
+                        return;
+                    }
+                    this.onselect();
+                }
+            },
+            select:function(dat:any){
+                if (this.onselect){
+                    for(let i of this.$items){
+                        if (i.getval() == dat){
+                            this.onselect(i);
+                            return;
+                        }
+                    }
+                    this.onselect();
+                }
             },
             attach:function(target:Element, mode?:number){
                 attachmenu(target, this, mode);

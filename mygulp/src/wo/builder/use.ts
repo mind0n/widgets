@@ -23,10 +23,10 @@ function read(target:any, keys:string[], isSet?:boolean, callback?:Function, und
     }
     return item;
 }
-Object.prototype.oread = function(keys:string[]){
+Object.prototype.read = function(keys:string[]){
     return read(this, keys);
 };
-Object.prototype.owrite = function(keys:string[], val:any){
+Object.prototype.write = function(keys:string[], val:any){
     read(this, keys, true, function(p:any, k:string, i:any){
         p[k] = val;
     })
