@@ -95,7 +95,7 @@ gulp.task("ut", function(){
 gulp.task("utspec", function(){
     gulp.src('./').pipe(web({
         fallback:"spec/specrunner.html",
-        host:"127.0.0.1",
+        host:"0.0.0.0",
         port:9999,
         livereload:true,
         directoryListing:false,
@@ -124,7 +124,7 @@ gulp.task("dev", ["assets"], function(){
     buildev();
     gulp.src('./dist').pipe(web({
         fallback:"index.html",
-        host:"127.0.0.1",
+        host:"0.0.0.0",
         port:9999,
         livereload:true,
         directoryListing:false,

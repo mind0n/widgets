@@ -49,17 +49,6 @@ namespace wo{
                     watcher.link(p, k, function(v:any){
                         dd.select(v);
                     });
-                    // Object.defineProperty(p, k, {
-                    //     get:function(){
-                    //         return value;
-                    //     },
-                    //     set:function(newValue){
-                    //         value = newValue;
-                    //         dd.select(value);
-                    //     },
-                    //     enumerable:true,
-                    //     configurable:true
-                    // });
                 });
             },
             made:function(){
@@ -71,16 +60,7 @@ namespace wo{
                 let dd = this;
                 dd.$menu = mel;
                 watcher = watch(this, "value");
-                // Object.defineProperty(this, "value", {
-                //     get:function(){
-                //         return value;
-                //     },
-                //     set: function(newValue){
-                //         value = newValue;
-                //     },
-                //     enumerable:true,
-                //     configurable:true
-                // });
+
                 mel.onselect = function(item:any, undef?:any){
                     if (item !== undef){
                         let val = item.get();
@@ -88,7 +68,7 @@ namespace wo{
                         this.hide();
                         changeCompleted(dd, val);
                     }else{
-                        dd.set({box:'　'});
+                        dd.set({box:'&nbsp;'}, true);
                         changeCompleted(dd);
                     }
                 };

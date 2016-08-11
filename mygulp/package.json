@@ -9,7 +9,8 @@
     "ut": "gulp ut && shell-exec \"gulp utspec\" \"gulp utwatch\"",
     "dev": "shell-exec \"gulp dev\" \"gulp watch\" ",
     "test": "gulp test",
-    "deploy": "gulp test && gulp deploy"
+    "deploy": "gulp test && gulp deploy",
+    "weinre": "weinre --boundHost -all-"
   },
   "author": "Michael Yuan",
   "license": "Mozilla Public License Version 2.0",
@@ -37,7 +38,8 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "shell-executor": "^0.3.2",
-    "typings": "^1.3.1"
+    "typings": "^1.3.1",
+    "weinre": "^2.0.0-pre-I0Z7U9OV"
   },
   "devDependencies": {}
 }

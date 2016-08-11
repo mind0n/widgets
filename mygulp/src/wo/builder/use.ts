@@ -33,7 +33,7 @@ Object.prototype.write = function(keys:string[], val:any){
     })
 };
 
-Element.prototype.set = function(val:any, undef?:any):void{
+Element.prototype.set = function(val:any, ishtml?:boolean, undef?:any):void{
     if (val === undef){
         return;
     }
@@ -47,7 +47,7 @@ Element.prototype.set = function(val:any, undef?:any):void{
             t.appendChild(v);
         }                            
     }
-    function add(t:any, v:any):boolean{
+    function add(t:any, v:any, ishtml?:boolean):boolean{
 		if (t){
             if (v === undef){
                 t.innerHTML = '';
@@ -78,18 +78,22 @@ Element.prototype.set = function(val:any, undef?:any):void{
                     _add(t, v, "append");
                 }
 			}else{
-				$(t).text(v);
+                if (ishtml){
+                    t.innerHTML = v;
+                }else{
+				    $(t).text(v);
+                }
 			}
 		}
         return false;
     }
     if (wo.usable(val)){
-        add(this, val);
+        add(this, val, ishtml);
     }
 	for(let i in val){
 		let v = val[i];
     	let t = this["$" + i];
-        add(t, v);
+        add(t, v, ishtml);
 	}            
 };
 Element.prototype.get = function(keys:string[], undef?:any){

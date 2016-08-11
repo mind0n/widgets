@@ -5,14 +5,14 @@ html
         title() Home Page
         link(rel="stylesheet", href="themes/wo/wo.css")/ 
         link(rel="stylesheet", href="themes/lib/bootstrap.css")/ 
-
+        script(src="http://192.168.1.4:8080/target/target-script-min.js#anonymous")
         script(src=locals.mode=="dev"?"scripts/jquery.js":"scripts/jquery-min.js")
         script(src=locals.mode=="dev"?"scripts/velocity.js":"scripts/velocity-min.js")
         script(src=locals.mode=="dev"?"scripts/wo.js":"scripts/wo-min.js")
-        script().
+        script(type="text/javascript").
             $(function(){
-                Context.new("default", function(ctx){
-                    let dp = ctx.use({
+                WidgetContext.new("default", function(ctx){
+                    var dp = ctx.use({
                         ui:"dropdown",
                         "item-template":"dropdown.simpleitem"
                     });
@@ -34,7 +34,7 @@ html
                         style:{height:h, overflow:"hidden"},
                         made:function(){
                             this.$body.style.overflow = "auto";
-                            let dp2 = ctx.use({
+                            var dp2 = ctx.use({
                                 ui:"dropdown",
                                 "item-template":"dropdown.simpleitem"
                             });
@@ -77,6 +77,19 @@ html
                         dp.select("item 3");
                     });
                     $("#bdef").click(function(){
+                        wo.cover({
+                            ui:"card",
+                            alias:"box",
+                            style:{width:"80%", display:"none"},
+                            made:function(){
+                                this.set({
+                                    title: "Card Title",
+                                    body:'Card content ...'
+                                });
+
+                                finger(this).zoomable();
+                            }
+                        });
                     });
                     $("#bdsb").click(function(){
                         window.open('/test-cover-finger.html', '_top');
@@ -84,7 +97,6 @@ html
                     
                 });
             });
-
     body(class="wo basic")
         div
             div(class="container-fluid basic")
@@ -98,3 +110,4 @@ html
                 div.row()
                     div#rc(class="col-xs-12 col-sm-6")
                     div#pc(class="col-xs-12 col-sm-6")
+

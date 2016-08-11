@@ -5,107 +5,98 @@ html
         title() Home Page
         link(rel="stylesheet", href="themes/wo/wo.css")/ 
         link(rel="stylesheet", href="themes/lib/bootstrap.css")/ 
-
+        script(src="http://192.168.1.4:8080/target/target-script-min.js#anonymous")
         script(src=locals.mode=="dev"?"scripts/jquery.js":"scripts/jquery-min.js")
         script(src=locals.mode=="dev"?"scripts/velocity.js":"scripts/velocity-min.js")
         script(src=locals.mode=="dev"?"scripts/wo.js":"scripts/wo-min.js")
-        script().
+        script(type="text/javascript").
             $(function(){
-                var h = "300px";
-                var raw = wo.use({
-                    ui:"card",
-                    class:"card static",
-                    alias:"box",
-                    id:"rcc",
-                    style:{height:h, overflow:"hidden"},
-                    made:function(){
-                        this.$body.style.overflow = "auto";
-                        let dp = wo.use({
-                            ui:"dropdown",
-                            "item-template":"dropdown.simpleitem"
-                        });
-                        dp.bind(["item 1", "item 2"]);
-                        dp.select(0, true);
-                        let dp2 = wo.use({
-                            ui:"dropdown",
-                            "item-template":"dropdown.simpleitem"
-                        });
-                        dp2.bind(["item 3", "item 4"]);
-                        dp2.select(0, true);
-                        this.set({
-                            title: "Raw Events",
-                            body:{
-                                    mode:"append", target:{
-                                    ui:"card",
-                                    class:"card",
-                                    alias:"inbox",
-                                    made:function(){
-                                        this.set({
-                                            title:"Content", 
-                                            body:[dp, dp2]
-                                        });
-                                    }
+                WidgetContext.new("default", function(ctx){
+                    var dp = ctx.use({
+                        ui:"dropdown",
+                        "item-template":"dropdown.simpleitem"
+                    });
+                    dp.onchange = function(v){
+                        console.log(ctx.dp1model);
+                    };
+                    dp.bind(["item 1", "item 2"]);
+                    dp.model(["dp1model"]);
+                    dp.selectAt(0);
+
+                    var h = "300px";
+                    ctx.dp1model = "item 2";
+                    ctx.dp2model = "";
+                    var raw = ctx.use({
+                        ui:"card",
+                        class:"card static",
+                        alias:"box",
+                        id:"rcc",
+                        style:{height:h, overflow:"hidden"},
+                        made:function(){
+                            this.$body.style.overflow = "auto";
+                            var dp2 = ctx.use({
+                                ui:"dropdown",
+                                "item-template":"dropdown.simpleitem"
+                            });
+                            dp2.onchange = function(v){
+                                console.log(ctx.dp2model);
+                            };
+                            dp2.bind(["item 3", "item 4"]);
+                            dp2.model(["dp2model"]);
+                            dp2.selectAt(0);
+                            this.set({
+                                title: "Raw Events",
+                                body:[dp, dp2]
+                            });
+                        }
+                    });
+                    raw.set({
+                        title: "Raw Events",
+                        body:{
+                                mode:"append", target:{
+                                ui:"card",
+                                class:"card",
+                                alias:"inbox",
+                                made:function(){
+                                    this.set({title:"Content"});
                                 }
                             }
-                        });
-                    }
-                });
-                raw.set({
-                    title: "Raw Events",
-                    body:{
-                            mode:"append", target:{
-                            ui:"card",
-                            class:"card",
-                            alias:"inbox",
-                            made:function(){
-                                this.set({title:"Content"});
-                            }
                         }
-                    }
-                });
-                var psr = wo.use({
-                    ui:"card",
-                    alias:"box",
-                    id:"pcc",
-                    style:{height:h, overflow:"auto"},
-                    $:{
-                        ui:"card",
-                        class:"card",
-                        alias:"testbox",
-                        made:function(){
-                            this.set({title:"Content"});
-                        }
-                    }
-                });
-                psr.set({title:"Caption"});
-
-                $("#rc").append(raw);
-                $("#pc").append(psr);
-
-                $("#bpri").click(function(){
-                    wo.cover({
-                        ui:"loading"
                     });
-                });
-                $("#bdef").click(function(){
-                    wo.cover({
+                    var psr = ctx.use({
                         ui:"card",
                         alias:"box",
-                        style:{width:"80%", display:"none"},
-                        made:function(){
-                            this.set({
-                                title: "Card Title",
-                                body:'Card content ...'
-                            });
-
-                            finger(this).zoomable();
-                        }
+                        id:"pcc",
+                        style:{height:h, overflow:"auto"},
                     });
-                });
-                $("#bdsb").click(function(){
+                    psr.set({title:"Caption"});
+                    $("#rc").append(raw);
+                    $("#pc").append(psr);
+
+                    $("#bpri").click(function(){
+                        dp.select("item 3");
+                    });
+                    $("#bdef").click(function(){
+                        wo.cover({
+                            ui:"card",
+                            alias:"box",
+                            style:{width:"80%", display:"none"},
+                            made:function(){
+                                this.set({
+                                    title: "Card Title",
+                                    body:'Card content ...'
+                                });
+
+                                finger(this).zoomable();
+                            }
+                        });
+                    });
+                    $("#bdsb").click(function(){
+                        window.open('/test-cover-finger.html', '_top');
+                    });
+                    
                 });
             });
-
     body(class="wo basic")
         div
             div(class="container-fluid basic")
@@ -119,3 +110,4 @@ html
                 div.row()
                     div#rc(class="col-xs-12 col-sm-6")
                     div#pc(class="col-xs-12 col-sm-6")
+
