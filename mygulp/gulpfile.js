@@ -104,7 +104,7 @@ gulp.task("utspec", function(){
 });
 
 
-gulp.task("deploy", function(){
+gulp.task("deploy", ["test"], function(){
     gulp.src(["./dist/scripts/*-min.*"])
         .pipe(gulp.dest("../../widgetonline.github.io/scripts"));
     gulp.src(["./dist/themes/lib/*.*"])
