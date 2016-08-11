@@ -1,18 +1,21 @@
 /// <reference path="../../foundation/elements.ts" />
+/// <reference path="../../foundation/watcher.ts" />
 /// <reference path="../../builder/uicreator.ts" />
 
+
 namespace wo{
-    function changeCompleted(el:any, v?:any){
-        // if (el.$model){
-        //     el.$ctx.write(el.$model, v);
-        // }
-        el.value = v;
-        if (el.onchange){
-            el.onchange(v);
-        }
-    }
-    let value:any;
     Widgets.dropdown = function():any{
+        function changeCompleted(el:any, v?:any){
+            // if (el.$model){
+            //     el.$ctx.write(el.$model, v);
+            // }
+            el.value = v;
+            // if (el.onchange){
+            //     el.onchange(v);
+            // }
+        }
+        let value:any;
+        let watcher:any;
         return  {
             tag:"div",
             class:"dropdown",
@@ -43,17 +46,20 @@ namespace wo{
                 let dd = this;
                 dd.$model = keys;
                 dd.$ctx.read(keys, true, function(p:any, k:string, i:any){
-                    Object.defineProperty(p, k, {
-                        get:function(){
-                            return value;
-                        },
-                        set:function(newValue){
-                            value = newValue;
-                            dd.select(value);
-                        },
-                        enumerable:true,
-                        configurable:true
+                    watcher.link(p, k, function(v:any){
+                        dd.select(v);
                     });
+                    // Object.defineProperty(p, k, {
+                    //     get:function(){
+                    //         return value;
+                    //     },
+                    //     set:function(newValue){
+                    //         value = newValue;
+                    //         dd.select(value);
+                    //     },
+                    //     enumerable:true,
+                    //     configurable:true
+                    // });
                 });
             },
             made:function(){
@@ -64,16 +70,17 @@ namespace wo{
                 let mel = wo.use({ui:menu});
                 let dd = this;
                 dd.$menu = mel;
-                Object.defineProperty(this, "value", {
-                    get:function(){
-                        return value;
-                    },
-                    set: function(newValue){
-                        value = newValue;
-                    },
-                    enumerable:true,
-                    configurable:true
-                });
+                watcher = watch(this, "value");
+                // Object.defineProperty(this, "value", {
+                //     get:function(){
+                //         return value;
+                //     },
+                //     set: function(newValue){
+                //         value = newValue;
+                //     },
+                //     enumerable:true,
+                //     configurable:true
+                // });
                 mel.onselect = function(item:any, undef?:any){
                     if (item !== undef){
                         let val = item.get();
