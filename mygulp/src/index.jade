@@ -4,13 +4,24 @@ html
         meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")/
         title() Home Page
         link(rel="stylesheet", href="themes/wo/wo.css")/ 
-        link(rel="stylesheet", href="themes/lib/bootstrap.css")/ 
-        script(src="http://192.168.1.4:8080/target/target-script-min.js#anonymous")
+        link(rel="stylesheet", href="themes/lib/bootstrap.css")/
+        - if (locals.mode == "dev"){ 
+            script(src="http://192.168.1.4:8080/target/target-script-min.js#anonymous")
+        - }
         script(src=locals.mode=="dev"?"scripts/jquery.js":"scripts/jquery-min.js")
         script(src=locals.mode=="dev"?"scripts/velocity.js":"scripts/velocity-min.js")
         script(src=locals.mode=="dev"?"scripts/wo.js":"scripts/wo-min.js")
         script(type="text/javascript").
             $(function(){
+                document.body.setAttribute("test", "ok");
+                var w = new wo.monitor();
+                w.observe(document.body, 'test', function(v, ov){
+                    console.log("Value:", v, "OldValue:", ov);
+                });
+                document.body.setAttribute("test", "a test");
+                document.body.getAttribute("test");
+                document.body.setAttribute("test", "success");
+
                 WidgetContext.new("default", function(ctx){
                     var dp = ctx.use({
                         ui:"dropdown",
@@ -22,7 +33,6 @@ html
                     dp.bind(["item 1", "item 2"]);
                     dp.model(["dp1model"]);
                     dp.selectAt(0);
-
                     var h = "300px";
                     ctx.dp1model = "item 2";
                     ctx.dp2model = "";
@@ -92,10 +102,11 @@ html
                         });
                     });
                     $("#bdsb").click(function(){
-                        window.open('/test-cover-finger.html', '_top');
+                        document.body.setAttribute("test", "done");
                     });
                     
                 });
+                console.log("index end");
             });
     body(class="wo basic")
         div

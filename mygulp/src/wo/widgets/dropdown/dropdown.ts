@@ -15,7 +15,7 @@ namespace wo{
             // }
         }
         let value:any;
-        let watcher:any;
+        let watcher:any = new monitor();
         return  {
             tag:"div",
             class:"dropdown",
@@ -46,7 +46,7 @@ namespace wo{
                 let dd = this;
                 dd.$model = keys;
                 dd.$ctx.read(keys, true, function(p:any, k:string, i:any){
-                    watcher.link(p, k, function(v:any){
+                    watcher.watch(p, k, function(v:any){
                         dd.select(v);
                     });
                 });
@@ -59,7 +59,8 @@ namespace wo{
                 let mel = wo.use({ui:menu});
                 let dd = this;
                 dd.$menu = mel;
-                watcher = watch(this, "value");
+                //watcher = watch(this, "value");
+                watcher.watch(this, "value");
 
                 mel.onselect = function(item:any, undef?:any){
                     if (item !== undef){
