@@ -1,11 +1,16 @@
 namespace wo{
 
     export class monitor{
-        private val:any;
+        private val:any = null;
         private undo:Function[] = [];
-        private origin:any;
-        watch(target:any, prop:string, callback?:Function){
+        private origin:any = null;
+        private fwd:Function[] = [];
+
+        watch(target:any, prop:string, callback?:Function, forward?:boolean){
             let self = this;
+            if (forward){
+                target[prop] = this.val;
+            }
             if (!self.origin){
                 self.origin = target;
                 this.val = target[prop];
@@ -21,7 +26,10 @@ namespace wo{
                         callback(newValue, oldval);
                     }
                     if (oldval != newValue && self.origin.onchange){
-                        self.origin.onchange(newValue, self.val);
+                        self.origin.onchange(newValue, oldval, prop);
+                    }
+                    for(let i of self.fwd){
+                        i();
                     }
                 },
                 configurable:true,
@@ -40,7 +48,28 @@ namespace wo{
                     enumerable:true
                 });
             });
-            
+            return this;
+        }
+
+        forward(target:any, prop:string, isattr?:boolean){
+            let self = this;
+            if (isattr){
+                self.fwd.add(function(){
+                    target.setAttribute(prop, self.val);
+                });
+            }else{
+                self.fwd.add(function(){
+                    target[prop] = self.val;
+                });
+            }
+        }
+
+        cancel(){
+            for(let i of this.undo){
+                i();
+            }
+            this.undo.clear();
+            this.fwd.clear();
         }
 
         observe(el:any, attr:string, callback?:Function){
@@ -54,7 +83,7 @@ namespace wo{
                     if (mutation.attributeName == attr){
                         self.val = el.getAttribute(mutation.attributeName);
                         if (callback){
-                            callback(self.val, mutation.oldValue);
+                            callback(self.val, mutation.oldValue, attr);
                         }
                     }
                 });
@@ -63,6 +92,7 @@ namespace wo{
             self.undo.add(function(){
                 obs.disconnect();
             });
+            return this;
         }
     }
 }

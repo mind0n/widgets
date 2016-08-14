@@ -48,6 +48,7 @@ html
                                 ui:"dropdown",
                                 "item-template":"dropdown.simpleitem"
                             });
+                            dp2.watcher().forward($("#bpri")[0], 'innerHTML');
                             dp2.onchange = function(v){
                                 console.log(ctx.dp2model);
                             };

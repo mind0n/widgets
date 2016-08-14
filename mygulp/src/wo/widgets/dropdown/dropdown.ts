@@ -6,19 +6,14 @@
 namespace wo{
     Widgets.dropdown = function():any{
         function changeCompleted(el:any, v?:any){
-            // if (el.$model){
-            //     el.$ctx.write(el.$model, v);
-            // }
             el.value = v;
-            // if (el.onchange){
-            //     el.onchange(v);
-            // }
         }
         let value:any;
-        let watcher:any = new monitor();
+        let watcher:any;
         return  {
             tag:"div",
             class:"dropdown",
+            watcher:function(){return watcher;},
             bind:function(dat:any[]){
                 if (!dat){
                     return;
@@ -59,8 +54,8 @@ namespace wo{
                 let mel = wo.use({ui:menu});
                 let dd = this;
                 dd.$menu = mel;
-                //watcher = watch(this, "value");
-                watcher.watch(this, "value");
+
+                watcher = new monitor().watch(this, "value");
 
                 mel.onselect = function(item:any, undef?:any){
                     if (item !== undef){
@@ -73,6 +68,9 @@ namespace wo{
                         changeCompleted(dd);
                     }
                 };
+            },
+            dispose(){
+                watcher.cancel();
             },
             $:[
                 {tag:"div", class:"area", $:[
