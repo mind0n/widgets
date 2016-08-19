@@ -29,7 +29,6 @@ exports.gulp = {
                 this.dir('spec/1st.tests.ts'), 
                 this.dir('spec/2nd.tests.ts'),
                 this.dir('spec/component.tests.ts'),
-                this.dir('spec/auto-input.tests.ts')
             ];
             return rlt;
         }
