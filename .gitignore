@@ -1,4 +1,8 @@
 node_modules
+.vs
+bin
+obj
+output
 bower_components
 dist
 test-coverage
