@@ -7,7 +7,6 @@ using AppDomainContracts;
 
 namespace Addin
 {
-	[Serializable]
     public class ConsoleAddin : AppDomainComponent
     {
 	    public override void Start()

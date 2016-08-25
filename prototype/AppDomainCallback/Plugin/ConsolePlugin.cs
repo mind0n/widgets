@@ -7,7 +7,6 @@ using AppDomainContracts;
 
 namespace Plugin
 {
-	[Serializable]
     public class ConsolePlugin : AppDomainComponent
     {
 	    public override void Start()

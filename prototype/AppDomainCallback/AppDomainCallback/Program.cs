@@ -16,7 +16,7 @@ namespace Startup
 		{
 			Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
 			var domain = AppDomain.CreateDomain("Container", AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.BaseDirectory, false);
-			DoCallback(domain);
+            DoCallback(domain);
 
 			//CreateAndUnwrap(domain);
 
@@ -33,7 +33,6 @@ namespace Startup
 		{
 			domain.DoCallBack(() =>
 			{
-				var dll = AppDomain.CurrentDomain.BaseDirectory + "addin.dll";
 				//var handle = Activator.CreateInstance(dll, "Addin.ConsoleAddin");
 				var typ = Type.GetType("Addin.ConsoleAddin,addin", false, true);
 				if (typ != null)
@@ -50,8 +49,8 @@ namespace Startup
 
 		private static void CreateAndUnwrap(AppDomain domain)
 		{
-			var dll = AppDomain.CurrentDomain.BaseDirectory + "addin.dll";
-			var handle = domain.CreateInstanceFrom(dll, "Addin.ConsoleAddin");
+			var dll = AppDomain.CurrentDomain.BaseDirectory + "plugin.dll";
+			var handle = domain.CreateInstanceFrom(dll, "Plugin.ConsolePlugin");
 			var ins = (AppDomainComponent) handle.Unwrap();
 			ins.Start();
 		}

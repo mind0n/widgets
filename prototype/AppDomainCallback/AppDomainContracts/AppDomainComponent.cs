@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppDomainContracts
 {
-	[Serializable]
-	public abstract class AppDomainComponent
+	public abstract class AppDomainComponent : MarshalByRefObject
 	{
 		public abstract void Start();
 	}
