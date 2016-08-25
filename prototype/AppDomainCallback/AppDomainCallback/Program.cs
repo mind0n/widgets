@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Act.Repository;
 using AppDomainContracts;
+using System.Threading;
 
 namespace Startup
 {
@@ -22,19 +23,7 @@ namespace Startup
 			{
 				Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
 
-				var dll = AppDomain.CurrentDomain.BaseDirectory + "plugin.dll";
-				var asm = Assembly.LoadFrom(dll);
-				var ins = asm.CreateInstance("Plugin.ConsolePlugin", true);
-				if (ins != null)
-				{
-					var typ = ins.GetType();
-					var mi = typ.GetMethod("Start");
-					if (mi != null)
-					{
-						var r = mi.Invoke(ins, Type.EmptyTypes);
-						Console.WriteLine(r);
-					}
-				}
+				LoadPlugin();
 
 				return pars[0];
 			}, "This is parameter");
@@ -44,10 +33,43 @@ namespace Startup
 
 			AppDomains.Unload("Container");
 
-			Console.WriteLine("Press any key to exit");
+			Console.WriteLine("Press any key to reload Container ...");
 			Console.ReadKey();
 
+			Thread th = new Thread(new ThreadStart(() =>
+			{
+				Thread.Sleep(2000);
+				AppDomains.Use("Container");
+			}));
+			th.Start();
+			Console.WriteLine("Requiring Container ...");
+			ad = AppDomains.Require("Container");
+			ad.Execute((pars) =>
+			{
+				Console.WriteLine("Container reload completed");
+				LoadPlugin();
+				return null;
+			});
+			Console.WriteLine("Press any key to exit ...");
+			Console.ReadKey();
 			//Test();
+		}
+
+		private static void LoadPlugin()
+		{
+			var dll = AppDomain.CurrentDomain.BaseDirectory + "plugin.dll";
+			var asm = Assembly.LoadFrom(dll);
+			var ins = asm.CreateInstance("Plugin.ConsolePlugin", true);
+			if (ins != null)
+			{
+				var typ = ins.GetType();
+				var mi = typ.GetMethod("Start");
+				if (mi != null)
+				{
+					var r = mi.Invoke(ins, Type.EmptyTypes);
+					Console.WriteLine(r);
+				}
+			}
 		}
 
 		private static void Test()
