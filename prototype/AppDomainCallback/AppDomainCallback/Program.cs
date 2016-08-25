@@ -21,11 +21,29 @@ namespace Startup
 			var rlt = ad.Execute((pars) =>
 			{
 				Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
+
+				var dll = AppDomain.CurrentDomain.BaseDirectory + "plugin.dll";
+				var asm = Assembly.LoadFrom(dll);
+				var ins = asm.CreateInstance("Plugin.ConsolePlugin", true);
+				if (ins != null)
+				{
+					var typ = ins.GetType();
+					var mi = typ.GetMethod("Start");
+					if (mi != null)
+					{
+						var r = mi.Invoke(ins, Type.EmptyTypes);
+						Console.WriteLine(r);
+					}
+				}
+
 				return pars[0];
 			}, "This is parameter");
 
 			Console.WriteLine($"{AppDomain.CurrentDomain.FriendlyName}: {rlt.Result}");
 			Console.ReadKey();
+
+			AppDomains.Unload("Container");
+
 			Console.WriteLine("Press any key to exit");
 			Console.ReadKey();
 

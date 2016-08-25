@@ -52,6 +52,10 @@ namespace Act.Repository
                 {
                     Thread.Sleep(100);
                 }
+				if (o != null)
+				{
+					o.Unload();
+				}
             }
         }
     }
@@ -75,17 +79,32 @@ namespace Act.Repository
 	        }
         }
 
+		public void Unload()
+		{
+			if (dm != null)
+			{
+				AppDomain.Unload(dm);
+			}
+		}
+
 	    public AppDomainTaskResult Execute(Func<object[], object> callback, params object[] args)
 	    {
 			var task = new AppDomainTask(callback, args);
-		    dm.DoCallBack(task.Run);
-		    var ec = Exchanger(dm);
-		    if (ec != null)
-		    {
-			    return ec[task.Id] as AppDomainTaskResult;
-		    }
-		    return null;
-	    }
+			try
+			{
+				dm.DoCallBack(task.Run);
+				var ec = Exchanger(dm);
+				if (ec != null)
+				{
+					return ec[task.Id] as AppDomainTaskResult;
+				}
+			}
+			finally
+			{
+				Exchanger(dm).Delete(task.Id);
+			}
+			return null;
+		}
 
 		public static ConcurrentDictionary<string, object> Exchanger(AppDomain domain)
 		{
@@ -112,7 +131,7 @@ namespace Act.Repository
 	}
 
 	[Serializable]
-	public class AppDomainTask : IDisposable
+	public class AppDomainTask
 	{
 		protected bool disposed;
 		protected Func<object[], object> handler;
@@ -148,16 +167,6 @@ namespace Act.Repository
 			catch (Exception ex)
 			{
 				exchanger[Id] = new AppDomainTaskResult(null, ex);
-			}
-		}
-
-		public void Dispose()
-		{
-			if (!disposed)
-			{
-				disposed = true;
-				pars = null;
-				
 			}
 		}
 
