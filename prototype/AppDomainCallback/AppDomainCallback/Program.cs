@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using Act.Repository;
 using AppDomainContracts;
 
 namespace Startup
@@ -15,8 +16,28 @@ namespace Startup
 		static void Main(string[] args)
 		{
 			Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
-			var domain = AppDomain.CreateDomain("Container", AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.BaseDirectory, false);
-            DoCallback(domain);
+
+			var ad = AppDomains.Use("Container");
+			var rlt = ad.Execute((pars) =>
+			{
+				Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
+				return pars[0];
+			}, "This is parameter");
+
+			Console.WriteLine($"{AppDomain.CurrentDomain.FriendlyName}: {rlt.Result}");
+			Console.ReadKey();
+			Console.WriteLine("Press any key to exit");
+			Console.ReadKey();
+
+			//Test();
+		}
+
+		private static void Test()
+		{
+			Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
+			var domain = AppDomain.CreateDomain("Container", AppDomain.CurrentDomain.Evidence,
+				AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.BaseDirectory, false);
+			DoCallback(domain);
 
 			//CreateAndUnwrap(domain);
 
@@ -26,7 +47,6 @@ namespace Startup
 
 			Console.WriteLine("Press any key to exit ...");
 			Console.ReadKey();
-
 		}
 
 		private static void DoCallback(AppDomain domain)

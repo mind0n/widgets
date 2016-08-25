@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Act.Repository\Act.Repository.csproj">
+      <Project>{b4abac4d-3e9a-4bfc-9ccd-bfb0ed9a0741}</Project>
+      <Name>Act.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppDomainContracts\AppDomainContracts.csproj">
       <Project>{1525274f-ceaf-4a6b-8c54-b33d9595eabe}</Project>
       <Name>AppDomainContracts</Name>

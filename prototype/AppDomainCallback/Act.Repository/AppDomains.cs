@@ -56,8 +56,10 @@ namespace Act.Repository
         }
     }
 
+	[Serializable]
     public class AppDomainAdapter
-    {
+	{
+		public const string KEY_EXCHANGE = "_exchange_";
         protected AppDomain dm;
         public string BaseDirectory { get { return dm.BaseDirectory; } }
         public string SearchDirectory { get { return dm.RelativeSearchPath; } }
@@ -65,6 +67,106 @@ namespace Act.Repository
         public AppDomainAdapter(AppDomain domain)
         {
             dm = domain;
+	        var ec = dm.GetData(KEY_EXCHANGE);
+	        if (ec == null)
+	        {
+		        ec = new ConcurrentDictionary<string, object>();
+				dm.SetData(KEY_EXCHANGE, ec);
+	        }
         }
-    }
+
+	    public AppDomainTaskResult Execute(Func<object[], object> callback, params object[] args)
+	    {
+			var task = new AppDomainTask(callback, args);
+		    dm.DoCallBack(task.Run);
+		    var ec = Exchanger(dm);
+		    if (ec != null)
+		    {
+			    return ec[task.Id] as AppDomainTaskResult;
+		    }
+		    return null;
+	    }
+
+		public static ConcurrentDictionary<string, object> Exchanger(AppDomain domain)
+		{
+			return domain.GetData(KEY_EXCHANGE) as ConcurrentDictionary<string, object>;
+		}
+	}
+
+	[Serializable]
+	public class AppDomainTaskResult
+	{
+		public object Result { get; protected set; }
+		public Exception Error { get; protected set; }
+
+		public bool NoError
+		{
+			get { return Error == null; }
+		}
+
+		public AppDomainTaskResult(object result, Exception ex = null)
+		{
+			Result = result;
+			Error = ex;
+		}
+	}
+
+	[Serializable]
+	public class AppDomainTask : IDisposable
+	{
+		protected bool disposed;
+		protected Func<object[], object> handler;
+		protected object[] pars;
+
+		public string Id { get; } = Guid.NewGuid().ToString();
+
+		public object Result
+		{
+			get { return exchanger[Id]; }
+		}
+
+		public AppDomainTask(Func<object[], object> callback, params object[] args)
+		{
+			handler = callback;
+			pars = args;
+		}
+
+		internal void Run()
+		{
+			try
+			{
+				if (handler != null)
+				{
+					var rlt = handler(pars);
+					exchanger[Id] = new AppDomainTaskResult(rlt);
+				}
+				else
+				{
+					exchanger[Id] = new AppDomainTaskResult(null);
+				}
+			}
+			catch (Exception ex)
+			{
+				exchanger[Id] = new AppDomainTaskResult(null, ex);
+			}
+		}
+
+		public void Dispose()
+		{
+			if (!disposed)
+			{
+				disposed = true;
+				pars = null;
+				
+			}
+		}
+
+		protected ConcurrentDictionary<string, object> exchanger
+		{
+			get
+			{
+				return AppDomain.CurrentDomain.GetData(AppDomainAdapter.KEY_EXCHANGE) as ConcurrentDictionary<string, object>;
+			}
+		} 
+	}
 }
