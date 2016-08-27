@@ -9,7 +9,7 @@ namespace Plugin
 {
     public class ConsolePlugin : AppDomainComponent
     {
-	    public override void Start()
+	    public override void Start(object arg = null)
 	    {
 			Console.WriteLine($"Console plugin:{AppDomain.CurrentDomain.FriendlyName}");
 		}

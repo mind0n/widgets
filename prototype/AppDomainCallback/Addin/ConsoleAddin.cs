@@ -9,9 +9,9 @@ namespace Addin
 {
     public class ConsoleAddin : AppDomainComponent
     {
-	    public override void Start()
+	    public override void Start(object arg = null)
 	    {
-		    Console.WriteLine($"Console addin:{AppDomain.CurrentDomain.FriendlyName}");
+		    Console.WriteLine($"Console addin: {AppDomain.CurrentDomain.FriendlyName}, {(arg != null?arg.ToString(): "(null)")}");
 	    }
     }
 }

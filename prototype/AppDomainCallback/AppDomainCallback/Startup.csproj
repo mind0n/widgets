@@ -44,13 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="Program.tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Act.Repository\Act.Repository.csproj">
+    <ProjectReference Include="..\..\..\..\..\kin\Act\Act.Repository\Act.Repository.csproj">
       <Project>{b4abac4d-3e9a-4bfc-9ccd-bfb0ed9a0741}</Project>
       <Name>Act.Repository</Name>
     </ProjectReference>

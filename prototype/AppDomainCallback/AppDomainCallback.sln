@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Addin", "Addin\Addin.csproj", "{DD1DB145-A03A-4D1A-A9C5-229679F5F0A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Act.Repository", "Act.Repository\Act.Repository.csproj", "{B4ABAC4D-3E9A-4BFC-9CCD-BFB0ED9A0741}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Act.Repository", "..\..\..\..\kin\Act\Act.Repository\Act.Repository.csproj", "{B4ABAC4D-3E9A-4BFC-9CCD-BFB0ED9A0741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
