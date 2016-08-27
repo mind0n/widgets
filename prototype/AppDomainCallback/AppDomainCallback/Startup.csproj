@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\kin\Act\Act.Core\Act.Core.csproj">
+      <Project>{d3af8b14-b033-4b54-bcbb-698022ba3163}</Project>
+      <Name>Act.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\kin\Act\Act.Repository\Act.Repository.csproj">
       <Project>{b4abac4d-3e9a-4bfc-9ccd-bfb0ed9a0741}</Project>
       <Name>Act.Repository</Name>

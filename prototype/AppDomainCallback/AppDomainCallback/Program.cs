@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Act.Repository;
 using AppDomainContracts;
 using System.Threading;
+using Act.Core;
 
 namespace Startup
 {
@@ -17,12 +18,13 @@ namespace Startup
 		static void Main(string[] args)
 		{
 			Console.WriteLine(AppDomain.CurrentDomain.FriendlyName);
-			var rp = new FolderRepository(new
-			{
-				name="Container",
-				basedir=AppDomain.CurrentDomain.BaseDirectory,
-				pattern="addin.dll"
-			});
+			dynamic settings = new Dobj(new DobjSettings { AutoCreate = true });
+			settings.name = "TestContainer";
+			settings.basedir = AppDomain.CurrentDomain.BaseDirectory;
+			settings.pattern = "addin.dll";
+			settings.entry = ".ConsoleAddin";
+			settings.settings.port = 80;
+			var rp = new FolderRepository(settings);
 			rp.Load();
 			Console.WriteLine("Press any key to unload ...");
 			Console.ReadKey();
