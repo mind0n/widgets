@@ -1,0 +1,12 @@
+﻿{
+	"module": {
+		"basedir": "./",
+		"pattern": "Act.Entry.dll",
+		"domain": "sample-module",
+		"enabled": true,
+		"entry": ".sampleentry",
+		"settings": {
+			"test": "Success~"
+		}
+	}
+}
