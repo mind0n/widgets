@@ -1,7 +1,7 @@
 ﻿{
 	"module": {
 		"basedir": "./",
-		"pattern": "Act.Entry.dll",
+		"pattern": "MetaEntry.dll",
 		"domain": "sample-module",
 		"enabled": true,
 		"entry": ".sampleentry",

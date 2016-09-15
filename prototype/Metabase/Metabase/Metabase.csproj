@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{10D18AFD-8349-415A-9772-081F8C54CCCE}</ProjectGuid>
+    <ProjectGuid>{9999335E-A344-4E74-9D67-436054551DA7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaStartup</RootNamespace>
-    <AssemblyName>MetaStartup</AssemblyName>
+    <RootNamespace>Metabase</RootNamespace>
+    <AssemblyName>Metabase</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,43 +35,47 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Act.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Core.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Entry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Entry.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Entry.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Processors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Processors.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Processors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Processors.Handlers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Processors.Handlers.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Processors.Handlers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Repositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Act.Repositories.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Act.Repositories.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Foundation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Foundation.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HttpMultipartParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\HttpMultipartParser.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\HttpMultipartParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Native, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Native.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Native.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NgSetup, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Act.1.0.12\lib\NgSetup.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Resource, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.5\lib\Resource.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.12\lib\Resource.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -86,9 +90,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetaEntry.cs" />
+    <Compile Include="Act.Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -99,6 +102,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaEntry\MetaEntry.csproj">
+      <Project>{2fec5660-4165-4bed-86cb-8e36ec2a5b2f}</Project>
+      <Name>MetaEntry</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

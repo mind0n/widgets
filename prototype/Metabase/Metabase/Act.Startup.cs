@@ -18,13 +18,9 @@ namespace Act
     {
         static void Main(string[] args)
 		{
-			//var gh = new GlobalKeyboardHook();
-			//gh.HookedKeys.Add(Keys.LMenu);
-			//gh.HookedKeys.Add(Keys.OemSemicolon);
 			log.Register(new ConfigLogManager());
 			Cmd.Handle(args, ()=>
 			{
-				var dir = Environment.CurrentDirectory;
 				ServiceStartup ss = new ServiceStartup();
 				if (Cmd.Exists("c") || Debugger.IsAttached)
 				{
