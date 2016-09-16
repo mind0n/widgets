@@ -25,7 +25,7 @@ namespace Act
 				if (Cmd.Exists("c") || Debugger.IsAttached)
 				{
 					ss.Begin();
-					log.w("Press ENTER to stop server ...");
+					log.w("Press ENTER to unload module(s) ...");
 					Console.ReadLine();
 					ss.End();
 					log.w("Press any key to exit ...");
@@ -39,10 +39,5 @@ namespace Act
 			});
 
 		}
-
-		private static void Output(string msg)
-        {
-            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "output.txt", msg);
-        }
     }
 }

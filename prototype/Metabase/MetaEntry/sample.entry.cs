@@ -22,12 +22,12 @@ namespace Act.Entry
 		public static void Start(dynamic settings)
 		{
 			log.Register(new ConfigLogManager());
-			log.d($"Started: SampleEntry - {AppDomain.CurrentDomain.FriendlyName} -> {settings.test}");
+			log.d($"Module started: SampleEntry - {AppDomain.CurrentDomain.FriendlyName} -> {settings.test}");
 		}
 
 		public static void Stop()
 		{
-			log.d($"Ended: SampleEntry - {AppDomain.CurrentDomain.FriendlyName}");
+			log.d($"Module ended: SampleEntry - {AppDomain.CurrentDomain.FriendlyName}");
 		}
 	}
 }
