@@ -1,4 +1,0 @@
-﻿{
-	"logger": "Act.Core.ConsoleLogManager,Act.Core",
-	"file": "log.txt"
-}
