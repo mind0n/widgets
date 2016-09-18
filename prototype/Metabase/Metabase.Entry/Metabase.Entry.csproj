@@ -31,43 +31,43 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Act.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.20\lib\Act.Core.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.21\lib\Act.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Entry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\Act.Entry.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\Act.Entry.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.20\lib\Act.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.21\lib\Act.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Processors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\Act.Processors.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\Act.Processors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Processors.Handlers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\Act.Processors.Handlers.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\Act.Processors.Handlers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Repositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.20\lib\Act.Repositories.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.21\lib\Act.Repositories.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Act.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\Act.Services.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\Act.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Foundation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Act.1.0.20\lib\Foundation.dll</HintPath>
+      <HintPath>..\packages\Act.1.0.21\lib\Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HttpMultipartParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\HttpMultipartParser.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\HttpMultipartParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Native, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serve.1.0.2\lib\Native.dll</HintPath>
+      <HintPath>..\packages\Serve.1.0.4\lib\Native.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -84,7 +84,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sample.entry.cs" />
-    <Compile Include="serve.entry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
