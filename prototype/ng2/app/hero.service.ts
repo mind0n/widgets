@@ -21,4 +21,7 @@ export class HeroService{
     getHeros():Promise<Hero[]>{
         return Promise.resolve(HEROES);
     }
+    getHero(id:string):Promise<Hero>{
+        return this.getHeros().then((heroes)=>heroes.find(hero=>hero.id.toString() === id));
+    }
 }

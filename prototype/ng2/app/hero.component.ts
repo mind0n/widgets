@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import {ActivatedRoute, Params} from '@angular/router';
+
 import {Hero} from "./hero";
 
 import {HeroService} from "./hero.service";
@@ -64,7 +66,7 @@ import {HeroService} from "./hero.service";
         border-radius: 4px 0 0 4px;
       }
     `]
-    , providers:[HeroService]
+    , providers:[HeroService, ActivatedRoute]
 })
 export class HeroesComponent implements OnInit {
     selectedHero:Hero;
