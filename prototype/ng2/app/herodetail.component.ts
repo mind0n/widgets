@@ -20,7 +20,7 @@ export class HeroDetailComponent implements OnInit  {
   constructor(private heroService: HeroService, private route:ActivatedRoute){}
   @Input()
   hero:Hero;
-
+  
   ngOnInit():void{
       this.route.params.forEach((params:Params)=>{
           let id = params['id'];
