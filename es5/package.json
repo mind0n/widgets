@@ -1,0 +1,12 @@
+{
+  "name": "widgets",
+  "version": "1.0.0",
+  "description": "Widgets(es5)",
+  "scripts": {
+    "start": ""
+  },
+  "license": "MPL-2.0-no-copyleft-exception",
+  "dependencies": {
+    "vue": "^2.3.0"
+  }
+}
