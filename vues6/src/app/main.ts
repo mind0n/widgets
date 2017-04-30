@@ -1,6 +1,8 @@
 import * as Vue from "vue";
-import {IconToggleDropDown} from "./components/SvgComponent";
+import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconComponent";
 
 (<any>window).v = Vue;
 
+Vue.component('icon', Icon);
+Vue.component('icon-toggle-menu', IconToggleMenu);
 Vue.component('icon-toggle-dropdown', IconToggleDropDown);
