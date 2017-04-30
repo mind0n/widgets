@@ -2,8 +2,20 @@
 <html>
     <head>
         <title>Widgets Development</title>
-        <link rel="stylesheet" type="text/css" href="css/vendors.css" />
+        <link rel="stylesheet" type="text/css" href="vendors.css" />
+        <style>
+        </style>
+
+        <script src="widgets.js"></script>
     </head>
     <body class="wo nb">
+        <div id="app">
+            <icon-toggle-dropdown></icon-toggle-dropdown>
+        </div>
+        <script>
+            new v({
+                el:'#app'
+            });
+        </script>
     </body>
 </html>

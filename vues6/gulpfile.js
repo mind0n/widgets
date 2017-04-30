@@ -7,17 +7,19 @@ reg([
     , 'vendor'
     , 'static'
     , 'ts'
+    , 'ts:prod'
     , '_host'
-    , '_watch:css'
+    , '_watch:ts'
+    , '_watch:vendor'
     , '_watch:html'
 ]);
 gulp.task("default", function(done){
-    runSequence('vendor', 'static', function() {
+    runSequence('vendor', 'static', 'ts', function() {
         done();
     });
 });
 gulp.task("prod", function(done){
-    runSequence('clean', 'vendor', 'ts', function() {
+    runSequence('clean', 'vendor', 'ts:prod', function() {
         done();
     });
 });

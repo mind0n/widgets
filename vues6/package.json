@@ -7,19 +7,25 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
     "gulp-shell": "^0.6.3",
     "gulp-task-register": "^1.1.9",
     "gulp-uglify": "^2.1.2",
+    "gulp-webserver": "^0.9.1",
+    "requirejs": "^2.3.3",
     "run-sequence": "^1.2.2",
     "tsify": "^3.0.1",
     "typescript": "^2.3.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "vue": "^2.3.0"
+    "vue": "^2.3.0",
+    "vue-class-component": "^5.0.1",
+    "vue-property-decorator": "^5.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "tsc"
+    "start": "gulp clean && gulp",
+    "test": "gulp clean && gulp && gulp host watch:ts watch:html watch:vendor"
   },
   "repository": {
     "type": "git",
@@ -30,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/mind0n/widgets/issues"
   },
-  "homepage": "https://github.com/mind0n/widgets#readme"
+  "homepage": "https://github.com/mind0n/widgets#readme",
+  "browser": {
+    "vue": "vue/dist/vue.runtime.common.js"
+  }
 }
