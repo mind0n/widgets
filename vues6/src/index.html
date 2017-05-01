@@ -10,11 +10,16 @@
     </head>
     <body class="wo nb">
         <div id="app">
-            <icon-toggle-menu width="32" height="32"></icon-toggle-menu>
+            <auto :current="current"></auto>
         </div>
         <script>
-            new v({
+            var vm = new v({
                 el:'#app'
+                , data:{
+                    current:{
+                        template:'<icon-toggle-menu width=32 height=32 />'
+                    }
+                }
             });
         </script>
     </body>
