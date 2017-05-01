@@ -10,15 +10,16 @@
     </head>
     <body class="wo nb">
         <div id="app">
-            <auto :current="current"></auto>
+            <autos :items="list"></autos>
         </div>
         <script>
             var vm = new v({
                 el:'#app'
                 , data:{
-                    current:{
-                        template:'<icon-toggle-menu width=32 height=32 />'
-                    }
+                    list:[
+                        {alive:true, current:{ template:'<icon-toggle-dropdown width=32 height=32 />'}}
+                        , {alive:true, current:{ template:'<icon-toggle-menu width=32 height=32 />'}}
+                    ]
                 }
             });
         </script>
