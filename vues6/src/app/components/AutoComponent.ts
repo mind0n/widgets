@@ -23,7 +23,7 @@ export class AutoComponent extends Vue{
 @Component({
     // All component options are allowed in here
     template: `
-        <div><auto v-for="item in items" :alive="item.alive" :current="item.current" :key="seed()" /></div>
+        <div><w.auto v-for="item in items" :alive="item.alive" :current="item.current" :key="seed()" /></div>
     `
     , props:["items"]
 })

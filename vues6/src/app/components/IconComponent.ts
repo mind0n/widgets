@@ -24,9 +24,9 @@ export class Icon extends Vue{
 @Component({
     // All component options are allowed in here
     template: `
-        <icon :width="width" :height="height" :viewbox="viewbox()">
+        <w.icon :width="width" :height="height" :viewbox="viewbox()">
             <path d="M13 9L22 17L13 25L22 17" />
-        </icon>
+        </w.icon>
     `
     , props:["width", "height"]
 })
@@ -42,9 +42,9 @@ export class IconToggleMenu extends Vue{
 @Component({
     // All component options are allowed in here
     template: `
-        <icon :width="width" :height="height">
+        <w.icon :width="width" :height="height">
             <path d="M8 13L16 22L24 13L16 22"></path>
-        </icon>
+        </w.icon>
     `
     , props:["width", "height"]
 })
