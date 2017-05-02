@@ -4,7 +4,7 @@ import Component from 'vue-class-component'
 @Component({
     template: `
         <div class="w-head-row">
-            Head Row
+            <div v-for="item in columns()" v-if="!item.hidden" class="w-cell">{{item.caption}}</div>
         </div>
     `
     , props:["meta"]
@@ -14,6 +14,10 @@ import Component from 'vue-class-component'
 })
 class HRow extends Vue{
     meta:any;
+    columns(){
+        console.log(this.meta);
+        return this.meta?this.meta.columns:[];
+    }
 }
 
 @Component({
@@ -32,18 +36,21 @@ class Row extends Vue{
 @Component({
     template: `
         <div class="w-grid">
-            <HRow :meta="meta"></HRow>
+            <HRow :meta="getmeta()"></HRow>
         </div>
     `
-    , props:["meta"]
+    , props:[]
     , components:{
         HRow,Row
     }
 })
 export class GridComponent extends Vue{
-    meta:any;
+    getmeta(){
+        return this.meta;
+    }
+    protected meta:any;
 
     prepare(meta){
-        console.log(this, meta);
+        this.meta = meta;
     }
 }
