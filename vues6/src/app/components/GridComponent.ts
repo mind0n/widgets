@@ -26,8 +26,11 @@ class Cell extends Widget{
         if (this.dat && m && f){
             let d = this.dat[f];
             if (d){
-                console.log(d);
-                this.val(d);
+                if (m.filter){
+                    this.val(m.filter(d));
+                }else{
+                    this.val(d);
+                }
             }
         }
     }

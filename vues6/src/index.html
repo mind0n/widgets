@@ -41,6 +41,10 @@
             <w.grid ref="grid"></w.grid>
         </div>
         <script>
+            function rolefilter(roles){
+                return join(roles, 'name');
+                //return roles && roles.length > 0 ? roles[0].name;
+            }
             var vm = new v({
                 el:'#app'
                 , data:{
@@ -54,7 +58,7 @@
                 columns:[
                     {field:'userID', caption:'User ID', hidden:true}
                     ,{field:'userName', caption:'Username'}
-                    ,{field:'aspNetRoles', caption:'Role'}
+                    ,{field:'aspNetRoles', caption:'Role', filter:rolefilter}
                     ,{field:'aspNetUserStatu', caption:'User Status'}
                     ,{field:'createdDate', caption:'Created Time'}
                     ,{field:'changedDate', caption:'Updated Time'}

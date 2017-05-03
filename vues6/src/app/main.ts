@@ -3,8 +3,11 @@ import UniqueId from "./plugins/uniqueid"
 import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
+import {each, join} from '../../../../kernel/web/common'
 
-(<any>window).v = Vue;
+let w = <any>window;
+w.v = Vue;
+w.join = join;
 Vue.use(UniqueId);
 Vue.component('w.icon', Icon);
 Vue.component('w.icon-toggle-menu', IconToggleMenu);
