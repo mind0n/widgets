@@ -1,5 +1,7 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
+import {Widget} from './widget'
+
 
 @Component({
     template: `
@@ -12,7 +14,7 @@ import Component from 'vue-class-component'
         
     }
 })
-class HRow extends Vue{
+class HRow extends Widget{
     protected meta:any;
     columns(){
         return this.meta?this.meta.columns:[];
@@ -30,7 +32,7 @@ class HRow extends Vue{
         
     }
 })
-class Row extends Vue{
+class Row extends Widget{
 }
 @Component({
     template: `
@@ -43,7 +45,7 @@ class Row extends Vue{
         HRow,Row
     }
 })
-export class GridComponent extends Vue{
+export class GridComponent extends Widget{
     getmeta(){
         return this.dat.meta;
     }

@@ -1,5 +1,6 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
+import {Widget} from './widget'
 
 
 // The @Component decorator indicates the class is a Vue component
@@ -14,7 +15,7 @@ import Component from 'vue-class-component'
     `
     , props:["alive", "current"]
 })
-export class AutoComponent extends Vue{
+export class AutoComponent extends Widget{
     alive:boolean;
     current:any;
 }
@@ -27,7 +28,7 @@ export class AutoComponent extends Vue{
     `
     , props:["items"]
 })
-export class AutoComponents extends Vue{
+export class AutoComponents extends Widget{
     items:any[]
     protected seed(){
         var d = new Date();

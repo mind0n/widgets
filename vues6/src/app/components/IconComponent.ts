@@ -1,5 +1,6 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
+import {Widget} from './widget'
 
 // The @Component decorator indicates the class is a Vue component
 @Component({
@@ -14,7 +15,7 @@ import Component from 'vue-class-component'
     `
     , props:["width", "height"]
 })
-export class Icon extends Vue{
+export class Icon extends Widget{
     html:string
     width:number;
     height:number;
@@ -30,7 +31,7 @@ export class Icon extends Vue{
     `
     , props:["width", "height"]
 })
-export class IconToggleMenu extends Vue{
+export class IconToggleMenu extends Widget{
     width:number;
     height:number;
     viewbox():string{
@@ -48,7 +49,7 @@ export class IconToggleMenu extends Vue{
     `
     , props:["width", "height"]
 })
-export class IconToggleDropDown extends Vue{
+export class IconToggleDropDown extends Widget{
     width:number;
     height:number;
 }
