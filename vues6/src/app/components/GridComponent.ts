@@ -1,7 +1,7 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
 import {Widget} from './widget'
-import {each} from '../../../../../kernel/web/common'
+import {each, extend} from '../../../../../kernel/web/common'
 
 @Component({
     template: `
@@ -22,7 +22,9 @@ class Cell extends Widget{
     mounted(){
         let f = this.field;
         let m = this.meta;
-        console.log(m);
+        if (m && m.styles){
+            extend(this.$el.style, m.styles);
+        }
         if (this.dat && m && f){
             let d = this.dat[f];
             if (d){
@@ -42,7 +44,7 @@ class Cell extends Widget{
 @Component({
     template: `
         <div class="w-head w-row">
-            <Cell v-for="item in columns()" v-if="!item.hidden" :key="$uid()">{{item.caption}}</Cell>
+            <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()">{{item.caption}}</Cell>
         </div>
     `
     , props:["meta"]
@@ -79,19 +81,21 @@ class Row extends Widget{
 }
 @Component({
     template: `
-        <div class="w-grid">
+        <div :class="'w-grid ' + classes">
             <HRow :meta="getmeta()"></HRow>
             <div class="w-body">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
         </div>
     `
-    , props:[]
+    , props:['classes']
     , components:{
         HRow,Row
     }
 })
 export class GridComponent extends Widget{
+    protected classes:string;
+
     getmeta(){
         return this.dat.meta;
     }

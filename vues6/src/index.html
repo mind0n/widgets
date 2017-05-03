@@ -8,8 +8,13 @@
                 margin:50px;
             }
             .w-grid{
-                overflow: auto;
+                overflow-x: auto;
+                overflow-y: hidden;
                 border:solid 1px yellow;
+            }
+            .w-grid .w-body{
+                overflow-y: visible;
+                overflow-x: hidden;
             }
             .w-grid .w-row{
                 display: flex;
@@ -28,8 +33,20 @@
 
                 padding:4px;
             }
+            .w-grid.w-nowrap .w-row .w-cell{
+                word-break: keep-all;
+                white-space: nowrap;
+                overflow: hidden;
+
+                flex-shrink:0;
+                width:100px;
+                text-overflow: ellipsis;
+            }
             .w-grid .w-row:nth-of-type(2n){
                 color:yellow;
+            }
+            .w-grid.low-body .w-body{
+                height:50px;
             }
         </style>
 
@@ -38,12 +55,14 @@
     <body class="w nb">
         <div id="app">
             <w.autos :items="list"></w.autos>
-            <w.grid ref="grid"></w.grid>
+            <w.grid classes="w-nowrap" ref="grid"></w.grid>
         </div>
         <script>
             function rolefilter(roles){
                 return join(roles, 'name');
-                //return roles && roles.length > 0 ? roles[0].name;
+            }
+            function statusfilter(status){
+                return status.userStatus;
             }
             var vm = new v({
                 el:'#app'
@@ -57,9 +76,9 @@
             vm.$refs.grid.prepare({
                 columns:[
                     {field:'userID', caption:'User ID', hidden:true}
-                    ,{field:'userName', caption:'Username'}
+                    ,{field:'userName', caption:'Username', styles:{flexBasis:'200px'}}
                     ,{field:'aspNetRoles', caption:'Role', filter:rolefilter}
-                    ,{field:'aspNetUserStatu', caption:'User Status'}
+                    ,{field:'aspNetUserStatu', caption:'User Status', filter:statusfilter}
                     ,{field:'createdDate', caption:'Created Time'}
                     ,{field:'changedDate', caption:'Updated Time'}
                     ,{field:'lastLoginTime', caption:'Last Login Time'}
