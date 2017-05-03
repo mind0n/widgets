@@ -24,9 +24,12 @@
                 flex-shrink:1;
                 flex-basis:100px;
                 white-space: normal;
-                word-break:normal;
+                word-break:break-all;
 
                 padding:4px;
+            }
+            .w-grid .w-row:nth-of-type(2n){
+                color:yellow;
             }
         </style>
 
@@ -59,7 +62,43 @@
                     ,{caption:'Operations'}
                 ]
             });
-            var dat = [{"userID":"8fb966c0-8a79-4ac2-b2a7-936ed64ebb22","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-25T14:08:58.413","userStatusKey":null,"userName":"alan.zang@greendotcorp.com","changedDate":"2017-04-25T06:20:54.68","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":"2017-04-25T14:31:12.57","aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":2,"userStatus":"Activated","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F","name":"Employee","aspNetUsers":[]}]},{"userID":"2fa845a8-0d48-4d12-873d-202290dbb254","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-24T12:31:09.417","userStatusKey":null,"userName":"asdf.asdf@greendotcorp.com","changedDate":"2017-04-25T13:57:47.02","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":null,"aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":1,"userStatus":"New","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"380A11DE-631C-4E2B-8AC7-A8A39CA7EF51","name":"Business Development","aspNetUsers":[]}]},{"userID":"a2af3e52-6a62-42f2-8638-a3a83ddfe381","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-24T23:30:36.853","userStatusKey":null,"userName":"asdf121.asdf2@greendotcorp.com","changedDate":"2017-04-25T14:07:55.027","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":null,"aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":4,"userStatus":"Closed","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F","name":"Employee","aspNetUsers":[]}]},{"userID":"14988dc1-8555-4c82-a37b-f1cf5624b02e","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-06T13:56:29.62","userStatusKey":null,"userName":"asdsadsadas.dsaddssad@greendotcorp.com","changedDate":"2017-04-22T09:02:31.203","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":"2017-03-29T05:41:47.463","aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":4,"userStatus":"Closed","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"52968242-5BB1-421E-B215-3C41955483FB","name":"Administrator","aspNetUsers":[]}]},{"userID":"1fec21e3-e1ac-4691-a836-c2043651e302","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-03-21T11:10:10.667","userStatusKey":null,"userName":"chaya.chen@greendotcorp.com","changedDate":"2017-03-27T22:40:43.433","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":"2017-03-29T05:41:47.463","aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":2,"userStatus":"Activated","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F","name":"Employee","aspNetUsers":[]}]}];
+            var dat = [
+                {
+                    "userID":"8fb966c0-8a79-4ac2-b2a7-936ed64ebb22"
+                    ,"email":null
+                    ,"emailConfirmed":false
+                    ,"passwordHash":null
+                    ,"securityStamp":null
+                    ,"phoneNumber":null
+                    ,"phoneNumberConfirmed":false
+                    ,"lockoutEndDateUtc":null
+                    ,"lockoutEnabled":false
+                    ,"accessFailedCount":0
+                    ,"createdDate":"2017-04-25T14:08:58.413"
+                    ,"userStatusKey":null
+                    ,"userName":"alan.zang@greendotcorp.com"
+                    ,"changedDate":"2017-04-25T06:20:54.68"
+                    ,"passwordExpDate":null
+                    ,"lastLoginFailedTime":null
+                    ,"lastLoginTime":"2017-04-25T14:31:12.57"
+                    ,"aspNetUserClaims":[]
+                    ,"aspNetUserLogins":[]
+                    ,"aspNetUserStatu":{
+                        "userStatusKey":2
+                        ,"userStatus":"Activated"
+                        ,"createdDate":"0001-01-01T00:00:00"
+                        ,"aspNetUsers":[]
+                    }
+                    ,"coupons":[]
+                    ,"aspNetRoles":[
+                        {
+                            "roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F"
+                            ,"name":"Employee"
+                            ,"aspNetUsers":[]
+                        }
+                    ]
+                },{"userID":"2fa845a8-0d48-4d12-873d-202290dbb254","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-24T12:31:09.417","userStatusKey":null,"userName":"asdf.asdf@greendotcorp.com","changedDate":"2017-04-25T13:57:47.02","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":null,"aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":1,"userStatus":"New","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"380A11DE-631C-4E2B-8AC7-A8A39CA7EF51","name":"Business Development","aspNetUsers":[]}]},{"userID":"a2af3e52-6a62-42f2-8638-a3a83ddfe381","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-24T23:30:36.853","userStatusKey":null,"userName":"asdf121.asdf2@greendotcorp.com","changedDate":"2017-04-25T14:07:55.027","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":null,"aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":4,"userStatus":"Closed","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F","name":"Employee","aspNetUsers":[]}]},{"userID":"14988dc1-8555-4c82-a37b-f1cf5624b02e","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-04-06T13:56:29.62","userStatusKey":null,"userName":"asdsadsadas.dsaddssad@greendotcorp.com","changedDate":"2017-04-22T09:02:31.203","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":"2017-03-29T05:41:47.463","aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":4,"userStatus":"Closed","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"52968242-5BB1-421E-B215-3C41955483FB","name":"Administrator","aspNetUsers":[]}]},{"userID":"1fec21e3-e1ac-4691-a836-c2043651e302","email":null,"emailConfirmed":false,"passwordHash":null,"securityStamp":null,"phoneNumber":null,"phoneNumberConfirmed":false,"lockoutEndDateUtc":null,"lockoutEnabled":false,"accessFailedCount":0,"createdDate":"2017-03-21T11:10:10.667","userStatusKey":null,"userName":"chaya.chen@greendotcorp.com","changedDate":"2017-03-27T22:40:43.433","passwordExpDate":null,"lastLoginFailedTime":null,"lastLoginTime":"2017-03-29T05:41:47.463","aspNetUserClaims":[],"aspNetUserLogins":[],"aspNetUserStatu":{"userStatusKey":2,"userStatus":"Activated","createdDate":"0001-01-01T00:00:00","aspNetUsers":[]},"coupons":[],"aspNetRoles":[{"roleId":"2B882CFE-439A-4A06-BD16-36ED1377BF1F","name":"Employee","aspNetUsers":[]}]}];
+            vm.$refs.grid.bind(dat);
         </script>
     </body>
 </html>
