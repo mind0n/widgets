@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Widgets Development</title>
         <link rel="stylesheet" type="text/css" href="vendors.css" />
         <style>
@@ -8,13 +10,11 @@
                 margin:50px;
             }
             .w-grid{
-                overflow-x: auto;
-                overflow-y: hidden;
+                overflow: auto;
                 border:solid 1px yellow;
             }
             .w-grid .w-body{
-                overflow-y: visible;
-                overflow-x: hidden;
+                overflow: visible;
             }
             .w-grid .w-row{
                 display: flex;
@@ -33,13 +33,12 @@
 
                 padding:4px;
             }
-            .w-grid.w-nowrap .w-row .w-cell{
+            .w-nowrap .w-row .w-cell,.w-nowrap.w-row .w-cell{
                 word-break: keep-all;
                 white-space: nowrap;
                 overflow: hidden;
 
-                flex-shrink:0;
-                width:100px;
+                flex-shrink:1;
                 text-overflow: ellipsis;
             }
             .w-grid .w-row:nth-of-type(2n){

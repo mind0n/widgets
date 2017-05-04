@@ -43,7 +43,7 @@ class Cell extends Widget{
 
 @Component({
     template: `
-        <div class="w-head w-row">
+        <div class="w-head w-row w-nowrap">
             <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()">{{item.caption}}</Cell>
         </div>
     `
