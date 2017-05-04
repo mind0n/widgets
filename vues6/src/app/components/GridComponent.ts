@@ -81,8 +81,8 @@ class Row extends Widget{
 }
 @Component({
     template: `
-        <div :class="'w-grid ' + classes">
-            <HRow :meta="getmeta()"></HRow>
+        <div :class="'w-grid ' + classes" v-on:scroll="scroll">
+            <HRow ref="head" :meta="getmeta()"></HRow>
             <div class="w-body">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
@@ -106,6 +106,12 @@ export class GridComponent extends Widget{
     constructor(options?: Vue.ComponentOptions<Vue>){
         super(options);
         this.dat = {};
+    }
+    scroll(){
+        let el = this.$el;
+        let child = <any>this.$refs.head;
+        let head = child.$el;
+        head.style.top = el.scrollTop + 'px';
     }
     prepare(meta){
         this.$set(this.dat, 'meta', meta);
