@@ -81,7 +81,7 @@ class Row extends Widget{
 }
 @Component({
     template: `
-        <div :class="'w-grid ' + classes" v-on:scroll="scroll">
+        <div :class="'w-grid ' + classes" v-on:scroll="scroll" >
             <HRow ref="head" :meta="getmeta()"></HRow>
             <div class="w-body">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />

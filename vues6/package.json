@@ -7,6 +7,7 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
+    "gulp-minify": "0.0.15",
     "gulp-rename": "^1.2.2",
     "gulp-shell": "^0.6.3",
     "gulp-task-register": "^1.1.9",
@@ -14,6 +15,7 @@
     "gulp-webserver": "^0.9.1",
     "requirejs": "^2.3.3",
     "run-sequence": "^1.2.2",
+
     "tsify": "^3.0.1",
     "typescript": "^2.3.2",
     "vinyl-buffer": "^1.0.0",
