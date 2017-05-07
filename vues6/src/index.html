@@ -22,7 +22,7 @@
     <body class="w nb">
         <div id="app">
             <w.autos :items="list"></w.autos>
-            <w.grid classes="" ref="grid"></w.grid>
+            <w.grid classes="w-link-btn" ref="grid"></w.grid>
         </div>
         <script>
             function rolefilter(roles){
@@ -37,6 +37,8 @@
                     list:[
                         {alive:true, current:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
                         , {alive:true, current:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
+                        , {current:{ template:'<button>Test Button</button>'}}
+                        , {current:{ template:'<button class="w-primary">Test Button</button>'}}
                     ]
                 }
             });
@@ -49,7 +51,12 @@
                     ,{field:'createdDate', caption:'Created Time'}
                     ,{field:'changedDate', caption:'Updated Time'}
                     ,{field:'lastLoginTime', caption:'Last Login Time'}
-                    ,{caption:'Operations'}
+                    ,{caption:'Operations', styles:{flexBasis:'200px'}, children:[
+                        {current:{template:"<button>Activate</button>"}}
+                        , {current:{template:"<button>Deactivate</button>"}}
+                        , {current:{template:"<button>Close</button>"}}
+                        , {current:{template:"<button>Change Role</button>"}}
+                    ]}
                 ]
             });
             var dat = [

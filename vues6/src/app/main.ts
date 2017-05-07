@@ -3,7 +3,7 @@ import UniqueId from "./plugins/uniqueid"
 import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
-import {each, join} from '../../../../kernel/web/common'
+import {each, join} from '../../../../kernel/src/common'
 
 let w = <any>window;
 w.v = Vue;

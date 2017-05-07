@@ -1,11 +1,11 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
 import {Widget} from './widget'
-import {each, extend} from '../../../../../kernel/web/common'
+import {each, extend} from '../../../../../kernel/src/common'
 
 @Component({
     template: `
-        <div class="w-cell"><slot></slot></div>
+        <div class="w-cell"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
     `
     , props:["meta", "dat", "field"]
     , components:{
@@ -22,8 +22,13 @@ class Cell extends Widget{
     mounted(){
         let f = this.field;
         let m = this.meta;
-        if (m && m.styles){
-            extend(this.$el.style, m.styles);
+        if (m){
+            if (m.styles){
+                extend(this.$el.style, m.styles);
+            }
+            if (m.attaches){
+                extend(this.$el, m.attaches);
+            }
         }
         if (this.dat && m && f){
             let d = this.dat[f];
@@ -34,6 +39,8 @@ class Cell extends Widget{
                     this.val(d);
                 }
             }
+        }else if (!f && m){
+            //console.log(f, m);
         }
     }
     protected val(v:string){

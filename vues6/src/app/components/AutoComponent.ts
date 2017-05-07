@@ -7,11 +7,16 @@ import {Widget} from './widget'
 @Component({
     // All component options are allowed in here
     template: `
+        <div class="w-holder">
         <keep-alive v-if="alive">
             <component :is="current">
 
             </component>
         </keep-alive>
+        <component v-if="!alive" :is="current">
+
+        </component>
+        </div>
     `
     , props:["alive", "current"]
 })
