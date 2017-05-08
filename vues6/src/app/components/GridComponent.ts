@@ -1,11 +1,11 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
 import {Widget} from './widget'
-import {each, extend} from '../../../../../kernel/src/common'
+import {extend, find} from '../../../../../kernel/src/common'
 
 @Component({
     template: `
-        <div class="w-cell"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
+        <div :class="'w-cell ' + (meta.desc?'w-desc':'')" @click="cellclick"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
     `
     , props:["meta", "dat", "field"]
     , components:{
@@ -46,12 +46,15 @@ class Cell extends Widget{
     protected val(v:string){
         this.$el.innerHTML = v;
     }
+    protected cellclick(event:MouseEvent){
+        this.$emit("cellclick", this.meta);
+    }
 }
 
 @Component({
     template: `
         <div class="w-head w-row w-nowrap">
-            <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()">{{item.caption}}</Cell>
+            <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()" @cellclick="columnclick">{{item.caption}}</Cell>
         </div>
     `
     , props:["meta"]
@@ -61,8 +64,18 @@ class Cell extends Widget{
 })
 class HRow extends Widget{
     protected meta:any;
+    protected sort:any = {};
     columns(){
         return this.meta?this.meta.columns:[];
+    }
+    
+    columnclick(meta:any){
+        this.sort[meta.field] = this.sort[meta.field]?false:true;
+        let m = find(this.meta.columns, 'field', meta.field);
+        m.desc = this.sort[meta.field];
+        //this.$set(m, 'desc', this.sort[meta.field]);
+        //console.log(this.meta);
+        this.$forceUpdate();
     }
 }
 

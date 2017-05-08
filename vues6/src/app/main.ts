@@ -3,7 +3,7 @@ import UniqueId from "./plugins/uniqueid"
 import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
-import {each, join} from '../../../../kernel/src/common'
+import {join} from '../../../../kernel/src/common'
 import {init} from '../../../../kernel/src/web/init';
 
 
