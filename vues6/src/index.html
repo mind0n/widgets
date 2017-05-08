@@ -18,7 +18,7 @@
 
         </style>
 
-        <script src="vendors.js"></script>
+        <!--<script src="vendors.js"></script>-->
         <script src="widgets.js"></script>
     </head>
     <body class="w nb">
@@ -47,13 +47,13 @@
                 el:'#app'
                 , data:{
                     listicon:[
-                        {alive:true, current:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
-                        , {alive:true, current:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
+                        {alive:true, widget:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
+                        , {alive:true, widget:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
                     ]
                     , listbtn:[
-                        {current:{ template:'<button class="w-disabled">Disabled Button</button>'}}
-                        , {current:{ template:'<button>Normal Button</button>'}}
-                        , {current:{ template:'<button class="w-primary">Primary Button</button>'}}
+                        {widget:{ template:'<button class="w-disabled">{{message}}</button>', data:function(){return {message:'Forbiden Button'};}}}
+                        , {widget:{ template:'<button>Normal Button</button>'}}
+                        , {widget:{ template:'<button class="w-primary">Primary Button</button>'}}
                     ]
                 }
             });
@@ -67,10 +67,10 @@
                     ,{field:'changedDate', caption:'Updated Time'}
                     ,{field:'lastLoginTime', caption:'Last Login Time'}
                     ,{caption:'Operations', styles:{flexBasis:'200px'}, children:[
-                        {current:{template:"<button>Activate</button>"}}
-                        , {current:{template:"<button>Deactivate</button>"}}
-                        , {current:{template:"<button>Close</button>"}}
-                        , {current:{template:"<button>Change Role</button>"}}
+                        {widget:{template:"<button>Activate</button>"}}
+                        , {widget:{template:"<button>Deactivate</button>"}}
+                        , {widget:{template:"<button>Close</button>"}}
+                        , {widget:{template:"<button>Change Role</button>"}}
                     ]}
                 ]
             });

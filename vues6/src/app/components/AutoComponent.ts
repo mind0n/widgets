@@ -29,7 +29,7 @@ export class AutoComponent extends Widget{
 @Component({
     // All component options are allowed in here
     template: `
-        <div><w.auto v-for="item in items" :alive="item.alive" :current="item.current" :key="seed()" /></div>
+        <div><w.auto v-for="item in items" :alive="item.alive" :current="item.widget" :key="seed()" /></div>
     `
     , props:["items"]
 })
