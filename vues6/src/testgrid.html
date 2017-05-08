@@ -9,10 +9,8 @@
             *{
                 font:12px arial;
             }
-            #app{
-                padding:32px;
-            }
             .w-grid{
+                margin:50px;
                 height:400px;
             }
 
@@ -23,18 +21,8 @@
     </head>
     <body class="w nb">
         <div id="app">
-            <div class="w-widget">
-                <div class="w-title">Icons</div>
-                <w.autos :items="listicon"></w.autos>
-            </div>
-            <div class="w-widget w-group">
-                <div class="w-title">Buttons</div>
-                <w.autos :items="listbtn"></w.autos>
-            </div>
-            <div class="w-widget">
-                <div class="w-title">Table &amp; Popup</div>
-                <w.grid classes="w-link-btn" ref="grid"></w.grid>
-            </div>
+            <w.autos :items="list"></w.autos>
+            <w.grid classes="w-link-btn" ref="grid"></w.grid>
         </div>
         <script>
             function rolefilter(roles){
@@ -46,12 +34,10 @@
             var vm = new v({
                 el:'#app'
                 , data:{
-                    listicon:[
+                    list:[
                         {alive:true, current:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
                         , {alive:true, current:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
-                    ]
-                    , listbtn:[
-                        {current:{ template:'<button class="w-disabled">Disabled Button</button>'}}
+                        , {current:{ template:'<button class="w-disabled">Disabled Button</button>'}}
                         , {current:{ template:'<button>Normal Button</button>'}}
                         , {current:{ template:'<button class="w-primary">Primary Button</button>'}}
                     ]
