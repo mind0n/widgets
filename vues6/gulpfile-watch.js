@@ -2,7 +2,7 @@ var gulp    =   require('gulp');
 var shell   =   require('gulp-shell');
 
 gulp.task("ts", function(){
-    gulp.watch(["./src/**/*.ts"], ["rebuild"]);
+    gulp.watch(["./src/**/*.ts", "../../kernel/src/**/*.ts"], ["rebuild"]);
 });
 gulp.task("vendor", function(){
     gulp.watch(["../../themes/src/**/*.scss"], ["revendor"]);

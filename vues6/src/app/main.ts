@@ -4,6 +4,8 @@ import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconCompone
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
 import {each, join} from '../../../../kernel/src/common'
+import {init} from '../../../../kernel/src/web/init';
+
 
 let w = <any>window;
 w.v = Vue;
@@ -15,3 +17,5 @@ Vue.component('w.icon-toggle-dropdown', IconToggleDropDown);
 Vue.component('w.auto', AutoComponent);
 Vue.component('w.autos', AutoComponents);
 Vue.component('w.grid', GridComponent);
+
+init();
