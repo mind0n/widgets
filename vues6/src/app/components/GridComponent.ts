@@ -3,15 +3,40 @@ import Component from 'vue-class-component'
 import {Widget} from './widget'
 import {extend, find} from '../../../../../kernel/src/common'
 
+function getScrollbarWidth() {
+    var outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+    document.body.appendChild(outer);
+
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);        
+
+    var widthWithScroll = inner.offsetWidth;
+
+    // remove divs
+    outer.parentNode.removeChild(outer);
+
+    return (widthNoScroll - widthWithScroll) + 'px';
+}
+
 @Component({
     template: `
         <div :class="'w-cell ' + sort()" @click="cellclick">
             <div class="w-sort">
-                <w.icon-sort-up width=16 height=16 vwidth=32 vheight=32 />
-                <w.icon-sort-down width=16 height=16 vwidth=32 vheight=32 />
+                <w.icon-sort-up width=14 height=14 vwidth=32 vheight=32 />
+                <w.icon-sort-down width=14 height=14 vwidth=32 vheight=32 />
             </div>
             <slot v-if="meta.field||$slots.default"></slot>
-            <w.autos v-if="!meta.field&&meta.children" :items="meta.children" />
+            <w.autos v-if="!meta.field&&meta.children&&!$slots.default" :items="meta.children" />
         </div>
     `
     , props:["meta", "dat", "field"]
@@ -98,6 +123,10 @@ class HRow extends Widget{
         m.desc = this.sort[meta.field];
         this.$forceUpdate();
     }
+    mounted(){
+        let w = getScrollbarWidth();
+        this.$el.style.paddingRight = w;
+    }
 }
 
 @Component({
@@ -123,10 +152,10 @@ class Row extends Widget{
 @Component({
     template: `
         <div :class="'w-grid ' + classes" v-on:scroll="scroll" >
+            <HRow ref="head" :meta="getmeta()"></HRow>
             <div class="w-body">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
-            <HRow ref="head" :meta="getmeta()"></HRow>
         </div>
     `
     , props:['classes']
