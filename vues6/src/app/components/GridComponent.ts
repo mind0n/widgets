@@ -5,7 +5,7 @@ import {extend, find} from '../../../../../kernel/src/common'
 
 @Component({
     template: `
-        <div :class="'w-cell ' + (meta.desc?'w-desc':'')" @click="cellclick"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
+        <div :class="'w-cell ' + sort()" @click="cellclick"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
     `
     , props:["meta", "dat", "field"]
     , components:{
@@ -49,6 +49,15 @@ class Cell extends Widget{
     protected cellclick(event:MouseEvent){
         this.$emit("cellclick", this.meta);
     }
+    protected sort(){
+        if (this.meta.desc === undefined){
+            return '';
+        }else if (this.meta.desc === true){
+            return 'w-desc';
+        }else{
+            return 'w-asc'; 
+        }
+    }
 }
 
 @Component({
@@ -70,11 +79,16 @@ class HRow extends Widget{
     }
     
     columnclick(meta:any){
-        this.sort[meta.field] = this.sort[meta.field]?false:true;
+        let o = this.sort[meta.field];
+        if (o === undefined){
+            this.sort[meta.field] = false;
+        }else if (o === false){
+            this.sort[meta.field] = true;
+        }else{
+            this.sort[meta.field] = undefined;
+        }
         let m = find(this.meta.columns, 'field', meta.field);
         m.desc = this.sort[meta.field];
-        //this.$set(m, 'desc', this.sort[meta.field]);
-        //console.log(this.meta);
         this.$forceUpdate();
     }
 }
