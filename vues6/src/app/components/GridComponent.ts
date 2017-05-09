@@ -5,7 +5,14 @@ import {extend, find} from '../../../../../kernel/src/common'
 
 @Component({
     template: `
-        <div :class="'w-cell ' + sort()" @click="cellclick"><slot v-if="meta.field||$slots.default"></slot><w.autos v-if="!meta.field&&meta.children" :items="meta.children" /></div>
+        <div :class="'w-cell ' + sort()" @click="cellclick">
+            <div class="w-sort">
+                <w.icon-sort-up width=16 height=16 vwidth=32 vheight=32 />
+                <w.icon-sort-down width=16 height=16 vwidth=32 vheight=32 />
+            </div>
+            <slot v-if="meta.field||$slots.default"></slot>
+            <w.autos v-if="!meta.field&&meta.children" :items="meta.children" />
+        </div>
     `
     , props:["meta", "dat", "field"]
     , components:{
@@ -116,10 +123,10 @@ class Row extends Widget{
 @Component({
     template: `
         <div :class="'w-grid ' + classes" v-on:scroll="scroll" >
-            <HRow ref="head" :meta="getmeta()"></HRow>
             <div class="w-body">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
+            <HRow ref="head" :meta="getmeta()"></HRow>
         </div>
     `
     , props:['classes']

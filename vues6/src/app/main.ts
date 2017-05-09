@@ -1,6 +1,6 @@
 import * as Vue from "vue";
 import UniqueId from "./plugins/uniqueid"
-import {IconToggleDropDown, Icon, IconToggleMenu} from "./components/IconComponent";
+import {IconToggleDropDown, Icon, IconToggleMenu, IconSortUp, IconSortDown} from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
 import {join} from '../../../../kernel/src/common'
@@ -14,6 +14,8 @@ Vue.use(UniqueId);
 Vue.component('w.icon', Icon);
 Vue.component('w.icon-toggle-menu', IconToggleMenu);
 Vue.component('w.icon-toggle-dropdown', IconToggleDropDown);
+Vue.component('w.icon-sort-up', IconSortUp);
+Vue.component('w.icon-sort-down', IconSortDown);
 Vue.component('w.auto', AutoComponent);
 Vue.component('w.autos', AutoComponents);
 Vue.component('w.grid', GridComponent);
