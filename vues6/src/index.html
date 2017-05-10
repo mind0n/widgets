@@ -70,23 +70,19 @@
                     ,{caption:'Operations', styles:{flexBasis:'200px'}, classes:'w-wrap', children:[
                         {widget:{template:"<button @click='change'>Activate</button>", methods:{
                             change:function(){
-                                let c = this.unit('cell');
-                                let r = this.unit('row');
-                                //r.$set(r.meta, 'columns', r.meta.columns);
-                                //r.$set(r.dat, 'userName', '');
-                                r.meta.columns.push('');
-                                r.meta.columns.pop();
-                                // r.dat.aspNetUserStatu.userStatusKey = 2;
-                                // r.dat.aspNetUserStatu.userStatus = 'Activated';
-                                // r.$set(r.meta, 'columns', r.meta.columns);
-                                r.$set(r.dat, 'aspNetUserStatu', {
-                                    userStatusKey:2, userStatus:'Activated'
-                                });
-                                //r.$set(r.dat, 'userName', 'test');
-                                r.refresh();
+                                var c = this.unit('cell');
+                                c.dat.aspNetUserStatu.userStatusKey = 2;
+                                c.dat.aspNetUserStatu.userStatus = 'Success';
+                                c.notifyChange();
                             }
                         }}}
-                        , {widget:{template:"<button>Deactivate</button>"}}
+                        , {widget:{template:"<button @click='getchange'>Deactivate</button>", methods:{
+                            getchange:function(){
+                                var g = this.unit('w.grid');
+                                var ch = g.getchanges();
+                                console.log(ch);
+                            }
+                        }}}
                         , {widget:{template:"<button>Close</button>"}}
                         , {widget:{template:"<button onclick='w().cover();'>Change Role</button>"}}
                     ]}

@@ -1,7 +1,7 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
 import {Widget} from './widget'
-import {extend, find, clone} from '../../../../../kernel/src/common'
+import {extend, find, clone, all, add} from '../../../../../kernel/src/common'
 
 function getScrollbarWidth() {
     var outer = document.createElement("div");
@@ -83,6 +83,10 @@ class Cell extends Widget{
     }
     updated(){
         cellChange(this);
+    }
+    notifyChange(){
+        let r = (<any>this).unit('row');
+        r.refresh();
     }
     protected val(v:string){
         this.$el.innerHTML = v;
@@ -204,5 +208,15 @@ export class GridComponent extends Widget{
     }
     bind(dat){
         this.$set(this.dat, 'value', dat);
+    }
+    getchanges():any[]{
+        let list = this.$refs.rows;
+        let rlt:any[] = [];
+        all(list, function(item, i){
+            if (item.isdirty){
+                add(rlt, item);
+            }
+        });
+        return rlt;
     }
 }

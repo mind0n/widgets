@@ -17,6 +17,7 @@ const UniqueId = {
         this.$uid = uid;
         this.console = console;
         this.refresh = function(){
+          this.isdirty = true;
           this.$forceUpdate();
         }
       },
