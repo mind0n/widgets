@@ -1,12 +1,15 @@
 function parentUnit(name?:string){
+  if (name){
+    name = name.toLowerCase();
+  }
   let par = this.$parent;
-  let tag = par.$options._componentTag;
+  let tag = par.$options._componentTag.toLowerCase();
   while(name && tag){
     if (name == tag || !par.$parent || par == this.$root){
       break;
     }
     par = par.$parent;
-    tag = par.$options._componentTag;
+    tag = par.$options._componentTag.toLowerCase();
   }
   return par;
 }

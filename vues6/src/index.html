@@ -41,6 +41,7 @@
                 return join(roles, 'name');
             }
             function statusfilter(status){
+                //console.log(status);
                 return status.userStatus;
             }
             var vm = new v({
@@ -67,7 +68,24 @@
                     ,{field:'changedDate', caption:'Updated Time'}
                     ,{field:'lastLoginTime', caption:'Last Login Time'}
                     ,{caption:'Operations', styles:{flexBasis:'200px'}, classes:'w-wrap', children:[
-                        {widget:{template:"<button @click='console.log(unit(\"w.grid\").$el)'>Activate</button>"}}
+                        {widget:{template:"<button @click='change'>Activate</button>", methods:{
+                            change:function(){
+                                let c = this.unit('cell');
+                                let r = this.unit('row');
+                                //r.$set(r.meta, 'columns', r.meta.columns);
+                                //r.$set(r.dat, 'userName', '');
+                                r.meta.columns.push('');
+                                r.meta.columns.pop();
+                                // r.dat.aspNetUserStatu.userStatusKey = 2;
+                                // r.dat.aspNetUserStatu.userStatus = 'Activated';
+                                // r.$set(r.meta, 'columns', r.meta.columns);
+                                r.$set(r.dat, 'aspNetUserStatu', {
+                                    userStatusKey:2, userStatus:'Activated'
+                                });
+                                //r.$set(r.dat, 'userName', 'test');
+                                r.refresh();
+                            }
+                        }}}
                         , {widget:{template:"<button>Deactivate</button>"}}
                         , {widget:{template:"<button>Close</button>"}}
                         , {widget:{template:"<button onclick='w().cover();'>Change Role</button>"}}

@@ -1,7 +1,7 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
 import {Widget} from './widget'
-import {extend, find} from '../../../../../kernel/src/common'
+import {extend, find, clone} from '../../../../../kernel/src/common'
 
 function getScrollbarWidth() {
     var outer = document.createElement("div");
@@ -27,7 +27,34 @@ function getScrollbarWidth() {
 
     return (widthNoScroll - widthWithScroll) + 'px';
 }
-
+function cellChange(self:any){
+    let m = self.meta;
+    let f = self.field || m.field;
+    let dat = self.dat;
+    //if (f != m.field){
+        //console.log(f, m.field, self);
+    //}
+    if (m){
+        if (m.styles){
+            extend(self.$el.style, m.styles);
+        }
+        if (m.attaches){
+            extend(self.$el, m.attaches);
+        }
+        if (dat && m && f){
+            let d = dat[f];
+            if (d){
+                if (m.filter){
+                    self.val(m.filter(d));
+                }else{
+                    self.val(d);
+                }
+            }
+        }else if (!f && m){
+            //console.log(f, m);
+        }
+    }
+}
 @Component({
     template: `
         <div :class="'w-cell ' + sort() + ' ' + classes()" @click="cellclick">
@@ -52,28 +79,10 @@ class Cell extends Widget{
         return this.meta?this.meta.columns:[];
     }
     mounted(){
-        let f = this.field;
-        let m = this.meta;
-        if (m){
-            if (m.styles){
-                extend(this.$el.style, m.styles);
-            }
-            if (m.attaches){
-                extend(this.$el, m.attaches);
-            }
-        }
-        if (this.dat && m && f){
-            let d = this.dat[f];
-            if (d){
-                if (m.filter){
-                    this.val(m.filter(d));
-                }else{
-                    this.val(d);
-                }
-            }
-        }else if (!f && m){
-            //console.log(f, m);
-        }
+        cellChange(this);
+    }
+    updated(){
+        cellChange(this);
     }
     protected val(v:string){
         this.$el.innerHTML = v;
@@ -134,7 +143,7 @@ class HRow extends Widget{
 
 @Component({
     template: `
-        <div class="w-row"><Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :field="item.field" :dat="cells()" :key="$uid()"></Cell></div>
+        <div class="w-row"><Cell v-for="item in columns()" :meta="rowitem(item)" :field="item.field + ''" :dat="cells()" :key="$uid()" v-if="!item.hidden"></Cell></div>
     `
     , props:["dat", "meta"]
     , components:{
@@ -150,7 +159,11 @@ class Row extends Widget{
     cells(){
         return this.dat||[];
     }
-
+    rowitem(item:any){
+        let t = clone(item);
+        t.dat = this.cells();
+        return t;
+    }
 }
 @Component({
     template: `

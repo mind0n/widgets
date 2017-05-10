@@ -16,6 +16,9 @@ const UniqueId = {
       beforeCreate() {
         this.$uid = uid;
         this.console = console;
+        this.refresh = function(){
+          this.$forceUpdate();
+        }
       },
       mounted(){
         this.$el.$uid = function(){
