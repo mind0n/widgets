@@ -54,7 +54,6 @@ class Cell extends Widget{
     mounted(){
         let f = this.field;
         let m = this.meta;
-        console.log(m);
         if (m){
             if (m.styles){
                 extend(this.$el.style, m.styles);
@@ -158,7 +157,7 @@ class Row extends Widget{
         <div :class="'w-grid w-flex-col ' + classes" v-on:scroll="scroll" >
             <HRow ref="head" :meta="getmeta()"></HRow>
             <div class="w-body w-flex-col-item">
-                <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
+                <Row ref="rows" v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
         </div>
     `

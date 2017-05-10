@@ -1,5 +1,6 @@
 import * as Vue from "vue";
 import UniqueId from "./plugins/uniqueid"
+import ParentUnit from "./plugins/parentunit";
 import {IconToggleDropDown, Icon, IconToggleMenu, IconSortUp, IconSortDown} from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
@@ -11,6 +12,7 @@ let w = <any>window;
 w.v = Vue;
 w.join = join;
 Vue.use(UniqueId);
+Vue.use(ParentUnit);
 Vue.component('w.icon', Icon);
 Vue.component('w.icon-toggle-menu', IconToggleMenu);
 Vue.component('w.icon-toggle-dropdown', IconToggleDropDown);

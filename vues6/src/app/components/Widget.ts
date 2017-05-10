@@ -7,7 +7,4 @@ export class Widget extends Vue{
     constructor(options?: Vue.ComponentOptions<Vue>){
         super(options);
     } 
-    mounted(){
-        console.log("Mounted", this);
-    }   
 }

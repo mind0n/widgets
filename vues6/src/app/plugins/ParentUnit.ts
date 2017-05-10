@@ -1,11 +1,17 @@
-function uid(){
-    if (this.uid === undefined){
-        this.uid = this._uid;
+function parentUnit(name?:string){
+  let par = this.$parent;
+  let tag = par.$options._componentTag;
+  while(name && tag){
+    if (name == tag || !par.$parent || par == this.$root){
+      break;
     }
-    return this.uid;
+    par = par.$parent;
+    tag = par.$options._componentTag;
+  }
+  return par;
 }
 // This is your plugin object. It can be exported to be used anywhere.
-const UniqueId = {
+const ParentUnit = {
   // The install method is all that needs to exist on the plugin object.
   // It takes the global Vue object as well as user-defined options.
   install(Vue, options) {
@@ -14,16 +20,15 @@ const UniqueId = {
       // Anything added to a mixin will be injected into all components.
       // In this case, the mounted() method runs when the component is added to the DOM.
       beforeCreate() {
-        this.$uid = uid;
-        this.console = console;
+        this.unit = parentUnit;
       },
       mounted(){
-        this.$el.$uid = function(){
-            return this.__vue__.$uid();
+        this.$el.unit = function(name?:string){
+            return this.__vue__.unit(name);
         };
       }
     });
   }
 };
 
-export default UniqueId;
+export default ParentUnit;
