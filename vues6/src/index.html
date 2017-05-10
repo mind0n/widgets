@@ -33,7 +33,7 @@
             </div>
             <div class="w-widget">
                 <div class="w-title">Table &amp; Popup</div>
-                <w.grid classes="w-link-btn" ref="grid"></w.grid>
+                <w.grid classes="w-nowrap w-link-btn" ref="grid"></w.grid>
             </div>
         </div>
         <script>
@@ -66,7 +66,7 @@
                     ,{field:'createdDate', caption:'Created Time'}
                     ,{field:'changedDate', caption:'Updated Time'}
                     ,{field:'lastLoginTime', caption:'Last Login Time'}
-                    ,{caption:'Operations', styles:{flexBasis:'200px'}, children:[
+                    ,{caption:'Operations', styles:{flexBasis:'200px'}, classes:'w-wrap', children:[
                         {widget:{template:"<button onclick='w().cover();'>Activate</button>"}}
                         , {widget:{template:"<button>Deactivate</button>"}}
                         , {widget:{template:"<button>Close</button>"}}

@@ -30,7 +30,7 @@ function getScrollbarWidth() {
 
 @Component({
     template: `
-        <div :class="'w-cell ' + sort()" @click="cellclick">
+        <div :class="'w-cell ' + sort() + ' ' + classes()" @click="cellclick">
             <div class="w-sort">
                 <w.icon-sort-up width=14 height=14 vwidth=32 vheight=32 />
                 <w.icon-sort-down width=14 height=14 vwidth=32 vheight=32 />
@@ -54,6 +54,7 @@ class Cell extends Widget{
     mounted(){
         let f = this.field;
         let m = this.meta;
+        console.log(m);
         if (m){
             if (m.styles){
                 extend(this.$el.style, m.styles);
@@ -81,6 +82,9 @@ class Cell extends Widget{
     protected cellclick(event:MouseEvent){
         this.$emit("cellclick", this.meta);
     }
+    protected classes(){
+        return this.meta?this.meta.classes : '';
+    }
     protected sort(){
         if (this.meta.desc === undefined){
             return '';
@@ -94,7 +98,7 @@ class Cell extends Widget{
 
 @Component({
     template: `
-        <div class="w-head w-row w-nowrap w-flex-col-item">
+        <div class="w-head w-row w-flex-col-item">
             <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()" @cellclick="columnclick">{{item.caption}}</Cell>
         </div>
     `
