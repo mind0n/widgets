@@ -94,7 +94,7 @@ class Cell extends Widget{
 
 @Component({
     template: `
-        <div class="w-head w-row w-nowrap">
+        <div class="w-head w-row w-nowrap w-flex-col-item">
             <Cell v-for="item in columns()" v-if="!item.hidden" :meta="item" :key="$uid()" @cellclick="columnclick">{{item.caption}}</Cell>
         </div>
     `
@@ -151,9 +151,9 @@ class Row extends Widget{
 }
 @Component({
     template: `
-        <div :class="'w-grid ' + classes" v-on:scroll="scroll" >
+        <div :class="'w-grid w-flex-col ' + classes" v-on:scroll="scroll" >
             <HRow ref="head" :meta="getmeta()"></HRow>
-            <div class="w-body">
+            <div class="w-body w-flex-col-item">
                 <Row v-for="row in getdata()" :dat="row" :meta="getmeta()" :key="$uid()" />
             </div>
         </div>
