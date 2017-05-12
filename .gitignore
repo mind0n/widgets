@@ -11,3 +11,4 @@ test-coverage
 npm-debug.log*
 gwst/dist/tests/SpecRunner.html
 gwst/dist/tests/tests.js
+uploads
