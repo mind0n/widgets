@@ -22,7 +22,16 @@
         <script src="widgets.js"></script>
     </head>
     <body class="w nb">
+
         <div id="app">
+            <div class="w-widget">
+                <div class="w-title">Upload</div>
+                <form action="http://localhost:8888/s/values" method="post" enctype="multipart/form-data" target="_blank">
+                    <div><input name="files" type="file" /></div>
+                    <div><input name="files" type="file" /></div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
             <div class="w-widget">
                 <div class="w-title">Icons</div>
                 <w.autos :items="listicon"></w.autos>
@@ -54,6 +63,7 @@
                     , listbtn:[
                         {widget:{ template:'<button class="w-disabled">{{message}}</button>', data:function(){return {message:'Forbiden Button'};}}}
                         , {widget:{ template:'<button>Normal Button</button>'}}
+                        , {widget:{ template:'<button>Normal Button2</button>'}}
                         , {widget:{ template:'<button class="w-primary">Primary Button</button>'}}
                     ]
                 }

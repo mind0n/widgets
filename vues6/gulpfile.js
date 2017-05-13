@@ -8,6 +8,7 @@ reg([
     , 'static'
     , 'ts'
     , 'ts:prod'
+    , 'publish'
     , '_host'
     , '_watch:ts'
     , '_watch:vendor'
@@ -19,7 +20,7 @@ gulp.task("default", function(done){
     });
 });
 gulp.task("prod", function(done){
-    runSequence('clean', 'vendor', 'ts:prod', function() {
+    runSequence('clean', 'vendor', 'ts:prod', 'publish', function() {
         done();
     });
 });
