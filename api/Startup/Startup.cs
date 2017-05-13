@@ -38,7 +38,7 @@ namespace Startup
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseCors(builder=>builder.WithOrigins("http://localhost:8888")).UseMvc();
+            app.UseCors(builder=>builder.WithOrigins("http://localhost")).UseMvc();
         }
     }
 }
