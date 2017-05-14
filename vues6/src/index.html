@@ -24,26 +24,19 @@
     <body class="w nb">
 
         <div id="app">
-            <div class="w-widget">
+            <div class="w-widget w-boundary">
                 <div class="w-title">Upload</div>
                 <w.upload action="http://localhost:8888/s/values" />
-                <!--
-                <w.form action="http://localhost:8888/s/values" type="upload" target="_blank">
-                    <div><input name="files" type="file" /></div>
-                    <div><input name="files" type="file" /></div>
-                    <button type="submit">Submit</button>
-                </w.form>
-                -->
             </div>
-            <div class="w-widget">
+            <div class="w-widget w-boundary">
                 <div class="w-title">Icons</div>
                 <w.autos :items="listicon"></w.autos>
             </div>
-            <div class="w-widget w-group">
+            <div class="w-widget w-group w-boundary">
                 <div class="w-title">Buttons</div>
                 <w.autos :items="listbtn"></w.autos>
             </div>
-            <div class="w-widget">
+            <div class="w-widget w-boundary">
                 <div class="w-title">Table &amp; Popup</div>
                 <w.grid classes="w-nowrap w-link-btn" ref="grid"></w.grid>
             </div>
