@@ -49,7 +49,8 @@ function readURL(el:any, input:any) {
     template: `
         <div class="w-boundary w-upload">
             <w.form ref="frm" :action="action" type="upload">
-                <img ref="img" />
+                <w.icon-placeholder classes="preview" vwidth=500 vheight=500 />
+                <img class="preview" ref="img" />
                 <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" />
                 <label ref="label" style="cursor:pointer;">
                     <div ref="text">Drag Here - Click Here - Paste Here to upload</div>
