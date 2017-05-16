@@ -48,7 +48,7 @@ function readURL(imgel:any, file:any) {
 
 @Component({
     template: `
-        <div class="w-wrap w-boundary" :style="show()">
+        <div class="w-wrap w-boundary" v-show="getfile()">
             <w.icon-placeholder v-if="getfile() && !isimg()" classes="preview" vwidth=500 vheight=500 />
             <img :style="showimg()" class="preview" ref="img" />
         </div>
@@ -63,6 +63,9 @@ export class SimplePreview extends Widget{
     show(){
         return this.getfile()?'':'display:none';
     }
+    type(){
+        return this._file?this._file.type.split('/')[0]:null;
+    }
     showimg(){
         if (this.isimg()){
             return '';
@@ -70,7 +73,6 @@ export class SimplePreview extends Widget{
         return 'display:none';
     }
     isimg(){
-        console.log(this._file ? this._file.type : '###');
         return this._file && this._file.type.indexOf('image/') == 0;
     }
     update(file:any){
