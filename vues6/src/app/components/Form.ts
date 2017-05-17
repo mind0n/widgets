@@ -106,6 +106,72 @@ export class SimplePreview extends Widget{
     }
 }
 
+@Component({
+    template: `
+        <div class="w-wrap">
+            <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" />
+            <label ref="label" style="cursor:pointer;">
+                <div class="content">
+                    <slot v-show="showpreview()"></slot>
+                    <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
+                </div>
+            </label>
+        </div>
+    `
+    , props:[]
+    , components:{
+        SimplePreview
+    }
+})
+export class UploadItem extends Widget{
+    protected changed:boolean;
+    getid(){
+        return (<any>this.$refs.box).id;
+    }
+    filechanged(){
+        this.changed = true;
+        all(this.$children, function(item:any, i:number){
+            console.log(item);
+        });
+    }
+    showpreview(){
+        return this.changed;
+    }
+    updated(){
+        let box = <any>this.$refs.box;
+        let label = <any>this.$refs.label;
+        label.setAttribute('for', box.id);
+    }
+    mounted(){
+        this.updated();
+    }
+    protected gid(){
+        return uid('fl');
+    }
+}
+
+@Component({
+    template: `
+        <div class="w-boundary w-upload">
+            <w.form ref="frm" :action="action" type="upload">
+                <UploadItem>
+                    <SimplePreview />
+                </UploadItem>
+            </w.form>
+        </div>
+    `
+    , props:["action"]
+    , components:{
+        SimplePreview, UploadItem
+    }
+})
+export class SingleUploader extends Widget{
+    protected action:string;
+    updated(){
+    }
+    mounted(){
+    }
+}
 
 @Component({
     template: `
