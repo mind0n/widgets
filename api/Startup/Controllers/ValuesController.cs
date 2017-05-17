@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Cors;
 namespace Startup.Controllers
 {
     [Route("s/[controller]")]
-    [EnableCors("localhost")]
     public class ValuesController : Controller
     {
         // GET api/values

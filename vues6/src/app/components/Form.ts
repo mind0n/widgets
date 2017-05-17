@@ -150,7 +150,7 @@ export class Uploader extends Widget{
         this.$forceUpdate();
         if (this.auto){
             this.output('Uploading ...');
-            send(this.action, {form:fd, header:{'content-type':'multipart/form-data'}}, 'post').then((o)=>{
+            send(this.action, {form:fd, upload:true}, 'post').then((o)=>{
                 console.log(o);
                 let p = <SimplePreview>this.$refs.preview;
                 p.view(o.result.files[0]);

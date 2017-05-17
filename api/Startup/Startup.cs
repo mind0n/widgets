@@ -29,15 +29,7 @@ namespace Startup
         {
             // Add framework services.
             services
-                .AddCors((op) =>
-                {
-                    op.AddPolicy("localhost", (b) =>
-                    {
-                        b.WithOrigins("http://localhost");
-                        b.WithHeaders("*");
-                        b.WithMethods("*");
-                    });
-                })
+                .AddCors()
                 .AddMvc();
         }
 
@@ -47,7 +39,7 @@ namespace Startup
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseCors(builder=>builder.WithOrigins("http://localhost")).UseMvc();
+            app.UseCors(builder=>builder.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyMethod()).UseMvc();
         }
     }
 }
