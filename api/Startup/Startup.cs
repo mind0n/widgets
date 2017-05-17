@@ -12,6 +12,7 @@ namespace Startup
 {
     public class Startup
     {
+        private IHostingEnvironment env;
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -20,6 +21,7 @@ namespace Startup
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+            this.env = env;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -31,6 +33,9 @@ namespace Startup
             services
                 .AddCors()
                 .AddMvc();
+
+            var phy = env.ContentRootFileProvider;
+            services.AddSingleton(phy);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

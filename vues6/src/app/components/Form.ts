@@ -58,6 +58,7 @@ function readURL(imgel:any, file:any) {
 export class SimplePreview extends Widget{
     _file:any;
     getfile(){
+        console.log('get file', this._file);
         return this._file;
     }
     show(){
@@ -67,6 +68,7 @@ export class SimplePreview extends Widget{
         return this._file?this._file.type.split('/')[0]:null;
     }
     showimg(){
+        console.log('showimg', this.isimg());
         if (this.isimg()){
             return '';
         }
@@ -89,6 +91,7 @@ export class SimplePreview extends Widget{
         if (this.isimg(file)){
             let img = <any>this.$refs.img;
             img.setAttribute('src', file);
+            img.style.display = '';
         }
         this.$forceUpdate();
     }
@@ -110,9 +113,9 @@ export class SimplePreview extends Widget{
             <w.form ref="frm" :action="action" type="upload">
                 <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" />
                 <label ref="label" style="cursor:pointer;">
-                    <div class="content" ref="text">
+                    <div class="content">
                         <SimplePreview ref="preview" :style="showpreview()" />
-                        <span>Drag Here - Click Here - Paste Here to upload</span>
+                        <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
                     </div>
                 </label>
             </w.form>
@@ -154,8 +157,10 @@ export class Uploader extends Widget{
                 console.log(o);
                 let p = <SimplePreview>this.$refs.preview;
                 p.view(o.result.files[0]);
+                this.output('Upload Accomplished');
             }).catch((e)=>{
                 console.warn(e);
+                this.output('Upload Error');
             });
         }else{
             //let path = (<any>this.$refs.box).value;

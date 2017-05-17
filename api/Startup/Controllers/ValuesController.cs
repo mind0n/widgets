@@ -6,17 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Net.Http.Headers;
+using Files = System.IO.File;
 
 namespace Startup.Controllers
 {
     [Route("s/[controller]")]
     public class ValuesController : Controller
     {
+        private IHostingEnvironment env { get; }
+
+        public ValuesController(IHostingEnvironment env)
+        {
+            this.env = env;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get(string file = null)
         {
-            return new string[] { "value1", "value2" };
+            if (string.IsNullOrWhiteSpace(file))
+            {
+                return Forbid();
+            }
+            var path = Path.Combine(env.ContentRootPath, "uploads", file);
+            if (!Files.Exists(path))
+            {
+                return NotFound(new { success = false, errormsg = $"File not found {file}" });
+            }
+            return new PhysicalFileResult(path, new MediaTypeHeaderValue(Mime.TypeOf(path)));
         }
 
         // GET api/values/5
@@ -37,7 +57,7 @@ namespace Startup.Controllers
                 long size = files.Sum(f => f.Length);
 
                 // full path to file in temp location
-                var filePath = Path.GetFullPath("./uploads");
+                var filePath = Path.GetFullPath("uploads");
 
                 if (!Directory.Exists(filePath))
                 {
@@ -52,7 +72,7 @@ namespace Startup.Controllers
                         var fileName = $"{filePath}\\{formFile.FileName}";
                         using (var stream = new FileStream(fileName, FileMode.Create))
                         {
-                            list.Add(fileName);
+                            list.Add($"http://localhost:8888/s/values?file={formFile.FileName}");
                             formFile.CopyTo(stream);
                         }
                     }
@@ -93,5 +113,8 @@ namespace Startup.Controllers
         {
             Console.WriteLine(message);
         }
+
+
+
     }
 }
