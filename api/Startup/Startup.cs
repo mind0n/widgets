@@ -29,6 +29,15 @@ namespace Startup
         {
             // Add framework services.
             services
+                .AddCors((op) =>
+                {
+                    op.AddPolicy("localhost", (b) =>
+                    {
+                        b.WithOrigins("http://localhost");
+                        b.WithHeaders("*");
+                        b.WithMethods("*");
+                    });
+                })
                 .AddMvc();
         }
 

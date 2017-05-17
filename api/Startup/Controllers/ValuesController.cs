@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Cors;
 
 namespace Startup.Controllers
 {
     [Route("s/[controller]")]
+    [EnableCors("localhost")]
     public class ValuesController : Controller
     {
         // GET api/values

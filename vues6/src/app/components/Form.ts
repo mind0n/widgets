@@ -72,10 +72,27 @@ export class SimplePreview extends Widget{
         }
         return 'display:none';
     }
-    isimg(){
-        return this._file && this._file.type.indexOf('image/') == 0;
+    isimg(file?:string){
+        if (typeof(this._file) == 'string'){
+            file = this._file;
+        }
+        if (!file){
+            return this._file && this._file.type.indexOf('image/') == 0;
+        }
+        return file.lastIndexOf('.png')>0 
+            || file.lastIndexOf('.jpg')>0 
+            || file.lastIndexOf('.svg')>0 
+            || file.lastIndexOf('.gif')>0;
     }
-    update(file:any){
+    view(file:string){
+        this._file = file;
+        if (this.isimg(file)){
+            let img = <any>this.$refs.img;
+            img.setAttribute('src', file);
+        }
+        this.$forceUpdate();
+    }
+    preview(file:any){
         this._file = file;
         if (file){
             if (this.isimg()){
@@ -126,14 +143,17 @@ export class Uploader extends Widget{
         return uid('fl');
     }
     filechanged(){
-        let form = <HTMLFormElement>this.$el;
-        let fd = new FormData(form);
+        let form = <any>this.$refs.frm;
+        console.log(form.$el);
+        let fd = new FormData(form.$el);
         this.changed = true;
         this.$forceUpdate();
         if (this.auto){
             this.output('Uploading ...');
-            send(this.action, {form:fd}, 'post').then((o)=>{
+            send(this.action, {form:fd, header:{'content-type':'multipart/form-data'}}, 'post').then((o)=>{
                 console.log(o);
+                let p = <SimplePreview>this.$refs.preview;
+                p.view(o.result.files[0]);
             }).catch((e)=>{
                 console.warn(e);
             });
@@ -141,7 +161,7 @@ export class Uploader extends Widget{
             //let path = (<any>this.$refs.box).value;
             let p = <SimplePreview>this.$refs.preview;
             let inp = <any>this.$refs.box;
-            p.update(inp.files[0]);
+            p.preview(inp.files[0]);
             //readURL(img, inp);
             //this.output(path);
         }
