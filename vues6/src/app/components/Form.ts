@@ -2,6 +2,7 @@ import * as Vue from 'vue';
 import Component from 'vue-class-component';
 import {Widget} from './widget';
 import {extend, find, clone, all, add, uid, clear} from '../../../../../kernel/src/common';
+import {addcss} from '../../../../../kernel/src/web/element';
 import {send} from '../../../../../kernel/src/web/network';
 
 @Component({
@@ -35,7 +36,6 @@ export class FormContainer extends Widget{
 }
 
 function readURL(imgel:any, file:any) {
-
     if (file) {
         var reader = new FileReader();
         reader.onload = function (e:any) {
@@ -48,7 +48,7 @@ function readURL(imgel:any, file:any) {
 
 @Component({
     template: `
-        <div class="w-wrap w-boundary" v-show="getfile()">
+        <div class="w-wrap w-boundary w-inline" v-show="getfile()">
             <w.icon-placeholder v-if="getfile() && !isimg()" classes="preview" vwidth=500 vheight=500 />
             <img :style="showimg()" class="preview" ref="img" />
         </div>
@@ -110,9 +110,9 @@ export class SimplePreview extends Widget{
     template: `
         <div class="w-wrap">
             <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" />
-            <label ref="label" style="cursor:pointer;">
+            <slot v-show="showpreview()"></slot>
+            <label v-show="!ischanged()" ref="label" style="cursor:pointer;">
                 <div class="content">
-                    <slot v-show="showpreview()"></slot>
                     <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
                 </div>
             </label>
@@ -128,22 +128,31 @@ export class UploadItem extends Widget{
     getid(){
         return (<any>this.$refs.box).id;
     }
+    ischanged(){
+        return this.changed;
+    }
     filechanged(){
         this.changed = true;
+        addcss(this.$el, 'w-inline');
+        let box = <any>this.$refs.box;
         all(this.$children, function(item:any, i:number){
-            console.log(item);
+            item.preview(box.files[0]);
         });
+        this.$forceUpdate();
     }
     showpreview(){
         return this.changed;
     }
     updated(){
+        this.refreshid();
+    }
+    mounted(){
+        this.refreshid();
+    }
+    protected refreshid(){
         let box = <any>this.$refs.box;
         let label = <any>this.$refs.label;
         label.setAttribute('for', box.id);
-    }
-    mounted(){
-        this.updated();
     }
     protected gid(){
         return uid('fl');
