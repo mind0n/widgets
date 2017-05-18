@@ -219,16 +219,12 @@ export class AutoUploadItem extends Widget{
 @Component({
     template: `
         <div class="w-boundary w-upload">
-            <w.form v-if="!auto" classes="w-center" :action="action" type="upload">
+            <w.form ref="frm" classes="w-center" :action="action" type="upload">
                 <UploadItem v-for="n in count()" :key="$uid()">
                     <SimplePreview />
                 </UploadItem>
+                <button v-if="count()>1" @click="save" type="button">Save</button>
             </w.form>
-            <div v-if="auto" class="w-hold">
-                <AutoUploadItem v-for="n in count()" :key="$uid()">
-                    <SimplePreview />
-                </AutoUploadItem>
-            </div>
         </div>
     `
     , props:["action", "classes", "auto"]
@@ -244,7 +240,16 @@ export class ManualUploader extends Widget{
         super(options);
         this.upcount = 1;
     }
-
+    save(){
+        let frm = <any>this.$refs.frm;
+        let fd = frm.$el;
+        console.log(fd);
+        send(this.action, {form:fd, upload:true}, 'post').then((o)=>{
+            console.log(o);
+        }).catch((e)=>{
+            console.warn(e);
+        });
+    }
     count(){
         return this.upcount;
     }
