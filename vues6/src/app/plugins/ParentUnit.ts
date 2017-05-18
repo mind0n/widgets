@@ -3,13 +3,18 @@ function parentUnit(name?:string){
     name = name.toLowerCase();
   }
   let par = this.$parent;
-  let tag = par.$options._componentTag.toLowerCase();
+  let tag = par.$options._componentTag;
+  if (tag){
+    tag = tag.toLowerCase();
+  }else{
+    tag = 'unknown';
+  }
   while(name && tag){
     if (name == tag || !par.$parent || par == this.$root){
       break;
     }
     par = par.$parent;
-    tag = par.$options._componentTag.toLowerCase();
+    tag = par.$options._componentTag?par.$options._componentTag:'unknown';
   }
   return par;
 }

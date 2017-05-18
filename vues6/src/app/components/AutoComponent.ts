@@ -7,18 +7,15 @@ import {Widget} from './widget'
 @Component({
     // All component options are allowed in here
     template: `
-        <div class="w-holder">
-        <keep-alive v-if="alive">
+        <div :class="'w-holder ' + (classes?classes:' w-inline')">
+        <keep-alive>
             <component :is="current">
 
             </component>
         </keep-alive>
-        <component v-if="!alive" :is="current">
-
-        </component>
         </div>
     `
-    , props:["alive", "current"]
+    , props:["current", "classes"]
 })
 export class AutoComponent extends Widget{
     alive:boolean;
@@ -29,9 +26,9 @@ export class AutoComponent extends Widget{
 @Component({
     // All component options are allowed in here
     template: `
-        <div><w.auto v-for="item in items" :alive="item.alive" :current="item.widget" :key="seed()" /></div>
+        <div><w.auto :classes="classes" v-for="item in items" :current="item.widget" :key="seed()" /></div>
     `
-    , props:["items"]
+    , props:["items", 'classes']
 })
 export class AutoComponents extends Widget{
     items:any[]

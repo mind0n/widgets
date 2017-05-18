@@ -7,11 +7,11 @@ import {send} from '../../../../../kernel/src/web/network';
 
 @Component({
     template: `
-        <form :action="action" method="post" :enctype="getype()">
+        <form :class="classes" :action="action" method="post" :enctype="getype()">
             <slot></slot>
         </form>
     `
-    , props:["action", "type", "target"]
+    , props:["action", "type", "target", "classes"]
 })
 export class FormContainer extends Widget{
     getype(){
@@ -58,7 +58,6 @@ function readURL(imgel:any, file:any) {
 export class SimplePreview extends Widget{
     _file:any;
     getfile(){
-        console.log('get file', this._file);
         return this._file;
     }
     show(){
@@ -68,7 +67,6 @@ export class SimplePreview extends Widget{
         return this._file?this._file.type.split('/')[0]:null;
     }
     showimg(){
-        console.log('showimg', this.isimg());
         if (this.isimg()){
             return '';
         }
@@ -139,6 +137,65 @@ export class UploadItem extends Widget{
             item.preview(box.files[0]);
         });
         this.$forceUpdate();
+        let unit = (<any>this).unit('w.upload');
+        unit.fileChanged();
+    }
+    showpreview(){
+        return this.changed;
+    }
+    updated(){
+        this.refreshid();
+    }
+    mounted(){
+        this.refreshid();
+    }
+    protected refreshid(){
+        let box = <any>this.$refs.box;
+        let label = <any>this.$refs.label;
+        label.setAttribute('for', box.id);
+    }
+    protected gid(){
+        return uid('fl');
+    }
+}
+
+@Component({
+    template: `
+        <div class="w-wrap">
+            <w.form classes="w-center" ref="frm" :action="action" type="upload">
+            <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" />
+            <slot v-show="showpreview()"></slot>
+            <label v-show="!ischanged()" ref="label" style="cursor:pointer;">
+                <div class="content">
+                    <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
+                </div>
+            </label>
+            </w.form>
+        </div>
+    `
+    , props:[]
+    , components:{
+        SimplePreview
+    }
+})
+export class AutoUploadItem extends Widget{
+    protected changed:boolean;
+    getid(){
+        return (<any>this.$refs.box).id;
+    }
+    ischanged(){
+        return this.changed;
+    }
+    filechanged(){
+        this.changed = true;
+        addcss(this.$el, 'w-inline');
+        let box = <any>this.$refs.box;
+        all(this.$children, function(item:any, i:number){
+            item.preview(box.files[0]);
+        });
+        this.$forceUpdate();
+        let unit = (<any>this).unit('w.upload');
+        unit.fileChanged();
     }
     showpreview(){
         return this.changed;
@@ -162,20 +219,39 @@ export class UploadItem extends Widget{
 @Component({
     template: `
         <div class="w-boundary w-upload">
-            <w.form ref="frm" :action="action" type="upload">
-                <UploadItem>
+            <w.form v-if="!auto" classes="w-center" :action="action" type="upload">
+                <UploadItem v-for="n in count()" :key="$uid()">
                     <SimplePreview />
                 </UploadItem>
             </w.form>
+            <div v-if="auto" class="w-hold">
+                <AutoUploadItem v-for="n in count()" :key="$uid()">
+                    <SimplePreview />
+                </AutoUploadItem>
+            </div>
         </div>
     `
-    , props:["action"]
+    , props:["action", "classes", "auto"]
     , components:{
-        SimplePreview, UploadItem
+        SimplePreview, UploadItem, AutoUploadItem
     }
 })
-export class SingleUploader extends Widget{
+export class ManualUploader extends Widget{
     protected action:string;
+    protected auto:boolean;
+    protected upcount:number;
+    constructor(options?:any){
+        super(options);
+        this.upcount = 1;
+    }
+
+    count(){
+        return this.upcount;
+    }
+    fileChanged(){
+        this.upcount++;
+        this.$forceUpdate();
+    }
     updated(){
     }
     mounted(){
@@ -222,14 +298,12 @@ export class Uploader extends Widget{
     }
     filechanged(){
         let form = <any>this.$refs.frm;
-        console.log(form.$el);
         let fd = new FormData(form.$el);
         this.changed = true;
         this.$forceUpdate();
         if (this.auto){
             this.output('Uploading ...');
             send(this.action, {form:fd, upload:true}, 'post').then((o)=>{
-                console.log(o);
                 let p = <SimplePreview>this.$refs.preview;
                 p.view(o.result.files[0]);
                 this.output('Upload Accomplished');

@@ -57,7 +57,7 @@ function cellChange(self:any){
 }
 @Component({
     template: `
-        <div :class="'w-cell ' + sort() + ' ' + classes()" @click="cellclick">
+        <div :class="'w-cell ' + sort() + ' ' + getclasses()" @click="cellclick">
             <div class="w-sort">
                 <w.icon-sort-up width=14 height=14 vwidth=32 vheight=32 />
                 <w.icon-sort-down width=14 height=14 vwidth=32 vheight=32 />
@@ -94,7 +94,7 @@ class Cell extends Widget{
     protected cellclick(event:MouseEvent){
         this.$emit("cellclick", this.meta);
     }
-    protected classes(){
+    protected getclasses(){
         return this.meta?this.meta.classes : '';
     }
     protected sort(){
