@@ -12,10 +12,10 @@ import {
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {GridComponent} from "./components/gridcomponent";
 import {FormContainer
-        , Uploader
+        //, Uploader
         , ManualUploader
         , UploadItem
-        , AutoUploadItem
+        //, AutoUploadItem
         , SimplePreview
 } from "./components/form";
 import {join} from '../../../../kernel/src/common'
@@ -38,6 +38,6 @@ Vue.component('w.autos', AutoComponents);
 Vue.component('w.grid', GridComponent);
 Vue.component('w.form', FormContainer);
 Vue.component('w.upload', ManualUploader);
-Vue.component('w.uploads', Uploader);
+//Vue.component('w.uploads', Uploader);
 
 init();
