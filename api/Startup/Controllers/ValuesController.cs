@@ -69,7 +69,7 @@ namespace Startup.Controllers
                 {
                     if (formFile.Length > 0)
                     {
-                        var fileName = $"{filePath}\\{formFile.FileName}";
+                        var fileName = $"{filePath}\\{Path.GetFileName(formFile.FileName)}";
                         using (var stream = new FileStream(fileName, FileMode.Create))
                         {
                             list.Add($"http://localhost:8888/s/values?file={formFile.FileName}");
