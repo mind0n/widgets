@@ -107,13 +107,13 @@ export class SimplePreview extends Widget{
 @Component({
     template: `
         <div class="w-wrap">
-            <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" multiple />
             <slot name="previews" v-for="f in getfiles()" v-show="showpreview()"></slot>
             <label v-show="!ischanged()" ref="label" style="cursor:pointer;">
                 <div class="content">
                     <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
                 </div>
             </label>
+            <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" multiple />
         </div>
     `
     , props:["test"]
@@ -180,7 +180,9 @@ export class UploadItem extends Widget{
                         <SimplePreview />
                     </template>
                 </UploadItem>
-                <button v-if="count()>1" @click="save" type="button">Save</button>
+                <div class="w-cmd">
+                    <button v-if="count()>1 && !auto" @click="save" type="button">Save</button>
+                </div>
             </w.form>
         </div>
     `
@@ -201,7 +203,9 @@ export class ManualUploader extends Widget{
         let frm = <any>this.$refs.frm;
         let fd = frm.$el;
         console.log(fd);
-        send(this.action, {form:fd, upload:true}, 'post').then((o)=>{
+        send(this.action, {form:fd, upload:true, progress:(p, q)=>{
+            console.log(p, q);
+        }}, 'post').then((o)=>{
             console.log(o);
         }).catch((e)=>{
             console.warn(e);
