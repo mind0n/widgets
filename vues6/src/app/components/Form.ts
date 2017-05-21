@@ -113,7 +113,7 @@ export class SimplePreview extends Widget{
                     <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
                 </div>
             </label>
-            <input ref="box" :id="gid()" name="files" type="file" @change="filechanged()" multiple />
+            <input ref="box" :id="gid()" class="w-file" name="files" type="file" @change="filechanged()" multiple />
         </div>
     `
     , props:["test"]
@@ -124,27 +124,27 @@ export class SimplePreview extends Widget{
 export class UploadItem extends Widget{
     protected test:any;
     protected changed:boolean;
-    getid(){
+    protected getid(){
         return (<any>this.$refs.box).id;
     }
-    ischanged(){
+    protected ischanged(){
         return this.changed;
     }
-    getfiles(){
+    protected getfiles(){
         let box = <any>this.$refs.box;
         if (box){
             console.log("Count ", box.files.length);
         }
         return box?box.files.length:1;
     }
-    filechanged(){
+    protected filechanged(){
         this.changed = true;
         addcss(this.$el, 'w-inline');
 
         let unit = (<any>this).unit('w.upload');
         unit.fileChanged();
     }
-    showpreview(){
+    protected showpreview(){
         return this.changed;
     }
     updated(){
@@ -175,52 +175,87 @@ export class UploadItem extends Widget{
     template: `
         <div class="w-boundary w-upload">
             <w.form ref="frm" classes="w-center" :action="action" type="upload">
-                <UploadItem v-for="n in count()" :key="$uid()">
+                <UploadItem ref="upitems" v-for="n in count()" :key="$uid()">
                     <template slot="previews" scope="props">
                         <SimplePreview />
                     </template>
                 </UploadItem>
                 <div class="w-cmd">
-                    <button v-if="count()>1 && !auto" @click="save" type="button">Save</button>
+                    <button v-if="count()>1 && !isubmitted()" @click="save" type="button">Save</button>
+                    <button v-if="count()>=1 && isubmitted()" @click="retry" type="button">Retry</button>
                 </div>
             </w.form>
         </div>
     `
-    , props:["action", "classes", "auto"]
+    , props:["action", "classes", "onsubmitted"]
     , components:{
         SimplePreview, UploadItem
     }
 })
 export class ManualUploader extends Widget{
     protected action:string;
-    protected auto:boolean;
-    protected upcount:number;
+    protected _isubmitted:boolean;
+    protected upcount:any[];
+    protected onsubmitted:any;
+    protected isubmitted(){
+        return this._isubmitted;
+    }
+
     constructor(options?:any){
         super(options);
-        this.upcount = 1;
+        this.upcount = [1];
+    }
+    retry(){
+        //console.log(this.$refs.upitems);
+        this._isubmitted = false;
+        this.upcount = [];
+        this.$forceUpdate();
     }
     save(){
         let frm = <any>this.$refs.frm;
         let fd = frm.$el;
-        console.log(fd);
+        let self = this;
         send(this.action, {form:fd, upload:true, progress:(p, q)=>{
             console.log(p, q);
         }}, 'post').then((o)=>{
-            console.log(o);
+            this._isubmitted = true;
+            
+            if (this.onsubmitted){
+                let t = typeof(this.onsubmitted);
+                if (t == 'string'){
+                    let h = new Function("res", `return ${this.onsubmitted}`);
+                    h.call(window,o.result.files);
+                }else if (t == 'function'){
+                    let h = <Function>this.onsubmitted;
+                    h.call(window, o.result.files);
+                }
+            }
+            self.upcount.splice(self.upcount.length - 1, 1);
+            self.$forceUpdate();
         }).catch((e)=>{
             console.warn(e);
         });
     }
     count(){
-        return this.upcount;
+        return this.upcount.length;
     }
     fileChanged(){
-        this.upcount++;
+        this.upcount[this.upcount.length] = this.upcount.length;
         this.$forceUpdate();
     }
     updated(){
+        if (this.upcount.length < 1){
+            this.upcount = [1];
+            this.$forceUpdate();
+        }
     }
     mounted(){
+        document.body.onpaste = function(event:any){
+            all(event.clipboardData.items, function(item:any, i:number){
+                let f = item.getAsFile();
+                console.log(f);
+            });
+        }
     }
 }
 
