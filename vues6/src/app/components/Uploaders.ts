@@ -14,11 +14,16 @@ class UploadItem{
 class PreviewItem{
     isimg:boolean;
     url:any;
-    loadinput(file:File){
+    type:string;
+    loadinput(file:File, callback?:Function){
         let r = new FileReader();
         let self = this;
+        this.type = file.type;
         r.onload = (e:any)=>{
             self.url = e.target.result;
+            if (callback){
+                callback(e);
+            }
         }
         r.readAsDataURL(file);
     }
@@ -27,20 +32,58 @@ class PreviewItem{
         this.loadinput(f);
     }
 }
+
 @Component({
     template: `
-        <div class="w-wrap">
-            
+        <div class="preview">
+            <img ref="img" />
+        </div>
+    `
+    , props:["item"]
+    , components:{
+    }
+})
+export class Preview extends Widget{
+    item:PreviewItem;
+    rendering(){
+        let img = <any>this.$refs.img;
+        img.src = this.item.url;
+    }
+    updated(){
+        this.rendering();
+    }
+    mounted(){
+        this.rendering();
+    }
+}
+
+@Component({
+    template: `
+        <div class="previews">
+            <Preview v-for="item in list" :item="item" :key="$uid()" />
         </div>
     `
     , props:[]
     , components:{
+        Preview
     }
 })
 export class Previews extends Widget{
     protected list:PreviewItem[] = [];
     update(list:UploadItem[]){
-
+        let self = this;
+        clear(this.list);
+        all(list, (item:UploadItem, i:number)=>{
+            let it = new PreviewItem();
+            add(self.list, it);
+            it.loadinput(item.file);
+        });
+    }
+    mounted(){
+        let self = this;
+        window.setInterval(function(){
+            self.$forceUpdate();
+        },500);
     }
 }
 
@@ -61,20 +104,21 @@ export class Previews extends Widget{
     }
 })
 export class Uploads extends Widget{
-    protected files:UploadItem[] = [];
+    protected uploads:UploadItem[] = [];
     protected action:string;
     protected changed:boolean;
     protected fileChanged(files:FileList[]){
         all(files, (item:File, i:number)=>{
-            if (unique(this.files, item, (it:UploadItem, t:any)=>{
+            if (unique(this.uploads, item, (it:UploadItem, t:any)=>{
                 return it.file == t;
             })){
                 let f = new UploadItem(item);
-                add(this.files, f);
+                add(this.uploads, f);
             }
         });
-        let p = <any>this.$refs.preview;
-        p.update(this.files);
+        console.log(this.uploads);
+        let p = <Previews>this.$refs.previews;
+        p.update(this.uploads);
     }
     mounted(){
         let self = this;
@@ -82,6 +126,7 @@ export class Uploads extends Widget{
         input.type = "file";
         input.className = "w-file";
         input.id = this.gid();
+        input.setAttribute('multiple', "true");
         input.onchange = function(event:any){
             let t = event.currentTarget || event.srcElement;
             self.fileChanged(t.files);
@@ -94,8 +139,8 @@ export class Uploads extends Widget{
         console.log('Uploader updated');
     }
     destroyed(){
-        if (this.files.length > 0){
-            all(this.files, (item:any, i:any)=>{
+        if (this.uploads.length > 0){
+            all(this.uploads, (item:any, i:any)=>{
                 destroy(item);
             });
         }
