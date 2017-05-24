@@ -15,9 +15,9 @@ import {FormContainer
         //, Uploader
         , ManualUploader
         , UploadItem
-        //, AutoUploadItem
         , SimplePreview
 } from "./components/form";
+import {Uploads} from "./components/uploaders";
 import {join} from '../../../../kernel/src/common'
 import {init} from '../../../../kernel/src/web/init';
 
@@ -38,6 +38,6 @@ Vue.component('w.autos', AutoComponents);
 Vue.component('w.grid', GridComponent);
 Vue.component('w.form', FormContainer);
 Vue.component('w.upload', ManualUploader);
-//Vue.component('w.uploads', Uploader);
+Vue.component('w.uploads', Uploads);
 
 init();

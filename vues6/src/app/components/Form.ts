@@ -215,7 +215,7 @@ export class ManualUploader extends Widget{
         let frm = <any>this.$refs.frm;
         let fd = frm.$el;
         let self = this;
-        send(this.action, {form:fd, upload:true, progress:(p, q)=>{
+        send(this.action, {form:fd, upload:true, progress:(p:any, q:any)=>{
             console.log(p, q);
         }}, 'post').then((o)=>{
             this._isubmitted = true;

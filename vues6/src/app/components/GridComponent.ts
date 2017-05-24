@@ -203,16 +203,16 @@ export class GridComponent extends Widget{
         let head = child.$el;
         head.style.top = el.scrollTop + 'px';
     }
-    prepare(meta){
+    prepare(meta:any){
         this.$set(this.dat, 'meta', meta);
     }
-    bind(dat){
+    bind(dat:any){
         this.$set(this.dat, 'value', dat);
     }
     getchanges():any[]{
         let list = this.$refs.rows;
         let rlt:any[] = [];
-        all(list, function(item, i){
+        all(list, function(item:any, i:any){
             if (item.isdirty){
                 add(rlt, item);
             }
