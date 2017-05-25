@@ -6,8 +6,12 @@ import {addcss, destroy} from '../../../../../kernel/src/web/element';
 import {send} from '../../../../../kernel/src/web/network';
 
 class UploadItem{
+    protected preview:PreviewItem;
     constructor(public file:File){
 
+    }
+    setpreview(item:PreviewItem){
+        this.preview = item;
     }
 }
 
@@ -15,10 +19,12 @@ class PreviewItem{
     isimg:boolean;
     url:any;
     type:string;
+    //file:File;
     loadinput(file:File, callback?:Function){
         let r = new FileReader();
         let self = this;
         this.type = file.type;
+        //this.file = file;
         r.onload = (e:any)=>{
             self.url = e.target.result;
             if (callback){
@@ -36,7 +42,7 @@ class PreviewItem{
 @Component({
     template: `
         <div class="preview">
-            <img ref="img" />
+            <img style="display:none" ref="img" />
         </div>
     `
     , props:["item"]
@@ -48,6 +54,9 @@ export class Preview extends Widget{
     rendering(){
         let img = <any>this.$refs.img;
         img.src = this.item.url;
+        if (this.item.url){
+            img.style.display = '';
+        }
     }
     updated(){
         this.rendering();
@@ -60,7 +69,7 @@ export class Preview extends Widget{
 @Component({
     template: `
         <div class="previews">
-            <Preview v-for="item in list" :item="item" :key="$uid()" />
+            <Preview ref="children" v-for="x in previewItems()" :item="x" :key="$uid()" />
         </div>
     `
     , props:[]
@@ -70,31 +79,42 @@ export class Preview extends Widget{
 })
 export class Previews extends Widget{
     protected list:PreviewItem[] = [];
+    protected h:any;
+    protected count:number;
+    previewItems(){
+        return this.list;
+    }
     update(list:UploadItem[]){
         let self = this;
-        clear(this.list);
+        //clear(self.list);
+        self.list = [];
+        self.count = 0;
         all(list, (item:UploadItem, i:number)=>{
             let it = new PreviewItem();
+            item.setpreview(it);
             add(self.list, it);
-            it.loadinput(item.file);
+            it.loadinput(item.file, (e:any)=>{
+                self.count++;
+            });
         });
-    }
-    mounted(){
-        let self = this;
-        window.setInterval(function(){
-            self.$forceUpdate();
-        },500);
+        self.h = window.setInterval(function(){
+            if (self.count >= self.list.length){
+                window.clearInterval(self.h);
+                all(self.$refs.children, (ch:any, i:number)=>{
+                    ch.rendering();
+                });
+                self.$emit('previewed', self.list);
+            }
+        },200);
     }
 }
 
 @Component({
     template: `
         <div class="w-upload">
-            <Previews ref="previews" />
+            <Previews ref="previews" @previewed="previewCompleted" />
             <label ref="label" style="cursor:pointer;">
-                <div class="content">
-                    <span ref="text">Drag Here - Click Here - Paste Here to upload</span>
-                </div>
+                <slot></slot>
             </label>
         </div>
     `
@@ -108,6 +128,7 @@ export class Uploads extends Widget{
     protected action:string;
     protected changed:boolean;
     protected fileChanged(files:FileList[]){
+        clear(this.uploads);
         all(files, (item:File, i:number)=>{
             if (unique(this.uploads, item, (it:UploadItem, t:any)=>{
                 return it.file == t;
@@ -116,9 +137,14 @@ export class Uploads extends Widget{
                 add(this.uploads, f);
             }
         });
-        console.log(this.uploads);
         let p = <Previews>this.$refs.previews;
         p.update(this.uploads);
+    }
+    protected previewCompleted(list:PreviewItem[]){
+        console.log('Preview completed');
+        all(this.uploads, (up:UploadItem, i:number)=>{
+            send(`http://localhost:8888/s/values?n=${up.file.name}`, {header:{'content-type':up.file.type, 'content-dispositon':`attachment; filename=${up.file.name}`},raw:up.file}, 'post');
+        });
     }
     mounted(){
         let self = this;

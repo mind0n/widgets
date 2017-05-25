@@ -26,7 +26,11 @@
         <div id="app">
             <div class="w-widget w-boundary">
                 <div class="w-title">Upload</div>
-                <w.uploads ref="mu" action="http://localhost:8888/s/values" />
+                <w.uploads ref="mu" action="http://localhost:8888/s/values">
+                    <div class="content">
+                        <span ref="text">Drag Here, Click Here or Paste Here to upload</span>
+                    </div>
+                </w.uploads>
                 <!--<w.upload ref="mu" action="http://localhost:8888/s/values" :onsubmitted="'mudone(res)'" />-->
             </div>
             <div class="w-widget w-boundary">
