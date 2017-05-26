@@ -50,7 +50,7 @@ gulp.task('js', function(done){
         .pipe(rename('vue.runtime.min.js'))
         .pipe(gulp.dest('./node_modules/vue/dist'));
     return gulp.src([
-            './node_modules/simplebar/dist/simplebar.js'
+            './src/lib/bluebird.js'
         ])
         .pipe(bnd("vendors.js"))
         .pipe(gulp.dest('./dist'));
