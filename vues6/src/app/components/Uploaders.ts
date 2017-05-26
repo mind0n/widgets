@@ -6,24 +6,21 @@ import {addcss, destroy} from '../../../../../kernel/src/web/element';
 import {send} from '../../../../../kernel/src/web/network';
 
 class UploadItem{
-    protected preview:PreviewItem;
     constructor(public file:File){
 
     }
-    setpreview(item:PreviewItem){
-        this.preview = item;
-    }
-}
-
-class PreviewItem{
     isimg:boolean;
     url:any;
-    type:string;
-    //file:File;
-    loadinput(file:File, callback?:Function){
+    
+    private percent:number;
+
+    get type():string{
+        return this.file.type;
+    }
+
+    loadinput(callback?:Function){
         let r = new FileReader();
         let self = this;
-        this.type = file.type;
         //this.file = file;
         r.onload = (e:any)=>{
             self.url = e.target.result;
@@ -31,18 +28,26 @@ class PreviewItem{
                 callback(e);
             }
         }
-        r.readAsDataURL(file);
+        r.readAsDataURL(this.file);
     }
     loadclip(item:any){
         let f = item.getAsFile();
         this.loadinput(f);
     }
+    getprogress(){
+        return this.percent;
+    }
+    setprogress(p:number){
+        this.percent = p;
+    }
 }
+
 
 @Component({
     template: `
         <div class="preview">
-            <img style="display:none" ref="img" />
+            <img style="display:none" ref="img" /><br />
+            <span ref="pg"></span>
         </div>
     `
     , props:["item"]
@@ -50,13 +55,16 @@ class PreviewItem{
     }
 })
 export class Preview extends Widget{
-    item:PreviewItem;
+    item:UploadItem;
     rendering(){
         let img = <any>this.$refs.img;
         img.src = this.item.url;
         if (this.item.url){
             img.style.display = '';
         }
+    }
+    progress(){
+        (<any>this.$refs.pg).innerHTML = this.item.getprogress() + '%';
     }
     updated(){
         this.rendering();
@@ -78,28 +86,48 @@ export class Preview extends Widget{
     }
 })
 export class Previews extends Widget{
-    protected list:PreviewItem[] = [];
-    protected h:any;
-    protected count:number;
+    protected list:UploadItem[] = [];
+    protected hpreview:any;
+    protected hprogress:any;
+    protected previewCount:number;
+    protected progressCount:number; 
     previewItems(){
         return this.list;
+    }
+    progress(done?:boolean){
+        if (done === true){
+            this.progressCount--;
+            if (this.progressCount <= 0){
+                window.clearInterval(this.hprogress);
+                console.log('Progress completed');
+            }else{
+                console.log('Progress decrease');
+            }
+        }else if (done === undefined){
+            this.progressCount = 0;
+            this.hprogress = window.setInterval(()=>{
+                all(this.$refs.children, (item:Preview, i:any)=>{
+                    item.progress();
+                });
+            },200);
+        }else{
+            this.progressCount++;
+            console.log('Progress increase');
+        }
     }
     update(list:UploadItem[]){
         let self = this;
         //clear(self.list);
-        self.list = [];
-        self.count = 0;
+        self.list = list;
+        self.previewCount = 0;
         all(list, (item:UploadItem, i:number)=>{
-            let it = new PreviewItem();
-            item.setpreview(it);
-            add(self.list, it);
-            it.loadinput(item.file, (e:any)=>{
-                self.count++;
+            item.loadinput((e:any)=>{
+                self.previewCount++;
             });
         });
-        self.h = window.setInterval(function(){
-            if (self.count >= self.list.length){
-                window.clearInterval(self.h);
+        self.hpreview = window.setInterval(function(){
+            if (self.previewCount >= self.list.length){
+                window.clearInterval(self.hpreview);
                 all(self.$refs.children, (ch:any, i:number)=>{
                     ch.rendering();
                 });
@@ -140,10 +168,29 @@ export class Uploads extends Widget{
         let p = <Previews>this.$refs.previews;
         p.update(this.uploads);
     }
-    protected previewCompleted(list:PreviewItem[]){
+    protected previewCompleted(list:UploadItem[]){
         console.log('Preview completed');
+        let pvs = <Previews>this.$refs.previews;
+        pvs.progress();
         all(this.uploads, (up:UploadItem, i:number)=>{
-            send(`http://localhost:8888/s/values?n=${up.file.name}`, {header:{'content-type':up.file.type, 'content-dispositon':`attachment; filename=${up.file.name}`},raw:up.file}, 'post');
+            pvs.progress(false);
+            send(`http://localhost:8888/s/values?n=${up.file.name}`
+            ,{
+                method:'post'
+                , header:{
+                    'content-type':up.file.type
+                    , 'content-dispositon':`attachment; filename=${up.file.name}`
+                }
+                , progress: (event:any)=>{
+                    let p = (event.loaded / event.total) * 100;
+                    up.setprogress(p);
+                }
+                , raw:up.file
+            }).then((o:any)=>{
+                pvs.progress(true);
+            }).catch((e:any)=>{
+                pvs.progress(true);
+            });
         });
     }
     mounted(){
