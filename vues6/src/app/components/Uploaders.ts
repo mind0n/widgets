@@ -64,7 +64,8 @@ export class Preview extends Widget{
         }
     }
     progress(){
-        (<any>this.$refs.pg).innerHTML = this.item.getprogress() + '%';
+        let p = this.item.getprogress() || 0;
+        (<any>this.$refs.pg).innerHTML = p + '%';
     }
     updated(){
         this.rendering();
@@ -140,7 +141,7 @@ export class Previews extends Widget{
 @Component({
     template: `
         <div class="w-upload">
-            <Previews ref="previews" @previewed="previewCompleted" />
+            <Previews v-show="showpreview()" ref="previews" @previewed="previewCompleted" />
             <label ref="label" style="cursor:pointer;">
                 <slot></slot>
             </label>
@@ -154,7 +155,9 @@ export class Previews extends Widget{
 export class Uploads extends Widget{
     protected uploads:UploadItem[] = [];
     protected action:string;
-    protected changed:boolean;
+    protected showpreview(){
+        return this.uploads && this.uploads.length > 0;
+    }
     protected fileChanged(files:FileList[]){
         clear(this.uploads);
         all(files, (item:File, i:number)=>{
@@ -167,6 +170,7 @@ export class Uploads extends Widget{
         });
         let p = <Previews>this.$refs.previews;
         p.update(this.uploads);
+        this.$forceUpdate();
     }
     protected previewCompleted(list:UploadItem[]){
         console.log('Preview completed');
@@ -189,6 +193,7 @@ export class Uploads extends Widget{
             }).then((o:any)=>{
                 pvs.progress(true);
             }).catch((e:any)=>{
+                console.error(e);
                 pvs.progress(true);
             });
         });

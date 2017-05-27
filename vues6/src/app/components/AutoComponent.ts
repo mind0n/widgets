@@ -26,7 +26,7 @@ export class AutoComponent extends Widget{
 @Component({
     // All component options are allowed in here
     template: `
-        <div><w.auto :classes="classes" v-for="item in items" :current="item.widget" :key="seed()" /></div>
+        <div><w.auto :classes="classes" v-for="item in items" :current="item.widget" :key="seed()"></w.auto></div>
     `
     , props:["items", 'classes']
 })

@@ -24,11 +24,6 @@
     <body class="w nb">
 
         <div id="app">
-            <div>
-                aaa
-                <w.d :template="html" :data="dyn" />
-                bbb
-            </div>
             <div class="w-widget w-boundary">
                 <div class="w-title">Upload</div>
                 <w.uploads ref="mu" action="http://localhost:8888/s/values">
@@ -49,6 +44,15 @@
             <div class="w-widget w-boundary">
                 <div class="w-title">Table &amp; Popup</div>
                 <w.grid classes="w-nowrap w-link-btn" ref="grid"></w.grid>
+            </div>
+            <div class="w-widget w-boundary">
+                <div class="w-title">Dynamic Components</div>
+                <div>
+                    aaa
+                    <w.d :html="html" :data="dyn"></w.d>
+                    <w.ds :items="list"></w.ds>
+                    bbb
+                </div>
             </div>
         </div>
         <script>
@@ -74,6 +78,10 @@
                     ,dyn:{
                         test:'success'
                     }
+                    ,list:[
+                        {html:'<w.d :html="text" :data="dat"></w.d>', data:{text:'<div>{{msg}}</div>', dat:{msg:'done'} } }
+                        , {html:'<div>{{text}}</div>', data:{text:'item2'}}
+                    ]
                     ,listicon:[
                         {alive:true, widget:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
                         , {alive:true, widget:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
@@ -99,6 +107,7 @@
                         {widget:{template:"<button @click='change'>Activate</button>", methods:{
                             change:function(){
                                 var c = this.unit('cell');
+                                console.log(c);
                                 c.dat.aspNetUserStatu.userStatusKey = 2;
                                 c.dat.aspNetUserStatu.userStatus = 'Success';
                                 c.notifyChange();

@@ -14,7 +14,7 @@ function parentUnit(name?:string){
       break;
     }
     par = par.$parent;
-    tag = par.$options._componentTag?par.$options._componentTag:'unknown';
+    tag = par.$options._componentTag?par.$options._componentTag.toLowerCase():'unknown';
   }
   return par;
 }
