@@ -24,6 +24,11 @@
     <body class="w nb">
 
         <div id="app">
+            <div>
+                aaa
+                <w.d :template="html" :data="dyn" />
+                bbb
+            </div>
             <div class="w-widget w-boundary">
                 <div class="w-title">Upload</div>
                 <w.uploads ref="mu" action="http://localhost:8888/s/values">
@@ -65,7 +70,11 @@
             var vm = new v({
                 el:'#app'
                 , data:{
-                    listicon:[
+                    html:'<div>{{test}}</div>'
+                    ,dyn:{
+                        test:'success'
+                    }
+                    ,listicon:[
                         {alive:true, widget:{ template:'<w.icon-toggle-dropdown width=32 height=32 />'}}
                         , {alive:true, widget:{ template:'<w.icon-toggle-menu width=32 height=32 />'}}
                     ]
