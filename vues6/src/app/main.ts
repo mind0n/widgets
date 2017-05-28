@@ -12,6 +12,7 @@ import {
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
 import {DynComponent, DynsComponent, DynamicComponent} from "./components/dyncomponent";
 import {GridComponent} from "./components/gridcomponent";
+import {TestComponent} from "./components/testcomponent";
 import {FormContainer
         //, Uploader
         , ManualUploader
@@ -41,5 +42,6 @@ Vue.component('w.form', FormContainer);
 Vue.component('w.upload', ManualUploader);
 Vue.component('w.uploads', Uploads);
 Vue.component('d', DynamicComponent);
+Vue.component('test', TestComponent);
 
 init();
