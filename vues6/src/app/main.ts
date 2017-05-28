@@ -10,7 +10,7 @@ import {
     , IconPlaceholder
 } from "./components/IconComponent";
 import {AutoComponent, AutoComponents} from "./components/AutoComponent";
-import {DynComponent, DynsComponent} from "./components/dyncomponent";
+import {DynComponent, DynsComponent, DynamicComponent} from "./components/dyncomponent";
 import {GridComponent} from "./components/gridcomponent";
 import {FormContainer
         //, Uploader
@@ -40,7 +40,6 @@ Vue.component('w.grid', GridComponent);
 Vue.component('w.form', FormContainer);
 Vue.component('w.upload', ManualUploader);
 Vue.component('w.uploads', Uploads);
-Vue.component('w.d', DynComponent);
-Vue.component('w.ds', DynsComponent);
+Vue.component('d', DynamicComponent);
 
 init();

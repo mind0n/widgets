@@ -1,6 +1,6 @@
 import * as Vue from 'vue';
 import Component from 'vue-class-component';
-import {Widget} from './widget';
+import {BaseComponent} from './BaseComponent';
 import {extend, find, clone, all, add, addrange, uid, clear, unique} from '../../../../../kernel/src/common';
 import {addcss, destroy} from '../../../../../kernel/src/web/element';
 import {send} from '../../../../../kernel/src/web/network';
@@ -54,7 +54,7 @@ class UploadItem{
     , components:{
     }
 })
-export class Preview extends Widget{
+export class Preview extends BaseComponent{
     item:UploadItem;
     rendering(){
         let img = <any>this.$refs.img;
@@ -86,7 +86,7 @@ export class Preview extends Widget{
         Preview
     }
 })
-export class Previews extends Widget{
+export class Previews extends BaseComponent{
     protected list:UploadItem[] = [];
     protected hpreview:any;
     protected hprogress:any;
@@ -152,7 +152,7 @@ export class Previews extends Widget{
         Previews
     }
 })
-export class Uploads extends Widget{
+export class Uploads extends BaseComponent{
     protected uploads:UploadItem[] = [];
     protected action:string;
     protected showpreview(){
@@ -247,7 +247,7 @@ export class Uploads extends Widget{
 //         SimplePreview
 //     }
 // })
-// export class Uploader extends Widget{
+// export class Uploader extends BaseComponent{
 //     action:string;
 //     auto:boolean;
 //     protected changed:boolean;

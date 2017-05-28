@@ -1,6 +1,6 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
-import {Widget} from './widget'
+import {BaseComponent} from './BaseComponent';
 
 // The @Component decorator indicates the class is a Vue component
 @Component({
@@ -12,7 +12,7 @@ import {Widget} from './widget'
     `
     , props:["width", "height", "classes", "vwidth", "vheight"]
 })
-export class Icon extends Widget{
+export class Icon extends BaseComponent{
     html:string
     width:number;
     height:number;
@@ -43,7 +43,7 @@ export class Icon extends Widget{
     `
     , props:["width", "height", "vwidth", "vheight"]
 })
-export class IconToggleMenu extends Widget{
+export class IconToggleMenu extends BaseComponent{
     width:number;
     height:number;
 }
@@ -58,7 +58,7 @@ export class IconToggleMenu extends Widget{
     `
     , props:["width", "height", "vwidth", "vheight"]
 })
-export class IconToggleDropDown extends Widget{
+export class IconToggleDropDown extends BaseComponent{
     width:number;
     height:number;
 }
@@ -72,7 +72,7 @@ export class IconToggleDropDown extends Widget{
     `
     , props:["width", "height", "vwidth", "vheight"]
 })
-export class IconSortDown extends Widget{
+export class IconSortDown extends BaseComponent{
     width:number;
     height:number;
 }
@@ -86,7 +86,7 @@ export class IconSortDown extends Widget{
     `
     , props:["width", "height", "vwidth", "vheight"]
 })
-export class IconSortUp extends Widget{
+export class IconSortUp extends BaseComponent{
     width:number;
     height:number;
 }
@@ -106,7 +106,7 @@ export class IconSortUp extends Widget{
     `
     , props:["width", "height", "vwidth", "vheight", "classes"]
 })
-export class IconPlaceholder extends Widget{
+export class IconPlaceholder extends BaseComponent{
     classes:string;
     width:number;
     height:number;

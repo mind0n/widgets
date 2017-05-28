@@ -1,6 +1,6 @@
 import * as Vue from 'vue';
 import Component from 'vue-class-component';
-import {Widget} from './widget';
+import {BaseComponent} from './BaseComponent';
 import {extend, find, clone, all, add, uid, clear} from '../../../../../kernel/src/common';
 import {addcss} from '../../../../../kernel/src/web/element';
 import {send} from '../../../../../kernel/src/web/network';
@@ -13,7 +13,7 @@ import {send} from '../../../../../kernel/src/web/network';
     `
     , props:["action", "type", "target", "classes"]
 })
-export class FormContainer extends Widget{
+export class FormContainer extends BaseComponent{
     getype(){
         if (!this.type){
             return 'application/x-www-form-urlencoded';
@@ -55,7 +55,7 @@ function readURL(imgel:any, file:any) {
     `
     , props:["files"]
 })
-export class SimplePreview extends Widget{
+export class SimplePreview extends BaseComponent{
     _file:any;
     getfile(){
         return this._file;
@@ -121,7 +121,7 @@ export class SimplePreview extends Widget{
         SimplePreview
     }
 })
-export class UploadItem extends Widget{
+export class UploadItem extends BaseComponent{
     protected test:any;
     protected changed:boolean;
     protected getid(){
@@ -192,7 +192,7 @@ export class UploadItem extends Widget{
         SimplePreview, UploadItem
     }
 })
-export class ManualUploader extends Widget{
+export class ManualUploader extends BaseComponent{
     protected action:string;
     protected _isubmitted:boolean;
     protected upcount:any[];
@@ -278,7 +278,7 @@ export class ManualUploader extends Widget{
 //         SimplePreview
 //     }
 // })
-// export class AutoUploadItem extends Widget{
+// export class AutoUploadItem extends BaseComponent{
 //     protected changed:boolean;
 //     getid(){
 //         return (<any>this.$refs.box).id;
@@ -335,7 +335,7 @@ export class ManualUploader extends Widget{
 //         SimplePreview
 //     }
 // })
-// export class Uploader extends Widget{
+// export class Uploader extends BaseComponent{
 //     action:string;
 //     auto:boolean;
 //     protected changed:boolean;

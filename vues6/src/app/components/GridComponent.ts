@@ -1,6 +1,6 @@
 import * as Vue from 'vue'
 import Component from 'vue-class-component'
-import {Widget} from './widget'
+import {BaseComponent} from './BaseComponent';
 import {extend, find, clone, all, add} from '../../../../../kernel/src/common'
 
 function getScrollbarWidth() {
@@ -71,7 +71,7 @@ function cellChange(self:any){
         
     }
 })
-class Cell extends Widget{
+class Cell extends BaseComponent{
     protected meta:any;
     protected dat:any;
     protected field:string;
@@ -119,7 +119,7 @@ class Cell extends Widget{
         Cell
     }
 })
-class HRow extends Widget{
+class HRow extends BaseComponent{
     protected meta:any;
     protected sort:any = {};
     columns(){
@@ -154,7 +154,7 @@ class HRow extends Widget{
         Cell
     }
 })
-class Row extends Widget{
+class Row extends BaseComponent{
     protected dat:any;
     protected meta:any;
     columns(){
@@ -183,7 +183,7 @@ class Row extends Widget{
         HRow,Row
     }
 })
-export class GridComponent extends Widget{
+export class GridComponent extends BaseComponent{
     protected classes:string;
 
     getmeta(){

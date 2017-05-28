@@ -25,6 +25,12 @@
 
         <div id="app">
             <div class="w-widget w-boundary">
+                <div class="w-title">Testing</div>
+                Begin
+                <d :items="tests"></d>
+                End
+            </div>
+            <div class="w-widget w-boundary">
                 <div class="w-title">Upload</div>
                 <w.uploads ref="mu" action="http://localhost:8888/s/values">
                     <div class="content">
@@ -44,15 +50,6 @@
             <div class="w-widget w-boundary">
                 <div class="w-title">Table &amp; Popup</div>
                 <w.grid classes="w-nowrap w-link-btn" ref="grid"></w.grid>
-            </div>
-            <div class="w-widget w-boundary">
-                <div class="w-title">Dynamic Components</div>
-                <div>
-                    aaa
-                    <w.d :html="html" :data="dyn"></w.d>
-                    <w.ds :items="list"></w.ds>
-                    bbb
-                </div>
             </div>
         </div>
         <script>
@@ -78,6 +75,10 @@
                     ,dyn:{
                         test:'success'
                     }
+                    ,tests:[
+                        {template:'<div>{{msg}}</div>', data:{msg:'Item I'}}
+                        ,{template:'<div>{{msg}}</div>', data:{msg:'Item II'}}
+                    ]
                     ,list:[
                         {html:'<w.d :html="text" :data="dat"></w.d>', data:{text:'<div>{{msg}}</div>', dat:{msg:'done'} } }
                         , {html:'<div>{{text}}</div>', data:{text:'item2'}}
