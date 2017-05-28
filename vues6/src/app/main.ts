@@ -22,11 +22,14 @@ import {FormContainer
 import {Uploads} from "./components/uploaders";
 import {join} from '../../../../kernel/src/common'
 import {init} from '../../../../kernel/src/web/init';
+import {Widget} from '../../../../kernel/src/web/widgets/widget';
 
 
 let w = <any>window;
 w.v = Vue;
 w.join = join;
+Widget.init();
+
 Vue.use(UniqueId);
 Vue.use(ParentUnit);
 Vue.component('w.icon', Icon);

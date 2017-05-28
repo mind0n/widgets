@@ -16,7 +16,7 @@ import {send} from '../../../../../kernel/src/web/network';
 export class TestComponent extends BaseComponent{
     mounted(){
         let area = <HTMLElement>this.$refs.area;
-        let rlt = Widget.ParseHtml(`
+        let rlt = Widget.parsehtml(`
             <div class="w-test">
                 <span alias="head">Title</span>
                 <div alias="body">Body</div>
