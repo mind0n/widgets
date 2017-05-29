@@ -25,6 +25,13 @@ export class TestComponent extends BaseComponent{
                 rendered:(html:string)=>{
                     console.log('onrendered', html);
                 }
+            },
+            child:{
+                on:{
+                    click:function(event:Event){
+                        console.log('clicked');
+                    }
+                }
             }
         });
         area.appendChild(rlt);
