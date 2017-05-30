@@ -17,7 +17,6 @@ export class TestComponent extends BaseComponent{
     mounted(){
         let area = <HTMLElement>this.$refs.area;
         let rlt = Widget.parsehtml(`
-            <span>Test Widgets</span>
             <tst></tst>
         `);
         rlt.prepare({
