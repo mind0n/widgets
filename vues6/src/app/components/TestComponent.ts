@@ -20,12 +20,12 @@ export class TestComponent extends BaseComponent{
             <tst></tst>
         `);
         rlt.prepare({
-            on:{
-                rendered:(html:string)=>{
-                    console.log('onrendered', html);
+            $filters:{
+                test:function(input:string){
+                    return 'Filtered: ' + input;
                 }
-            },
-            child:{
+            }
+            ,child:{
                 on:{
                     click:function(event:Event){
                         console.log('clicked');
