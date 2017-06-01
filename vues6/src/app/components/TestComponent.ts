@@ -22,7 +22,26 @@ export class TestComponent extends BaseComponent{
         rlt.prepare({
             $filters:{
                 test:function(input:string){
-                    return 'Filtered: ' + input;
+                    return input;
+                }
+            }
+            ,child:{
+                on:{
+                    click:function(event:Event){
+                        console.log('clicked');
+                    }
+                }
+            }
+        });
+        area.appendChild(rlt);
+
+        rlt = Widget.parsehtml(`
+            <tst></tst>
+        `);
+        rlt.prepare({
+            $filters:{
+                test:function(input:string){
+                    return input;
                 }
             }
             ,child:{
