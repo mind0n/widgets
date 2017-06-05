@@ -23,12 +23,17 @@ import {Uploads} from "./components/uploaders";
 import {join} from '../../../../kernel/src/common'
 import {init} from '../../../../kernel/src/web/init';
 import {Widget} from '../../../../kernel/src/web/widgets/widget';
-
+import {UploadWidget} from '../../../../kernel/src/web/widgets/widgetupload';
+import {IconWidget} from '../../../../kernel/src/web/widgets/widgeticon';
+import {ForWidget} from '../../../../kernel/src/web/widgets/widgetfor';
 
 let w = <any>window;
 w.v = Vue;
 w.join = join;
-Widget.init();
+Widget.init({
+    tst: new UploadWidget()
+    ,icon: new IconWidget()
+});
 
 Vue.use(UniqueId);
 Vue.use(ParentUnit);
