@@ -33,6 +33,7 @@ w.join = join;
 Widget.init({
     tst: new UploadWidget()
     ,icon: new IconWidget()
+    ,for: new ForWidget()
 });
 
 Vue.use(UniqueId);
