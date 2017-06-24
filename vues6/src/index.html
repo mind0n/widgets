@@ -29,6 +29,10 @@
                 <for in="list">
                     <div html="this.html"></div>
                 </for>
+                <for in="icons">
+                     <icon :n="$ui~this.name" :size="ui~this.size"></icon>
+                </for>
+
                 <button alias="b">Update</button>
             </div>
         </div>
@@ -40,6 +44,11 @@
             ];
             w.prepare(app, {
                 list:list
+                , icons:[
+                    {name:'toggle-menu', size:'32'}
+                    , {name:'toggle-sort-up', size:'32'}
+                    , {name:'placeholder', size:'500'}
+                ]
             });
             app.$b.onclick = function(event){
                 list.splice(1, 1);
@@ -49,6 +58,7 @@
             list[1].html = 'success2';
             list[2] = {html:'added'};
             app.refresh(true);
+
         </script>
     </body>
 </html>
